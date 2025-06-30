@@ -444,7 +444,7 @@ Before deploying to production:
 
 For deployment issues:
 
-- Check the [troubleshooting guide](docs/TROUBLESHOOTING.md)
+- Check the [troubleshooting guide](TROUBLESHOOTING.md)
 - Search existing [GitHub issues](https://github.com/yourusername/mermaid-slides/issues)
 - Create a new issue with deployment details
 - Contact support: [your-email@example.com]
