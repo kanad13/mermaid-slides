@@ -230,7 +230,10 @@ cypress/videos
 # Documentation
 ############################
 
+# Vite build output
 dist
+dist-ssr
+*.local
 
 ############################
 # Builds

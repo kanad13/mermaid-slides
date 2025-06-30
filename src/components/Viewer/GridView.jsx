@@ -1,0 +1,80 @@
+import { useEffect } from 'react';
+import { useMermaid } from '../../hooks/useMermaid';
+import { getDiagramType } from '../../utils/mermaidParser';
+
+export const GridView = ({ 
+  diagrams, 
+  currentIndex, 
+  isDarkMode, 
+  mermaidTheme,
+  onDiagramSelect 
+}) => {
+  const { isLoaded, renderDiagram } = useMermaid(mermaidTheme);
+
+  useEffect(() => {
+    if (!isLoaded || diagrams.length === 0) return;
+
+    const renderGridDiagrams = async () => {
+      for (let i = 0; i < diagrams.length; i++) {
+        try {
+          const gridId = `grid-${diagrams[i].id}`;
+          const svgElement = await renderDiagram(gridId, diagrams[i].code);
+          
+          if (svgElement) {
+            svgElement.style.maxWidth = '100%';
+            svgElement.style.maxHeight = '100%';
+            svgElement.style.transform = 'scale(0.8)';
+            svgElement.style.transformOrigin = 'center center';
+          }
+        } catch (err) {
+          console.error(`Error rendering grid diagram ${i}:`, err);
+          const element = document.getElementById(`grid-${diagrams[i].id}`);
+          if (element) {
+            element.innerHTML = `<div class="text-red-500 text-xs">Error</div>`;
+          }
+        }
+      }
+    };
+
+    setTimeout(renderGridDiagrams, 100);
+  }, [isLoaded, diagrams, mermaidTheme, renderDiagram]);
+
+  return (
+    <div className="flex-1 p-6 overflow-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {diagrams.map((diagram, index) => (
+          <div
+            key={index}
+            className={`border rounded-lg p-4 cursor-pointer transition-all hover:shadow-lg ${
+              currentIndex === index
+                ? 'border-blue-500 shadow-lg'
+                : isDarkMode
+                ? 'border-gray-600 hover:border-gray-500 bg-gray-800'
+                : 'border-gray-300 hover:border-gray-400 bg-white'
+            }`}
+            onClick={() => onDiagramSelect(index)}
+          >
+            <div className="mb-3">
+              <span className={`text-sm font-medium ${
+                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+              }`}>
+                Diagram {index + 1}
+              </span>
+              <span className={`ml-2 text-xs px-2 py-1 rounded ${
+                isDarkMode ? 'bg-gray-700 text-gray-400' : 'bg-gray-100 text-gray-600'
+              }`}>
+                {getDiagramType(diagram.code)}
+              </span>
+            </div>
+            <div
+              id={`grid-${diagram.id}`}
+              className="h-48 flex items-center justify-center border rounded bg-gray-50 overflow-hidden"
+            >
+              <div className="text-gray-400 text-sm">Loading preview...</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};

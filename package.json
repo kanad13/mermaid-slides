@@ -2,16 +2,12 @@
 	"name": "mermaid-slides",
 	"version": "1.0.0",
 	"description": "Transform your markdown mermaid diagrams into beautiful presentation slides",
-	"main": "index.html",
+	"type": "module",
 	"scripts": {
-		"dev": "npx serve . --live-reload",
-		"serve": "npx serve .",
-		"build:web": "node scripts/build-web.js",
-		"build:offline": "node scripts/build-offline.js",
-		"build:all": "npm run build:web && npm run build:offline",
-		"test": "echo \"No tests specified yet\" && exit 0",
-		"lint": "echo \"Linting not configured yet\" && exit 0",
-		"format": "echo \"Formatting not configured yet\" && exit 0"
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
+		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
 	},
 	"keywords": [
 		"mermaid",
@@ -33,9 +29,24 @@
 		"url": "https://github.com/yourusername/mermaid-slides/issues"
 	},
 	"homepage": "https://github.com/yourusername/mermaid-slides#readme",
-	"dependencies": {},
+	"dependencies": {
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"mermaid": "^10.6.1",
+		"lucide-react": "^0.263.1"
+	},
 	"devDependencies": {
-		"serve": "^14.2.1"
+		"@types/react": "^18.2.15",
+		"@types/react-dom": "^18.2.7",
+		"@vitejs/plugin-react": "^4.0.3",
+		"autoprefixer": "^10.4.14",
+		"eslint": "^8.45.0",
+		"eslint-plugin-react": "^7.32.2",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.3",
+		"postcss": "^8.4.27",
+		"tailwindcss": "^3.3.3",
+		"vite": "^4.4.5"
 	},
 	"engines": {
 		"node": ">=14.0.0"
@@ -45,9 +56,5 @@
 		"last 2 versions",
 		"not dead",
 		"not ie 11"
-	],
-	"funding": {
-		"type": "github",
-		"url": "https://github.com/sponsors/yourusername"
-	}
+	]
 }
