@@ -1,0 +1,53 @@
+{
+	"name": "mermaid-slides",
+	"version": "1.0.0",
+	"description": "Transform your markdown mermaid diagrams into beautiful presentation slides",
+	"main": "index.html",
+	"scripts": {
+		"dev": "npx serve . --live-reload",
+		"serve": "npx serve .",
+		"build:web": "node scripts/build-web.js",
+		"build:offline": "node scripts/build-offline.js",
+		"build:all": "npm run build:web && npm run build:offline",
+		"test": "echo \"No tests specified yet\" && exit 0",
+		"lint": "echo \"Linting not configured yet\" && exit 0",
+		"format": "echo \"Formatting not configured yet\" && exit 0"
+	},
+	"keywords": [
+		"mermaid",
+		"markdown",
+		"presentation",
+		"slides",
+		"diagrams",
+		"visualization",
+		"react",
+		"documentation"
+	],
+	"author": "Your Name <your-email@example.com>",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/yourusername/mermaid-slides.git"
+	},
+	"bugs": {
+		"url": "https://github.com/yourusername/mermaid-slides/issues"
+	},
+	"homepage": "https://github.com/yourusername/mermaid-slides#readme",
+	"dependencies": {},
+	"devDependencies": {
+		"serve": "^14.2.1"
+	},
+	"engines": {
+		"node": ">=14.0.0"
+	},
+	"browserslist": [
+		"> 1%",
+		"last 2 versions",
+		"not dead",
+		"not ie 11"
+	],
+	"funding": {
+		"type": "github",
+		"url": "https://github.com/sponsors/yourusername"
+	}
+}
