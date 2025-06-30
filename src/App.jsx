@@ -26,7 +26,6 @@ function App() {
         diagrams={diagrams}
         onBackToEditor={handleBackToEditor}
         isDarkMode={isDarkMode}
-        onToggleDarkMode={toggleDarkMode}
       />
     );
   }
@@ -35,7 +34,6 @@ function App() {
     <Editor
       onViewDiagrams={handleViewDiagrams}
       isDarkMode={isDarkMode}
-      onToggleDarkMode={toggleDarkMode}
     />
   );
 }

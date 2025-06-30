@@ -71,7 +71,7 @@ export const DiagramViewer = ({
     };
 
     renderWithScaling();
-  }, [isLoaded, diagram, renderDiagram]);
+  }, [isLoaded, diagram, renderDiagram, mermaidTheme]);
 
   return (
     <div className="flex-1 flex items-center justify-center p-4 overflow-auto">

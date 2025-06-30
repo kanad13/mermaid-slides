@@ -3,14 +3,12 @@ import { ViewerHeader } from './ViewerHeader';
 import { DiagramViewer } from './DiagramViewer';
 import { GridView } from './GridView';
 import { NavigationControls } from '../Navigation/NavigationControls';
-import { ProgressIndicator } from '../Navigation/ProgressIndicator';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 
 export const Viewer = ({ 
   diagrams, 
   onBackToEditor,
-  isDarkMode,
-  onToggleDarkMode
+  isDarkMode
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mermaidTheme, setMermaidTheme] = useState('default');
@@ -47,7 +45,7 @@ export const Viewer = ({
   });
 
   return (
-    <div className={`min-h-screen flex flex-col ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
+    <div className={`min-h-screen flex flex-col relative ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
       <ViewerHeader
         currentIndex={currentIndex}
         totalDiagrams={diagrams.length}
@@ -55,18 +53,11 @@ export const Viewer = ({
         mermaidTheme={mermaidTheme}
         isGridView={isGridView}
         onBackToEditor={onBackToEditor}
-        onToggleDarkMode={onToggleDarkMode}
         onThemeChange={setMermaidTheme}
         onToggleGridView={() => setIsGridView(!isGridView)}
       />
 
-      <ProgressIndicator
-        currentIndex={currentIndex}
-        totalDiagrams={diagrams.length}
-        isDarkMode={isDarkMode}
-      />
-
-      <div className={`flex-1 flex flex-col ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
+      <div className={`flex-1 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
         {isGridView ? (
           <GridView
             diagrams={diagrams}
@@ -84,9 +75,8 @@ export const Viewer = ({
         )}
       </div>
 
-      <div className={`border-t px-6 py-4 flex justify-between items-center ${
-        isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-      }`}>
+      {/* Floating Navigation Controls */}
+      {!isGridView && (
         <NavigationControls
           currentIndex={currentIndex}
           totalDiagrams={diagrams.length}
@@ -96,16 +86,20 @@ export const Viewer = ({
           onLast={goToLast}
           isDarkMode={isDarkMode}
         />
-        
-        <div className={`text-center text-sm ${
-          isDarkMode ? 'text-gray-400' : 'text-gray-600'
-        }`}>
-          {isGridView
-            ? 'Click any diagram to view it • Press ESC to return to editor'
-            : 'Use ← → arrow keys to navigate • Home/End for first/last • Press ESC to return to editor'
-          }
+      )}
+
+      {/* Keyboard shortcuts help - only show in single view */}
+      {!isGridView && (
+        <div className="fixed bottom-4 right-4 z-40">
+          <div className={`px-3 py-2 rounded-lg text-xs backdrop-blur-sm border ${
+            isDarkMode 
+              ? 'bg-gray-800/80 border-gray-600 text-gray-300' 
+              : 'bg-white/80 border-gray-200 text-gray-600'
+          }`}>
+            ← → Navigate • ESC Exit
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

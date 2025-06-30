@@ -6,8 +6,7 @@ import { sampleMarkdown } from '../../utils/sampleData';
 
 export const Editor = ({ 
   onViewDiagrams,
-  isDarkMode,
-  onToggleDarkMode
+  isDarkMode
 }) => {
   const [markdownText, setMarkdownText] = useState('');
   const [diagrams, setDiagrams] = useState([]);
@@ -67,19 +66,6 @@ export const Editor = ({
               </p>
             </div>
 
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={onToggleDarkMode}
-                className={`p-2 rounded-lg transition-colors ${
-                  isDarkMode
-                    ? 'bg-gray-700 hover:bg-gray-600 text-yellow-400'
-                    : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                }`}
-                title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-              >
-                {isDarkMode ? '☀️' : '🌙'}
-              </button>
-            </div>
           </div>
 
           <div className="space-y-4">
