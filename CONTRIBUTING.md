@@ -36,6 +36,7 @@ Thank you for your interest in contributing to Mermaid Slides! This document pro
 
 ### Prerequisites
 
+- **Node.js 14+** and npm (for development)
 - Modern web browser (Chrome 90+, Firefox 88+, Safari 14+)
 - Text editor or IDE
 - Basic knowledge of HTML, CSS, JavaScript, and React
@@ -47,12 +48,13 @@ Thank you for your interest in contributing to Mermaid Slides! This document pro
 git clone https://github.com/yourusername/mermaid-slides.git
 cd mermaid-slides
 
-# No build process - just serve the files
-python -m http.server 8000
-# or
-npx serve .
+# Install dependencies
+npm install
 
-# Open http://localhost:8000
+# Start development server
+npm run dev
+
+# Open http://localhost:5173 (Vite default port)
 ```
 
 ### Project Structure
@@ -60,11 +62,17 @@ npx serve .
 ```
 mermaid-slides/
 ├── README.md                 # Project documentation
-├── index.html               # Main application file
+├── IMPROVEMENT_PLAN.md       # Current improvement tracking
+├── CLAUDE.md                 # Claude Code session guide
+├── src/                      # Source code
+│   ├── App.jsx              # Main application component
+│   ├── components/          # Modular React components
+│   ├── hooks/               # Custom React hooks
+│   └── utils/               # Utility functions
 ├── docs/                    # Additional documentation
 ├── examples/                # Sample markdown files
-├── offline/                 # Self-contained version
-└── dist/                   # Built versions for deployment
+├── dist/                    # Built files (after npm run build)
+└── package.json             # Project dependencies and scripts
 ```
 
 ## 📝 Code Style Guidelines

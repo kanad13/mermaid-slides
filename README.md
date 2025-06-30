@@ -48,21 +48,27 @@ Visit **[Mermaid Slides](https://your-deployment-url.com)** and start creating p
 git clone https://github.com/yourusername/mermaid-slides.git
 cd mermaid-slides
 
-# For simple local usage (requires internet for CDN resources)
-python -m http.server 8000
-# or
-npx serve .
+# Install dependencies
+npm install
 
-# Open http://localhost:8000 in your browser
+# Start development server
+npm run dev
+
+# Open http://localhost:5173 in your browser (Vite default port)
 ```
 
-### Option 3: Completely Offline
+### Option 3: Production Build
 
 ```bash
-# Use the offline version (no internet required)
-cd offline/
-python -m http.server 8000
-# Open http://localhost:8000
+# Build for production
+npm run build
+
+# Serve the built files (choose one)
+npx serve dist
+# or
+python -m http.server 8000 -d dist
+
+# Open http://localhost:3000 (serve) or http://localhost:8000 (python)
 ```
 
 ## 📖 Usage

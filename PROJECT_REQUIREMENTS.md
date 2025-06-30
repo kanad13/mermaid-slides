@@ -3,9 +3,11 @@
 ## 📊 Project Overview
 
 **Project Name**: Mermaid Slides
-**Current Status**: Phase 5A Complete (Single React Component)
+**Current Status**: Phase 5B Partially Complete (Modular Components Started)
 **Target**: Professional multi-distribution application
 **Tech Stack**: React, Tailwind CSS, Mermaid.js
+
+> ⚠️ **STATUS UPDATE**: This document represents the original project plan. For current improvement tracking and implementation progress, see [IMPROVEMENT_PLAN.md](./IMPROVEMENT_PLAN.md)
 
 ## 🎯 Project Goals
 

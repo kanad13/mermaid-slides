@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Editor } from './components/Editor/Editor';
 import { Viewer } from './components/Viewer/Viewer';
+import { Diagram } from './types/diagram';
 
 function App() {
   const [isViewMode, setIsViewMode] = useState(false);
-  const [diagrams, setDiagrams] = useState([]);
+  const [diagrams, setDiagrams] = useState<Diagram[]>([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const handleViewDiagrams = (extractedDiagrams) => {
+  const handleViewDiagrams = (extractedDiagrams: Diagram[]) => {
     setDiagrams(extractedDiagrams);
     setIsViewMode(true);
   };
