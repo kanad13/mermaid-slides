@@ -28,7 +28,7 @@ export const useMermaid = (theme = 'default') => {
 
         setIsLoaded(true);
         setError(null);
-      } catch (err) {
+      } catch {
         setError('Failed to load Mermaid library');
         setIsLoaded(false);
       }

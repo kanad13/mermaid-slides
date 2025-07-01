@@ -9,34 +9,43 @@ export const useKeyboardNavigation = ({
   onEscape
 }) => {
   useEffect(() => {
-    if (!isActive) return;
+    if (!isActive) {return;}
 
     const handleKeyPress = (e) => {
       switch (e.key) {
-        case 'ArrowLeft':
+        case 'ArrowLeft': {
           e.preventDefault();
           onPrevious?.();
           break;
-        case 'ArrowRight':
+        }
+        case 'ArrowRight': {
           e.preventDefault();
           onNext?.();
           break;
-        case 'Home':
+        }
+        case 'Home': {
           e.preventDefault();
           onFirst?.();
           break;
-        case 'End':
+        }
+        case 'End': {
           e.preventDefault();
           onLast?.();
           break;
-        case 'Escape':
+        }
+        case 'Escape': {
           e.preventDefault();
           onEscape?.();
           break;
+        }
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    
+    // eslint-disable-next-line consistent-return
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
   }, [isActive, onPrevious, onNext, onFirst, onLast, onEscape]);
 };

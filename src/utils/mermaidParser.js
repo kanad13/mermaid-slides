@@ -14,8 +14,8 @@ export const parseMermaidDiagrams = (text) => {
 };
 
 export const getDiagramType = (code) => {
-  if (code.includes('sequenceDiagram')) return 'sequence';
-  if (code.includes('erDiagram')) return 'er';
-  if (code.includes('graph')) return 'flowchart';
+  if (code.includes('sequenceDiagram')) {return 'sequence';}
+  if (code.includes('erDiagram')) {return 'er';}
+  if (code.includes('graph')) {return 'flowchart';}
   return 'diagram';
 };

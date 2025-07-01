@@ -16,7 +16,7 @@ export const DiagramViewer = ({
   }, [error, onError]);
 
   useEffect(() => {
-    if (!isLoaded || !diagram) return;
+    if (!isLoaded || !diagram) {return;}
 
     const renderWithScaling = async () => {
       try {

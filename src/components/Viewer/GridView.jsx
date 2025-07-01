@@ -12,7 +12,7 @@ export const GridView = ({
   const { isLoaded, renderDiagram } = useMermaid(mermaidTheme);
 
   useEffect(() => {
-    if (!isLoaded || diagrams.length === 0) return;
+    if (!isLoaded || diagrams.length === 0) {return;}
 
     const renderGridDiagrams = async () => {
       for (let i = 0; i < diagrams.length; i++) {
