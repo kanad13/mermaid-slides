@@ -5,7 +5,8 @@ export const DropZone = ({
   isDarkMode, 
   onDragOver, 
   onDragLeave, 
-  onDrop 
+  onDrop,
+  children
 }) => {
   return (
     <div
@@ -42,9 +43,11 @@ export const DropZone = ({
             {isDragging ? 'Drop your file here' : 'Drop markdown file here or click to browse'}
           </p>
           <p className={`text-sm mt-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-            Supports .md and .txt files
+            Supports .md and .markdown files
           </p>
         </div>
+        
+        {children}
       </div>
     </div>
   );

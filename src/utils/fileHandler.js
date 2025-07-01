@@ -1,8 +1,7 @@
 export const isValidFile = (file) => {
   return file.type === 'text/markdown' || 
          file.name.endsWith('.md') || 
-         file.type === 'text/plain' || 
-         file.name.endsWith('.txt');
+         file.name.endsWith('.markdown');
 };
 
 export const readFileAsText = (file) => {

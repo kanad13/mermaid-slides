@@ -7,7 +7,7 @@ export const useFileHandler = () => {
 
   const handleFileRead = async (file) => {
     if (!isValidFile(file)) {
-      throw new Error('Please select a markdown (.md) or text (.txt) file.');
+      throw new Error('Please select a markdown (.md or .markdown) file.');
     }
     
     const content = await readFileAsText(file);

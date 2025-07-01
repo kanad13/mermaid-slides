@@ -17,24 +17,19 @@ export const FileUpload = ({ onFileLoad, fileName, isDarkMode, onLoadSample }) =
 
   return (
     <div className="space-y-4">
-      <div className="relative">
-        <DropZone 
-          isDragging={isDragging}
-          isDarkMode={isDarkMode}
-          onDragOver={handleDragEvents.onDragOver}
-          onDragLeave={handleDragEvents.onDragLeave}
-          onDrop={handleDropWrapper}
-        />
-        
+      <DropZone 
+        isDragging={isDragging}
+        isDarkMode={isDarkMode}
+        onDragOver={handleDragEvents.onDragOver}
+        onDragLeave={handleDragEvents.onDragLeave}
+        onDrop={handleDropWrapper}
+      >
         <FileInput onFileSelect={handleFileSelectWrapper} />
-        
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
-          <ActionButtons 
-            onLoadSample={onLoadSample}
-            isDarkMode={isDarkMode}
-          />
-        </div>
-      </div>
+        <ActionButtons 
+          onLoadSample={onLoadSample}
+          isDarkMode={isDarkMode}
+        />
+      </DropZone>
 
       <CurrentFileDisplay 
         fileName={fileName}
