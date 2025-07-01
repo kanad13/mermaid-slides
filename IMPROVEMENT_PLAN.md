@@ -62,8 +62,8 @@
   - [x] React 18 → 19 (no breaking changes in our usage)
   - [x] Mermaid 10 → 11 (API compatible)
   - [x] Vite 5 → 7 (no config changes needed)
-  - [x] Tailwind 3 → 4 (PostCSS config updated)
-  - [x] Test after each major update (all builds successful)
+  - [x] Tailwind 3 → 4 → 3 (v4 broke UI, reverted to stable v3.4.17)
+  - [x] Test after each major update (styling issues resolved)
 
 - [x] **Fix Documentation**
   - [x] Update README.md with correct start commands
@@ -217,8 +217,9 @@
 
 ### **Development Notes**
 - ✅ **App Launch Verified**: Application loads correctly on localhost:3000
+- ✅ **Styling Issue Fixed**: Tailwind 4 broke UI, reverted to stable v3.4.17
 - ℹ️ **React DevTools Message**: Normal development message from React 19 (not an error)
-- 📝 **Minor Enhancement**: Consider adding React DevTools for better debugging experience
+- 📝 **Future Enhancement**: Upgrade to Tailwind 4 when stable (Phase 4)
 
 ---
 
