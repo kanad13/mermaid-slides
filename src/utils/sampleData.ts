@@ -1,4 +1,4 @@
-export const sampleMarkdown = `# Project Documentation
+export const sampleMarkdown: string = `# Project Documentation
 
 This is some regular markdown content.
 

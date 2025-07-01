@@ -1,6 +1,13 @@
+import React from 'react';
 import { Eye } from 'lucide-react';
 
-export const ActionButtons = ({ 
+interface ActionButtonsProps {
+  onProcessDiagrams: () => void;
+  onViewDiagrams: () => void;
+  diagramsCount: number;
+}
+
+export const ActionButtons: React.FC<ActionButtonsProps> = ({ 
   onProcessDiagrams, 
   onViewDiagrams, 
   diagramsCount 

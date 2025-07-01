@@ -1,12 +1,21 @@
 import { useState } from 'react';
 import { parseMermaidDiagrams } from '../utils/mermaidParser';
+import { Diagram } from '../types/diagram';
 
-export const useDiagramParser = () => {
-  const [diagrams, setDiagrams] = useState([]);
-  const [error, setError] = useState('');
-  const [isProcessing, setIsProcessing] = useState(false);
+interface UseDiagramParserReturn {
+  diagrams: Diagram[];
+  error: string;
+  isProcessing: boolean;
+  processDiagrams: (markdownText: string) => Promise<void>;
+  clearDiagrams: () => void;
+}
 
-  const processDiagrams = async (markdownText) => {
+export const useDiagramParser = (): UseDiagramParserReturn => {
+  const [diagrams, setDiagrams] = useState<Diagram[]>([]);
+  const [error, setError] = useState<string>('');
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+
+  const processDiagrams = async (markdownText: string): Promise<void> => {
     if (!markdownText.trim()) {
       setDiagrams([]);
       setError('');
@@ -26,14 +35,15 @@ export const useDiagramParser = () => {
       setDiagrams(extractedDiagrams);
       setError('');
     } catch (err) {
-      setError('Error parsing markdown: ' + err.message);
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      setError('Error parsing markdown: ' + errorMessage);
       setDiagrams([]);
     } finally {
       setIsProcessing(false);
     }
   };
 
-  const clearDiagrams = () => {
+  const clearDiagrams = (): void => {
     setDiagrams([]);
     setError('');
   };

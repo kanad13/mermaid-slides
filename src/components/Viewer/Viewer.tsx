@@ -1,3 +1,4 @@
+import React from 'react';
 import { ViewerHeader } from './ViewerHeader';
 import { DiagramViewer } from './DiagramViewer';
 import { GridView } from './GridView';
@@ -6,8 +7,9 @@ import { KeyboardShortcutsHelp } from './ViewerComponents/KeyboardShortcutsHelp'
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 import { useViewerNavigation } from '../../hooks/useViewerNavigation';
 import { useTheme } from '../../hooks/useTheme';
+import { ViewerProps } from '../../types/components';
 
-export const Viewer = ({ 
+export const Viewer: React.FC<ViewerProps> = ({ 
   diagrams, 
   onBackToEditor,
   isDarkMode

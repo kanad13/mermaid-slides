@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { FileUpload } from '../FileUpload/FileUpload';
 import { sampleMarkdown } from '../../utils/sampleData';
 import { useDiagramParser } from '../../hooks/useDiagramParser';
@@ -8,30 +8,36 @@ import { MarkdownTextarea } from './EditorComponents/MarkdownTextarea';
 import { ActionButtons } from './EditorComponents/ActionButtons';
 import { StatusMessages } from './EditorComponents/StatusMessages';
 import { Instructions } from './EditorComponents/Instructions';
+import { Diagram } from '../../types/diagram';
 
-export const Editor = ({ 
+interface EditorProps {
+  onViewDiagrams: (diagrams: Diagram[]) => void;
+  isDarkMode: boolean;
+}
+
+export const Editor: React.FC<EditorProps> = ({ 
   onViewDiagrams,
   isDarkMode
 }) => {
-  const [markdownText, setMarkdownText] = useState('');
+  const [markdownText, setMarkdownText] = useState<string>('');
   const { fileName, setFileName } = useFileHandler();
   const { diagrams, error, processDiagrams } = useDiagramParser();
 
-  const handleFileLoad = (content, name) => {
+  const handleFileLoad = (content: string, name: string): void => {
     setMarkdownText(content);
     setFileName(name);
   };
 
-  const loadSample = () => {
+  const loadSample = (): void => {
     setMarkdownText(sampleMarkdown);
     setFileName('Sample Document');
   };
 
-  const handleProcessDiagrams = () => {
+  const handleProcessDiagrams = (): void => {
     processDiagrams(markdownText);
   };
 
-  const handleViewDiagrams = () => {
+  const handleViewDiagrams = (): void => {
     onViewDiagrams(diagrams);
   };
 

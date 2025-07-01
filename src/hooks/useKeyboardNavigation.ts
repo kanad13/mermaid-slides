@@ -1,5 +1,14 @@
 import { useEffect } from 'react';
 
+interface UseKeyboardNavigationProps {
+  isActive: boolean;
+  onPrevious?: () => void;
+  onNext?: () => void;
+  onFirst?: () => void;
+  onLast?: () => void;
+  onEscape?: () => void;
+}
+
 export const useKeyboardNavigation = ({
   isActive,
   onPrevious,
@@ -7,11 +16,11 @@ export const useKeyboardNavigation = ({
   onFirst,
   onLast,
   onEscape
-}) => {
+}: UseKeyboardNavigationProps): void => {
   useEffect(() => {
-    if (!isActive) {return;}
+    if (!isActive) { return; }
 
-    const handleKeyPress = (e) => {
+    const handleKeyPress = (e: KeyboardEvent): void => {
       switch (e.key) {
         case 'ArrowLeft': {
           e.preventDefault();
@@ -38,12 +47,13 @@ export const useKeyboardNavigation = ({
           onEscape?.();
           break;
         }
+        default:
+          break;
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     
-    // eslint-disable-next-line consistent-return
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };

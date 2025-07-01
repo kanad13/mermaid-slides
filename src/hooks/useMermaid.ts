@@ -1,26 +1,50 @@
 import { useState, useEffect, useCallback } from 'react';
+import { MermaidTheme } from '../types/diagram';
 
-export const useMermaid = (theme = 'default') => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState(null);
+interface MermaidAPI {
+  initialize: (config: MermaidConfig) => void;
+  render: (id: string, code: string) => Promise<{ svg: string }>;
+}
+
+interface MermaidConfig {
+  startOnLoad: boolean;
+  theme: string;
+  securityLevel: string;
+}
+
+declare global {
+  interface Window {
+    mermaid?: MermaidAPI;
+  }
+}
+
+interface UseMermaidReturn {
+  isLoaded: boolean;
+  error: string | null;
+  renderDiagram: (elementId: string, code: string) => Promise<SVGElement | null>;
+}
+
+export const useMermaid = (theme: MermaidTheme = 'default'): UseMermaidReturn => {
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadMermaid = async () => {
+    const loadMermaid = async (): Promise<void> => {
       try {
         if (!window.mermaid) {
           const script = document.createElement('script');
           script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js';
           
-          const loadPromise = new Promise((resolve, reject) => {
-            script.onload = resolve;
-            script.onerror = reject;
+          const loadPromise = new Promise<void>((resolve, reject) => {
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error('Failed to load script'));
           });
           
           document.head.appendChild(script);
           await loadPromise;
         }
 
-        window.mermaid.initialize({
+        window.mermaid?.initialize({
           startOnLoad: false,
           theme: theme,
           securityLevel: 'loose'
@@ -37,7 +61,7 @@ export const useMermaid = (theme = 'default') => {
     loadMermaid();
   }, [theme]);
 
-  const renderDiagram = useCallback(async (elementId, code) => {
+  const renderDiagram = useCallback(async (elementId: string, code: string): Promise<SVGElement | null> => {
     if (!window.mermaid || !isLoaded) {
       throw new Error('Mermaid not loaded');
     }

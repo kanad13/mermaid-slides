@@ -1,17 +1,19 @@
+import React from 'react';
 import { useFileHandler } from '../../hooks/useFileHandler';
 import { DropZone } from './FileUploadComponents/DropZone';
 import { FileInput } from './FileUploadComponents/FileInput';
 import { ActionButtons } from './FileUploadComponents/ActionButtons';
 import { CurrentFileDisplay } from './FileUploadComponents/CurrentFileDisplay';
+import { FileUploadProps } from '../../types/components';
 
-export const FileUpload = ({ onFileLoad, fileName, isDarkMode, onLoadSample }) => {
+export const FileUpload: React.FC<FileUploadProps> = ({ onFileLoad, fileName, isDarkMode, onLoadSample }) => {
   const { isDragging, handleFileSelect, handleDragEvents } = useFileHandler();
 
-  const handleFileSelectWrapper = (event) => {
+  const handleFileSelectWrapper = (event: React.ChangeEvent<HTMLInputElement>): void => {
     handleFileSelect(event, onFileLoad);
   };
 
-  const handleDropWrapper = (e) => {
+  const handleDropWrapper = (e: React.DragEvent<HTMLDivElement>): void => {
     handleDragEvents.onDrop(e, onFileLoad);
   };
 
