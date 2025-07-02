@@ -1,20 +1,38 @@
 import { Diagram, DiagramType } from '../types/diagram';
 
 export const parseMermaidDiagrams = (text: string): Diagram[] => {
+  const diagrams: Diagram[] = [];
+  
+  // Parse Mermaid diagrams
   const mermaidRegex = /```mermaid\n([\s\S]*?)\n```/g;
-  const foundDiagrams: Diagram[] = [];
-  let match: RegExpExecArray | null;
+  let mermaidMatch: RegExpExecArray | null;
 
-  while ((match = mermaidRegex.exec(text)) !== null) {
-    const code = match[1].trim();
-    foundDiagrams.push({
+  while ((mermaidMatch = mermaidRegex.exec(text)) !== null) {
+    const code = mermaidMatch[1].trim();
+    diagrams.push({
       code,
-      id: `mermaid-${foundDiagrams.length}`,
+      id: `mermaid-${diagrams.length}`,
       type: getDiagramType(code)
     });
   }
 
-  return foundDiagrams;
+  // Parse image tags
+  const imageRegex = /!\[([^\]]*)\]\(([^)]+)\)/g;
+  let imageMatch: RegExpExecArray | null;
+
+  while ((imageMatch = imageRegex.exec(text)) !== null) {
+    const alt = imageMatch[1];
+    const src = imageMatch[2];
+    diagrams.push({
+      code: '', // Empty code for images
+      id: `image-${diagrams.length}`,
+      type: 'image',
+      src,
+      alt
+    });
+  }
+
+  return diagrams;
 };
 
 export const getDiagramType = (code: string): DiagramType => {

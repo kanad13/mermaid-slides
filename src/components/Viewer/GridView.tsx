@@ -12,31 +12,50 @@ export const GridView = ({
   const { isLoaded, renderDiagram } = useMermaid(mermaidTheme);
 
   useEffect(() => {
-    if (!isLoaded || diagrams.length === 0) {return;}
+    if (diagrams.length === 0) {return;}
 
-    const renderGridDiagrams = async () => {
+    const renderGridContent = async () => {
       for (let i = 0; i < diagrams.length; i++) {
+        const diagram = diagrams[i];
+        const gridId = `grid-${diagram.id}`;
+        const element = document.getElementById(gridId);
+        
+        if (!element) {
+          continue;
+        }
+
         try {
-          const gridId = `grid-${diagrams[i].id}`;
-          const svgElement = await renderDiagram(gridId, diagrams[i].code);
-          
-          if (svgElement) {
-            svgElement.style.maxWidth = '100%';
-            svgElement.style.maxHeight = '100%';
-            svgElement.style.transform = 'scale(0.8)';
-            svgElement.style.transformOrigin = 'center center';
+          if (diagram.type === 'image') {
+            // Render image preview
+            element.innerHTML = `
+              <div class="w-full h-full flex items-center justify-center">
+                <img 
+                  src="${diagram.src}" 
+                  alt="${diagram.alt || 'Image preview'}" 
+                  class="max-w-full max-h-full object-contain"
+                  onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=&quot;w-full h-full flex items-center justify-center&quot;><div class=&quot;text-red-500 text-xs&quot;>Image Error</div></div>'"
+                />
+              </div>
+            `;
+          } else if (isLoaded) {
+            // Render Mermaid diagram
+            const svgElement = await renderDiagram(gridId, diagram.code);
+            
+            if (svgElement) {
+              svgElement.style.maxWidth = '100%';
+              svgElement.style.maxHeight = '100%';
+              svgElement.style.transform = 'scale(0.8)';
+              svgElement.style.transformOrigin = 'center center';
+            }
           }
         } catch (err) {
-          console.error(`Error rendering grid diagram ${i}:`, err);
-          const element = document.getElementById(`grid-${diagrams[i].id}`);
-          if (element) {
-            element.innerHTML = `<div class="text-red-500 text-xs">Error</div>`;
-          }
+          console.error(`Error rendering grid content ${i}:`, err);
+          element.innerHTML = `<div class="text-red-500 text-xs">Error</div>`;
         }
       }
     };
 
-    setTimeout(renderGridDiagrams, 100);
+    setTimeout(renderGridContent, 100);
   }, [isLoaded, diagrams, mermaidTheme, renderDiagram]);
 
   return (
@@ -58,12 +77,12 @@ export const GridView = ({
               <span className={`text-sm font-medium ${
                 isDarkMode ? 'text-gray-300' : 'text-gray-700'
               }`}>
-                Diagram {index + 1}
+                {diagram.type === 'image' ? 'Image' : 'Diagram'} {index + 1}
               </span>
               <span className={`ml-2 text-xs px-2 py-1 rounded ${
                 isDarkMode ? 'bg-gray-700 text-gray-400' : 'bg-gray-100 text-gray-600'
               }`}>
-                {getDiagramType(diagram.code)}
+                {diagram.type === 'image' ? 'image' : getDiagramType(diagram.code)}
               </span>
             </div>
             <div

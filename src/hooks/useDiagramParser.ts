@@ -27,7 +27,7 @@ export const useDiagramParser = (): UseDiagramParserReturn => {
       const extractedDiagrams = parseMermaidDiagrams(markdownText);
 
       if (extractedDiagrams.length === 0) {
-        setError('No mermaid diagrams found in the markdown text.');
+        setError('No mermaid diagrams or images found in the markdown text.');
         setDiagrams([]);
         return;
       }
