@@ -1,6 +1,6 @@
 # Mermaid Slides
 
-Transform your markdown mermaid diagrams into beautiful presentation slides with advanced navigation and theming.
+Transform your markdown content with mermaid diagrams and images into beautiful presentation slides with advanced navigation and theming.
 
 ![Mermaid Slides Demo](docs/demo-screenshot.png)
 
@@ -12,6 +12,14 @@ Transform your markdown mermaid diagrams into beautiful presentation slides with
 - **File Browser** - Traditional file picker for .md and .txt files
 - **Copy & Paste** - Direct markdown content input
 - **Sample Content** - Built-in examples to get started quickly
+- **Mixed Content Support** - Seamlessly mix Mermaid diagrams and images in presentations
+
+### 🖼️ **Image & Diagram Support**
+
+- **Mermaid Diagrams** - All standard Mermaid diagram types with live rendering
+- **Image Files** - PNG, JPEG, GIF, and WebP images with automatic scaling
+- **Responsive Sizing** - Content automatically adapts to screen size and orientation
+- **Consistent Layout** - Both images and diagrams centered with optimal spacing
 
 ### 🎨 **Theming & Customization**
 
@@ -75,14 +83,15 @@ python -m http.server 8000 -d dist
 
 1. **Load Your Content**
 
-   - Drag a markdown file with mermaid diagrams onto the drop zone, or
+   - Drag a markdown file with mermaid diagrams and/or images onto the drop zone, or
    - Click "Choose File" to browse for files, or
    - Paste markdown content directly into the text area
 
-2. **Parse Diagrams**
+2. **Parse Content**
 
-   - Click "Parse Diagrams" to extract all mermaid code blocks
-   - The tool will find and prepare all diagrams for presentation
+   - Click "Parse Diagrams" to extract all mermaid code blocks and image references
+   - The tool will find and prepare all diagrams and images for presentation
+   - Both `![alt text](image.png)` syntax and mermaid code blocks are supported
 
 3. **Enter Presentation Mode**
 
@@ -105,8 +114,9 @@ python -m http.server 8000 -d dist
 - **Build**: No build process (single HTML file)
 - **Deployment**: Static hosting compatible
 
-## 📋 Supported Mermaid Diagrams
+## 📋 Supported Content Types
 
+### Mermaid Diagrams
 Mermaid Slides supports all standard Mermaid diagram types:
 
 - **Flowcharts** - Decision trees and process flows
@@ -118,13 +128,24 @@ Mermaid Slides supports all standard Mermaid diagram types:
 - **Pie Charts** - Data visualization
 - **Git Graphs** - Version control workflows
 
+### Image Files
+Native support for standard image formats:
+
+- **PNG** - Lossless compression, transparency support
+- **JPEG/JPG** - Efficient for photographs and complex images
+- **GIF** - Animated images and simple graphics
+- **WebP** - Modern format with excellent compression
+- **Responsive Display** - Automatic scaling and centering
+- **Error Handling** - Graceful fallback for missing images
+
 ## 🎯 Use Cases
 
 ### 📚 **Documentation Presentations**
 
 - Transform existing markdown documentation into slide presentations
-- Present technical architectures and system designs
+- Present technical architectures and system designs with supporting images
 - Share database schemas and API workflows
+- Combine screenshots, photos, and diagrams in unified presentations
 
 ### 🏢 **Business & Technical Meetings**
 

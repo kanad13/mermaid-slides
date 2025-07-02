@@ -7,12 +7,15 @@ export const NavigationControls = ({
   onNext,
   onFirst,
   onLast,
-  isDarkMode
+  isDarkMode,
+  isVisible = true
 }) => {
   const isDisabled = totalDiagrams <= 1;
 
   return (
-    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
+    <div className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 transition-opacity duration-300 ${
+      isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+    }`}>
       <div className={`flex items-center space-x-2 px-4 py-3 rounded-full shadow-lg backdrop-blur-sm border ${
         isDarkMode 
           ? 'bg-gray-800/90 border-gray-600' 

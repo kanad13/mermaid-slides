@@ -1,5 +1,5 @@
 import { BackButton } from './HeaderControls/BackButton';
-import { DiagramCounter } from './HeaderControls/DiagramCounter';
+import { HeaderNavigation } from './HeaderControls/HeaderNavigation';
 import { ThemeDropdown } from './HeaderControls/ThemeDropdown';
 import { GridViewToggle } from './HeaderControls/GridViewToggle';
 import { ProgressBar } from './HeaderControls/ProgressBar';
@@ -12,7 +12,11 @@ export const ViewerHeader = ({
   isGridView,
   onBackToEditor,
   onThemeChange,
-  onToggleGridView
+  onToggleGridView,
+  onPrevious,
+  onNext,
+  onFirst,
+  onLast
 }) => {
   return (
     <div className={`border-b shadow-sm ${
@@ -26,10 +30,14 @@ export const ViewerHeader = ({
           isDarkMode={isDarkMode} 
         />
 
-        {/* Center: Diagram counter */}
-        <DiagramCounter 
+        {/* Center: Navigation controls with counter */}
+        <HeaderNavigation 
           currentIndex={currentIndex}
           totalDiagrams={totalDiagrams}
+          onPrevious={onPrevious}
+          onNext={onNext}
+          onFirst={onFirst}
+          onLast={onLast}
           isDarkMode={isDarkMode}
         />
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { ViewerHeader } from './ViewerHeader';
 import { DiagramViewer } from './DiagramViewer';
 import { GridView } from './GridView';
-import { NavigationControls } from '../Navigation/NavigationControls';
 import { KeyboardShortcutsHelp } from './ViewerComponents/KeyboardShortcutsHelp';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 import { useViewerNavigation } from '../../hooks/useViewerNavigation';
@@ -46,6 +45,10 @@ export const Viewer: React.FC<ViewerProps> = ({
         onBackToEditor={onBackToEditor}
         onThemeChange={setMermaidTheme}
         onToggleGridView={toggleGridView}
+        onPrevious={goToPrevious}
+        onNext={goToNext}
+        onFirst={goToFirst}
+        onLast={goToLast}
       />
 
       <div className={`flex-1 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
@@ -65,19 +68,6 @@ export const Viewer: React.FC<ViewerProps> = ({
           />
         )}
       </div>
-
-      {/* Floating Navigation Controls */}
-      {!isGridView && (
-        <NavigationControls
-          currentIndex={currentIndex}
-          totalDiagrams={diagrams.length}
-          onPrevious={goToPrevious}
-          onNext={goToNext}
-          onFirst={goToFirst}
-          onLast={goToLast}
-          isDarkMode={isDarkMode}
-        />
-      )}
 
       {/* Keyboard shortcuts help - only show in single view */}
       {!isGridView && <KeyboardShortcutsHelp isDarkMode={isDarkMode} />}
