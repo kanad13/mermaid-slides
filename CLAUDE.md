@@ -26,23 +26,26 @@ npm run build
 
 # Lint
 npm run lint
+
+# Test
+npm test
 ```
 
 ### **Key Files to Understand**
 - `src/App.tsx` - Main application component (TypeScript)
 - `src/components/` - Complete modular component structure
 - `src/hooks/` - 8 custom hooks for reusable logic
-- `MERMAID_SLIDES_ACTION_PLAN.md` - **CRITICAL**: Current action plan for distribution channels
+- `docs/ACTION_PLAN.md` - **CRITICAL**: Current action plan for distribution channels
 
 ## 📊 **Current Distribution Process**
 
-### **Active Plan**: See `MERMAID_SLIDES_ACTION_PLAN.md`
+### **Active Plan**: See `docs/ACTION_PLAN.md`
 **Current Phase**: Phase 2 Complete - Web Deployment ✅
 **Next Phase**: Phase 3 - Offline Version
 **Live Site**: https://kanad13.github.io/mermaid-slides/
 
 ### **Progress Tracking**
-Always check and update `MERMAID_SLIDES_ACTION_PLAN.md`:
+Always check and update `docs/ACTION_PLAN.md`:
 - Mark tasks as completed ✅
 - Update progress sections
 - Note any blockers or issues
@@ -51,7 +54,7 @@ Always check and update `MERMAID_SLIDES_ACTION_PLAN.md`:
 ## 🛠️ **Development Guidelines**
 
 ### **Before Making Changes**
-1. Read `MERMAID_SLIDES_ACTION_PLAN.md` to understand current priorities
+1. Read `docs/ACTION_PLAN.md` to understand current priorities
 2. Check which distribution phase we're in
 3. Identify specific tasks to work on
 4. Update task status to "in progress"
@@ -60,7 +63,7 @@ Always check and update `MERMAID_SLIDES_ACTION_PLAN.md`:
 1. Test functionality before and after changes
 2. Run `npm run lint` to check code quality
 3. Update relevant documentation
-4. Mark tasks as complete in `MERMAID_SLIDES_ACTION_PLAN.md`
+4. Mark tasks as complete in `docs/ACTION_PLAN.md`
 
 ### **Key Principles**
 - **Preserve Functionality**: Never break existing features
@@ -88,13 +91,13 @@ Always check and update `MERMAID_SLIDES_ACTION_PLAN.md`:
 - ✅ Clean separation of concerns
 
 ### **Next Focus**
-- Testing infrastructure setup
-- Distribution channel packaging
+- ✅ Repository structure cleaned and organized
+- Phase 3: Offline distribution packaging
 
 ## 🧪 **Testing Status**
-- **Current**: No tests exist - main gap for distribution readiness
-- **Target**: 80%+ coverage with Vitest + React Testing Library
-- **Priority**: Phase 1 of current action plan
+- **Current**: 47 passing tests with comprehensive coverage ✅
+- **Infrastructure**: Vitest + React Testing Library fully configured ✅
+- **Status**: Testing foundation complete, distribution-ready
 
 ## 📚 **Documentation Status**
 
@@ -121,7 +124,7 @@ Distribution-specific documentation and user guides for each channel.
    ```
 
 2. **Review Progress**:
-   - Read `MERMAID_SLIDES_ACTION_PLAN.md` thoroughly
+   - Read `docs/ACTION_PLAN.md` thoroughly
    - Phase 2 (Web Deployment) is COMPLETE ✅
    - Next focus: Phase 3 (Offline Version)
    - Identify next priority tasks in action plan
@@ -152,7 +155,7 @@ Distribution-specific documentation and user guides for each channel.
 ## 🔄 **Session Handoff**
 
 ### **At End of Session**
-1. Update `MERMAID_SLIDES_ACTION_PLAN.md` with:
+1. Update `docs/ACTION_PLAN.md` with:
    - Completed tasks ✅
    - Any new issues discovered
    - Current progress status
@@ -163,12 +166,14 @@ Distribution-specific documentation and user guides for each channel.
    npm run dev
    npm run build
    npm run lint
+   npm test
    ```
 
 3. Commit changes if appropriate (but only when explicitly requested)
 
 ---
 
-**Last Updated**: 2025-07-03
+**Last Updated**: 2025-07-03 (Repository Structure Cleaned)
 **Phase 2 Status**: ✅ COMPLETE - Web deployment with enhanced landing page
+**Repository Status**: ✅ CLEAN - Organized structure ready for Phase 3
 **Next Session Priority**: Phase 3 - Offline Version Distribution Package

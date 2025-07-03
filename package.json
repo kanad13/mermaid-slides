@@ -4,13 +4,13 @@
 	"description": "Transform your markdown mermaid diagrams into beautiful presentation slides",
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
-		"preview": "vite preview",
-		"lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-		"test": "vitest",
-		"test:ui": "vitest --ui",
-		"test:run": "vitest run"
+		"dev": "vite --config config/vite.config.js",
+		"build": "vite build --config config/vite.config.js",
+		"preview": "vite preview --config config/vite.config.js",
+		"lint": "eslint . --config config/eslint.config.js --report-unused-disable-directives --max-warnings 0",
+		"test": "vitest --config config/vite.config.js",
+		"test:ui": "vitest --ui --config config/vite.config.js",
+		"test:run": "vitest run --config config/vite.config.js"
 	},
 	"keywords": [
 		"mermaid",

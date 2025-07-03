@@ -1,0 +1,225 @@
+# Mermaid Slides - Complete Documentation
+
+Transform your markdown content with mermaid diagrams and images into beautiful presentation slides with advanced navigation and theming.
+
+![Mermaid Slides Demo](assets/mermai-slides-demo.gif)
+
+## 📚 Documentation Index
+
+- **[Features Overview](FEATURES.md)** - Complete feature list and capabilities
+- **[Development Guide](../CLAUDE.md)** - Setup instructions and development workflow  
+- **[Contributing Guidelines](CONTRIBUTING.md)** - How to contribute to the project
+- **[Deployment Guide](DEPLOYMENT.md)** - Production deployment instructions
+- **[Action Plan](ACTION_PLAN.md)** - Current development roadmap and distribution strategy
+
+## ✨ Features
+
+### 📁 **File Handling**
+
+- **Drag & Drop Support** - Simply drag markdown files onto the interface
+- **File Browser** - Traditional file picker for .md and .txt files
+- **Copy & Paste** - Direct markdown content input
+- **Sample Content** - Built-in examples to get started quickly
+- **Mixed Content Support** - Seamlessly mix Mermaid diagrams and images in presentations
+
+### 🖼️ **Image & Diagram Support**
+
+- **Mermaid Diagrams** - All standard Mermaid diagram types with live rendering
+- **Image Files** - PNG, JPEG, GIF, and WebP images with automatic scaling
+- **Responsive Sizing** - Content automatically adapts to screen size and orientation
+- **Consistent Layout** - Both images and diagrams centered with optimal spacing
+
+### 🎨 **Theming & Customization**
+
+- **Dark/Light Mode** - Toggle between UI themes for comfortable viewing
+- **5 Mermaid Themes** - Default, Dark, Forest, Base, and Neutral diagram styles
+- **Live Theme Switching** - See changes instantly in presentation mode
+- **Responsive Design** - Works on desktop, tablet, and mobile devices
+
+### 🧭 **Advanced Navigation**
+
+- **Keyboard Controls** - Arrow keys, Home/End for seamless navigation
+- **Visual Progress Bar** - See your progress through the presentation
+- **Thumbnail Strip** - Quick overview and jumping to specific diagrams
+- **Grid View** - See all diagrams at once with overview mode
+- **Smart Scaling** - Automatic diagram sizing for optimal viewing
+
+### 🎯 **Presentation Mode**
+
+- **Full-Screen Experience** - Distraction-free presentation interface
+- **Multiple View Modes** - Single diagram focus or grid overview
+- **Professional Controls** - Clean navigation with progress indicators
+- **Theme Controls** - Adjust appearance during presentations
+
+## 🚀 Quick Start
+
+### Option 1: Use Online (Recommended)
+
+Visit **[Mermaid Slides](https://kanad13.github.io/mermaid-slides/)** and start creating presentations immediately.
+
+### Option 2: Run Locally
+
+```bash
+# Clone the repository
+git clone https://github.com/kanad13/mermaid-slides.git
+cd mermaid-slides
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Open http://localhost:3000 in your browser
+```
+
+### Option 3: Production Build
+
+```bash
+# Build for production
+npm run build
+
+# Serve the built files (choose one)
+npx serve dist
+# or
+python -m http.server 8000 -d dist
+
+# Open http://localhost:3000 (serve) or http://localhost:8000 (python)
+```
+
+## 📖 Usage
+
+1. **Load Your Content**
+
+   - Drag a markdown file with mermaid diagrams and/or images onto the drop zone, or
+   - Click "Choose File" to browse for files, or
+   - Paste markdown content directly into the text area
+
+2. **Parse Content**
+
+   - Click "Parse Diagrams" to extract all mermaid code blocks and image references
+   - The tool will find and prepare all diagrams and images for presentation
+   - Both `![alt text](image.png)` syntax and mermaid code blocks are supported
+
+3. **Enter Presentation Mode**
+
+   - Click "View Diagrams" to start your presentation
+   - Use the navigation controls or keyboard shortcuts
+
+4. **Navigate Your Presentation**
+   - **← →** Arrow keys to move between diagrams
+   - **Home/End** to jump to first/last diagram
+   - **Click thumbnails** for quick navigation
+   - **Grid view button** (⊞) to see all diagrams at once
+   - **ESC** to return to the editor
+
+## 🛠️ Technology Stack
+
+- **Frontend**: React 19 with TypeScript
+- **Build Tool**: Vite 7.0
+- **Styling**: Tailwind CSS 3.4
+- **Diagram Rendering**: Mermaid.js 11.7
+- **Icons**: Lucide React
+- **Testing**: Vitest + React Testing Library
+- **Deployment**: GitHub Actions → GitHub Pages
+- **Architecture**: Modular TypeScript with 8 custom hooks
+
+## 📋 Supported Content Types
+
+### Mermaid Diagrams
+
+Mermaid Slides supports all standard Mermaid diagram types:
+
+- **Flowcharts** - Decision trees and process flows
+- **Sequence Diagrams** - Interaction timelines
+- **ER Diagrams** - Database relationships
+- **Class Diagrams** - Object-oriented structures
+- **State Diagrams** - System state transitions
+- **Gantt Charts** - Project timelines
+- **Pie Charts** - Data visualization
+- **Git Graphs** - Version control workflows
+
+### Image Files
+
+Native support for standard image formats:
+
+- **PNG** - Lossless compression, transparency support
+- **JPEG/JPG** - Efficient for photographs and complex images
+- **GIF** - Animated images and simple graphics
+- **WebP** - Modern format with excellent compression
+- **Responsive Display** - Automatic scaling and centering
+- **Error Handling** - Graceful fallback for missing images
+
+## 🎯 Use Cases
+
+### 📚 **Documentation Presentations**
+
+- Transform existing markdown documentation into slide presentations
+- Present technical architectures and system designs with supporting images
+- Share database schemas and API workflows
+- Combine screenshots, photos, and diagrams in unified presentations
+
+### 🏢 **Business & Technical Meetings**
+
+- Present process flows and decision trees
+- Demonstrate system architectures to stakeholders
+- Review database designs and relationships
+
+### 🎓 **Education & Training**
+
+- Create interactive learning materials
+- Teach system design concepts
+- Explain complex workflows step-by-step
+
+### 💼 **Professional Development**
+
+- Portfolio presentations with technical diagrams
+- Code review sessions with visual aids
+- Architecture decision records (ADRs) presentations
+
+## 🌟 Why Mermaid Slides?
+
+### **vs PowerPoint/Google Slides**
+
+- ✅ **Version Control Friendly** - Markdown source can be tracked in Git
+- ✅ **Programmatic** - Diagrams defined in code, not drawn manually
+- ✅ **Consistent Styling** - Automatic theme application across all diagrams
+- ✅ **Fast Updates** - Change code, not complex visual elements
+
+### **vs Mermaid Live Editor**
+
+- ✅ **Presentation Mode** - Full-screen, distraction-free experience
+- ✅ **Multi-Diagram** - Handle dozens of diagrams in sequence
+- ✅ **Advanced Navigation** - Thumbnails, grid view, progress tracking
+- ✅ **File Handling** - Direct markdown file support
+
+### **vs Static Site Generators**
+
+- ✅ **Zero Setup** - No build process or deployment complexity
+- ✅ **Interactive** - Real-time theme switching and navigation
+- ✅ **Portable** - Single file that works anywhere
+- ✅ **Offline Capable** - No internet required for offline version
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **[Mermaid.js](https://mermaid.js.org/)** - Powerful diagramming and charting library
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[Lucide](https://lucide.dev/)** - Beautiful, customizable icons
+- **[React](https://react.dev/)** - User interface library
+
+## 📞 Support
+
+- 📖 **Documentation**: Check our [docs](.) folder
+- 💬 **Discussions**: Use GitHub Discussions for questions
+- 🐛 **Issues**: Report bugs via GitHub Issues
+- 🌐 **Live Demo**: [https://kanad13.github.io/mermaid-slides/](https://kanad13.github.io/mermaid-slides/)
+
+---
+
+**Made with ❤️ for the developer community**
+
+_Transform your markdown diagrams into presentations that wow your audience._
