@@ -13,7 +13,7 @@ from pathlib import Path
 
 # Configuration
 PORT = 3000
-HOST = 'localhost'
+HOST = '0.0.0.0'  # Bind to all interfaces for Docker compatibility
 
 def find_available_port(start_port=3000):
     """Find an available port starting from the given port."""

@@ -1,34 +1,30 @@
 @echo off
-REM Windows batch file to start Mermaid Slides offline server
+echo 🧜‍♀️ Mermaid Slides - Starting Server...
+echo Checking for Python 3...
 
-echo 🧜‍♀️ Mermaid Slides - Offline Server
-echo ========================================
-
-REM Check if Python is available
 python --version >nul 2>&1
 if %errorlevel% == 0 (
-    echo ✅ Python found, starting Python server...
+    echo ✅ Found Python, starting server...
     python start-server.py
     goto :end
 )
 
-REM Check if Node.js is available
+python3 --version >nul 2>&1
+if %errorlevel% == 0 (
+    echo ✅ Found Python 3, starting server...
+    python3 start-server.py
+    goto :end
+)
+
 node --version >nul 2>&1
 if %errorlevel% == 0 (
-    echo ✅ Node.js found, starting Node.js server...
+    echo ✅ Found Node.js, starting server...
     node start-server.js
     goto :end
 )
 
-REM If neither Python nor Node.js is available
-echo ❌ Error: Neither Python nor Node.js is installed.
-echo.
-echo Please install one of the following:
-echo - Python 3.x: https://python.org/downloads/
-echo - Node.js: https://nodejs.org/download/
-echo.
-echo Then run this script again.
-echo.
+echo ❌ Error: Neither Python nor Node.js found.
+echo Please install Python 3 or Node.js to run the server.
 pause
 
 :end
