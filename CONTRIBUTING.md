@@ -62,7 +62,7 @@ npm run dev
 ```
 mermaid-slides/
 ├── README.md                 # Project documentation
-├── IMPROVEMENT_PLAN.md       # Current improvement tracking
+├── MERMAID_SLIDES_ACTION_PLAN.md  # Current action plan for distribution
 ├── CLAUDE.md                 # Claude Code session guide
 ├── src/                      # Source code
 │   ├── App.jsx              # Main application component
@@ -261,7 +261,7 @@ Add any other context or screenshots about the feature request.
 
 ### Project-Specific Resources
 
-- [Project Requirements](PROJECT_REQUIREMENTS.md)
+- [Action Plan](MERMAID_SLIDES_ACTION_PLAN.md)
 - [Feature Documentation](docs/FEATURES.md)
 - [Deployment Guide](docs/DEPLOYMENT.md)
 

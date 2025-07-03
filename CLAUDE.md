@@ -7,10 +7,10 @@ This file contains important context for Claude Code to effectively work on the 
 ### **What is Mermaid Slides?**
 A React application that transforms markdown files containing Mermaid diagrams into presentation slides with navigation, theming, and multiple view modes.
 
-### **Current State (as of 2025-06-30)**
+### **Current State (as of 2025-07-03)**
 - **Working Features**: File upload, diagram parsing, presentation mode, navigation, theming
-- **Architecture**: Partially modularized (new structure alongside legacy code)
-- **Key Issue**: Legacy `MermaidSlides.jsx` (400+ lines) coexists with new modular components
+- **Architecture**: Complete TypeScript modular structure with 8 custom hooks
+- **Status**: Ready for distribution through web, offline, and VS Code extension channels
 
 ## 🚨 **Critical Information**
 
@@ -27,20 +27,19 @@ npm run lint
 ```
 
 ### **Key Files to Understand**
-- `src/App.jsx` - New main application component
-- `src/MermaidSlides.jsx` - ⚠️ LEGACY - Scheduled for removal
-- `src/components/` - New modular structure (partially complete)
-- `IMPROVEMENT_PLAN.md` - **CRITICAL**: Current improvement tracking and plan
-- `PROJECT_REQUIREMENTS.md` - Original project requirements (historical reference)
+- `src/App.tsx` - Main application component (TypeScript)
+- `src/components/` - Complete modular component structure
+- `src/hooks/` - 8 custom hooks for reusable logic
+- `MERMAID_SLIDES_ACTION_PLAN.md` - **CRITICAL**: Current action plan for distribution channels
 
-## 📊 **Current Improvement Process**
+## 📊 **Current Distribution Process**
 
-### **Active Plan**: See `IMPROVEMENT_PLAN.md`
-**Current Phase**: Phase 1 - Foundation Cleanup
-**Priority**: Remove legacy code, update dependencies, fix docs
+### **Active Plan**: See `MERMAID_SLIDES_ACTION_PLAN.md`
+**Current Phase**: Phase 1 - Testing Foundation
+**Priority**: Testing setup, then web deployment, offline version, VS Code extension
 
 ### **Progress Tracking**
-Always check and update `IMPROVEMENT_PLAN.md`:
+Always check and update `MERMAID_SLIDES_ACTION_PLAN.md`:
 - Mark tasks as completed ✅
 - Update progress sections
 - Note any blockers or issues
@@ -49,8 +48,8 @@ Always check and update `IMPROVEMENT_PLAN.md`:
 ## 🛠️ **Development Guidelines**
 
 ### **Before Making Changes**
-1. Read `IMPROVEMENT_PLAN.md` to understand current priorities
-2. Check which phase we're in
+1. Read `MERMAID_SLIDES_ACTION_PLAN.md` to understand current priorities
+2. Check which distribution phase we're in
 3. Identify specific tasks to work on
 4. Update task status to "in progress"
 
@@ -58,70 +57,70 @@ Always check and update `IMPROVEMENT_PLAN.md`:
 1. Test functionality before and after changes
 2. Run `npm run lint` to check code quality
 3. Update relevant documentation
-4. Mark tasks as complete in `IMPROVEMENT_PLAN.md`
+4. Mark tasks as complete in `MERMAID_SLIDES_ACTION_PLAN.md`
 
 ### **Key Principles**
 - **Preserve Functionality**: Never break existing features
-- **Incremental Progress**: Complete one phase before moving to next
-- **Update Documentation**: Keep improvement plan current
+- **Incremental Progress**: Complete one distribution phase before moving to next
+- **Update Documentation**: Keep action plan current
 - **Test Changes**: Verify everything works after modifications
 
-## 📦 **Dependency Issues (Critical)**
+## 📦 **Dependencies Status**
 
-### **Major Updates Needed** (as of 2025-06-30)
-- React: 18.2.0 → 19.1.0 (⚠️ Breaking changes expected)
-- Mermaid: 10.6.1 → 11.7.0 (⚠️ API changes likely)
-- Vite: 5.4.0 → 7.0.0 (⚠️ Config changes needed)
-- Tailwind: 3.4.0 → 4.1.11 (⚠️ CSS changes)
+### **Current Versions (as of 2025-07-03)**
+- ✅ React: 19.1.0 (Latest)
+- ✅ Mermaid: 11.7.0 (Latest)
+- ✅ Vite: 7.0.0 (Latest)
+- ✅ TypeScript: 5.8.3 (Latest)
+- ✅ Tailwind: 3.4.17 (Latest stable)
 
-**Important**: Update one major dependency at a time and test thoroughly.
+**Status**: All dependencies are up-to-date and working correctly.
 
-## 🏗️ **Architecture Notes**
+## 🏗️ **Architecture Status**
 
-### **Current Structure Issues**
-- Two parallel implementations (old vs new) - confusing and redundant
-- Incomplete component modularization
-- Mixed coding patterns
+### **Current Architecture (Achieved)**
+- ✅ Fully modular components (max 100 lines each)
+- ✅ 8 custom hooks for reusable logic
+- ✅ Complete TypeScript implementation with type safety
+- ✅ Clean separation of concerns
 
-### **Target Architecture**
-- Fully modular components (max 100 lines each)
-- Custom hooks for reusable logic
-- TypeScript for type safety
-- Comprehensive testing
+### **Next Focus**
+- Testing infrastructure setup
+- Distribution channel packaging
 
 ## 🧪 **Testing Status**
-- **Current**: No tests exist
+- **Current**: No tests exist - main gap for distribution readiness
 - **Target**: 80%+ coverage with Vitest + React Testing Library
-- **Priority**: Set up after Phase 1 (Foundation Cleanup)
+- **Priority**: Phase 1 of current action plan
 
-## 📚 **Documentation Issues**
+## 📚 **Documentation Status**
 
-### **Known Problems**
-- README says start with `python -m http.server` but should be `npm run dev`
-- Various command examples throughout docs are incorrect
-- PROJECT_REQUIREMENTS.md describes work as "to be done" but partially exists
+### **Current State**
+- ✅ Documentation updated to reflect current architecture
+- ✅ Obsolete planning documents removed
+- ✅ Clear action plan for distribution channels established
 
-### **Fix Strategy**
-Update all documentation as part of Phase 1 cleanup.
+### **Focus**
+Distribution-specific documentation and user guides for each channel.
 
 ## 🚀 **Quick Start for New Session**
 
 1. **Check Current Status**:
    ```bash
-   # Check if dependencies are up to date
-   npm outdated
-   
    # Check current project state
    npm run dev
+   
+   # Run tests (when available)
+   npm test
    ```
 
 2. **Review Progress**:
-   - Read `IMPROVEMENT_PLAN.md` thoroughly
-   - Check which phase we're in
+   - Read `MERMAID_SLIDES_ACTION_PLAN.md` thoroughly
+   - Check current distribution phase
    - Identify next priority tasks
 
 3. **Start Working**:
-   - Update task status to "in progress" in improvement plan
+   - Update task status to "in progress" in action plan
    - Make incremental changes
    - Test frequently
    - Update documentation
@@ -129,24 +128,24 @@ Update all documentation as part of Phase 1 cleanup.
 ## 💡 **Tips for Effective Sessions**
 
 ### **Understanding the Codebase**
-- Look at `src/App.jsx` for current architecture
-- Avoid modifying `src/MermaidSlides.jsx` (legacy - will be deleted)
-- Check `src/components/` for new modular structure
+- Look at `src/App.tsx` for main application component
+- Check `src/components/` for complete modular structure
+- Review `src/hooks/` for 8 custom hooks with reusable logic
 
 ### **Common Tasks**
-- **Dependency Updates**: Check for breaking changes first
-- **Code Refactoring**: Maintain functionality while improving structure
-- **Documentation**: Keep improvement plan updated with progress
+- **Testing Setup**: Priority focus for distribution readiness
+- **Distribution Packaging**: Web, offline, and VS Code extension channels
+- **Documentation**: Keep action plan updated with progress
 
 ### **When Stuck**
-- Check if issue is documented in improvement plan
+- Check if issue is documented in action plan
 - Look for similar patterns in existing code
 - Test changes incrementally
 
 ## 🔄 **Session Handoff**
 
 ### **At End of Session**
-1. Update `IMPROVEMENT_PLAN.md` with:
+1. Update `MERMAID_SLIDES_ACTION_PLAN.md` with:
    - Completed tasks ✅
    - Any new issues discovered
    - Current progress status
@@ -163,5 +162,5 @@ Update all documentation as part of Phase 1 cleanup.
 
 ---
 
-**Last Updated**: 2025-06-30
-**Next Session Priority**: Phase 1 - Foundation Cleanup
+**Last Updated**: 2025-07-03
+**Next Session Priority**: Phase 1 - Testing Foundation for Distribution
