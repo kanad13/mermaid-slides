@@ -49,6 +49,14 @@ npm run dev
 
 ## 📚 Documentation
 
+### **🏗️ Architecture & Development**
+- **[Architecture Strategy](docs/ARCHITECTURE_STRATEGY.md)** - Multi-channel architecture and development strategy
+- **[Distribution Guide](docs/DISTRIBUTION_GUIDE.md)** - Complete distribution process for all channels
+- **[Action Plan](docs/ACTION_PLAN.md)** - Current development phases and progress tracking
+- **[Contributing Guide](docs/CONTRIBUTING.md)** - Development setup and contribution guidelines
+
+### **📖 User Guides**
+
 - **[Complete Documentation](docs/)** - Full guides and feature details
 - **[Features Overview](docs/FEATURES.md)** - Comprehensive feature list
 - **[Development Setup](CLAUDE.md)** - Developer workflow and instructions

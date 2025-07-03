@@ -16,7 +16,20 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    assetsDir: 'assets'
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // React and core dependencies
+          'react-vendor': ['react', 'react-dom'],
+          // Lucide icons
+          'icons': ['lucide-react'],
+          // Mermaid will be dynamically imported and automatically chunked
+        }
+      }
+    },
+    // Increase chunk size warning limit to reduce noise for Mermaid chunks
+    chunkSizeWarningLimit: 600
   },
   test: {
     environment: 'jsdom',

@@ -10,7 +10,10 @@
 		"lint": "eslint . --config config/eslint.config.js --report-unused-disable-directives --max-warnings 0",
 		"test": "vitest --config config/vite.config.js",
 		"test:ui": "vitest --ui --config config/vite.config.js",
-		"test:run": "vitest run --config config/vite.config.js"
+		"test:run": "vitest run --config config/vite.config.js",
+		"validate:compatibility": "node scripts/validate-compatibility.cjs",
+		"validate:continuity": "node scripts/validate-continuity.cjs",
+		"validate:all": "npm test && npm run validate:compatibility && npm run validate:continuity"
 	},
 	"keywords": [
 		"mermaid",

@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import mermaid from 'mermaid';
 import { MermaidTheme } from '../types/diagram';
 
 
@@ -13,16 +12,21 @@ interface UseMermaidReturn {
 export const useMermaid = (theme: MermaidTheme = 'default'): UseMermaidReturn => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [mermaidInstance, setMermaidInstance] = useState<any>(null);
 
   useEffect(() => {
-    const initializeMermaid = (): void => {
+    const initializeMermaid = async (): Promise<void> => {
       try {
+        // Dynamic import of Mermaid to enable code splitting
+        const { default: mermaid } = await import('mermaid');
+        
         mermaid.initialize({
           startOnLoad: false,
           theme: theme,
           securityLevel: 'loose'
         });
 
+        setMermaidInstance(mermaid);
         setIsLoaded(true);
         setError(null);
       } catch {
@@ -35,7 +39,7 @@ export const useMermaid = (theme: MermaidTheme = 'default'): UseMermaidReturn =>
   }, [theme]);
 
   const renderDiagram = useCallback(async (elementId: string, code: string): Promise<SVGElement | null> => {
-    if (!isLoaded) {
+    if (!isLoaded || !mermaidInstance) {
       throw new Error('Mermaid not loaded');
     }
 
@@ -46,11 +50,11 @@ export const useMermaid = (theme: MermaidTheme = 'default'): UseMermaidReturn =>
 
     element.innerHTML = '';
     const uniqueId = `${elementId}-${Date.now()}`;
-    const { svg } = await mermaid.render(uniqueId, code);
+    const { svg } = await mermaidInstance.render(uniqueId, code);
     element.innerHTML = svg;
 
     return element.querySelector('svg');
-  }, [isLoaded]);
+  }, [isLoaded, mermaidInstance]);
 
   return { isLoaded, error, renderDiagram };
 };
