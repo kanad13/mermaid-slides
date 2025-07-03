@@ -15,6 +15,8 @@ describe('App', () => {
     render(<App />)
     
     // App should start in editor mode, not view mode
-    expect(screen.queryByText(/back to editor/i)).not.toBeInTheDocument()
+    // Check for viewer-specific elements that shouldn't be present
+    expect(screen.queryByText(/diagram counter/i)).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /grid view/i })).not.toBeInTheDocument()
   })
 })
