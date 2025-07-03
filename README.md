@@ -2,7 +2,7 @@
 
 Transform your markdown content with mermaid diagrams and images into beautiful presentation slides with advanced navigation and theming.
 
-![Mermaid Slides Demo](docs/demo-screenshot.png)
+![Mermaid Slides Demo](docs/mermai-slides-demo.gif)
 
 ## ✨ Features
 
@@ -119,6 +119,7 @@ python -m http.server 8000 -d dist
 ## 📋 Supported Content Types
 
 ### Mermaid Diagrams
+
 Mermaid Slides supports all standard Mermaid diagram types:
 
 - **Flowcharts** - Decision trees and process flows
@@ -131,6 +132,7 @@ Mermaid Slides supports all standard Mermaid diagram types:
 - **Git Graphs** - Version control workflows
 
 ### Image Files
+
 Native support for standard image formats:
 
 - **PNG** - Lossless compression, transparency support
