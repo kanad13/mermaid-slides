@@ -150,6 +150,6 @@ graph TB
 
 Here are some example images to demonstrate the image rendering functionality:
 
-![Small image - should be centered](https://kanad13.github.io/mermaid-slides/examples/assets/673×1024.jpg)
+![Small image - should be centered](https://kanad13.github.io/mermaid-slides/examples/assets/673×1024-pixels.jpg)
 
 ![Large image - should be centered](https://kanad13.github.io/mermaid-slides/examples/assets/2560×1707-pixels.jpg)`;
