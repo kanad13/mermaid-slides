@@ -7,7 +7,7 @@ export const EditorHeader = ({ isDarkMode }) => {
             Mermaid Slides
           </h1>
           <p className={`text-lg mb-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Transform your markdown mermaid diagrams into beautiful presentation slides.
+            Upload markdown files with Mermaid diagrams and view them as interactive presentation slides.
           </p>
         </div>
         <div className="flex space-x-2">
@@ -25,32 +25,42 @@ export const EditorHeader = ({ isDarkMode }) => {
           </a>
         </div>
       </div>
+
+      <div className={`text-center mb-4 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+        <p className="text-sm font-medium">Choose the option that works best for you:</p>
+      </div>
       
-      <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-4 rounded-lg ${
+      <div className={`flex flex-col md:flex-row items-center justify-center gap-4 mb-6 p-4 rounded-lg ${
         isDarkMode ? 'bg-gray-700' : 'bg-gray-100'
       }`}>
-        <div className="text-center">
+        <div className="text-center flex-1">
           <div className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-            📊 Multiple Formats
+            🌐 Try Online
           </div>
           <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Flowcharts, Sequence, ER diagrams & more
+            Use it right here in your browser
           </div>
         </div>
-        <div className="text-center">
+        
+        <div className={`text-lg font-bold ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>OR</div>
+        
+        <div className="text-center flex-1">
           <div className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-            🎨 Beautiful Themes
+            💻 Local Package
           </div>
           <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Dark/Light modes with professional styling
+            Self-hosted for complete privacy (coming soon)
           </div>
         </div>
-        <div className="text-center">
+        
+        <div className={`text-lg font-bold ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>OR</div>
+        
+        <div className="text-center flex-1">
           <div className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-            ⚡ No Installation
+            🔧 VS Code Extension
           </div>
           <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Works directly in your browser
+            Work directly in your editor (in progress)
           </div>
         </div>
       </div>

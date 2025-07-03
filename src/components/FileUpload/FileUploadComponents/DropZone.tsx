@@ -10,7 +10,7 @@ export const DropZone = ({
 }) => {
   return (
     <div
-      className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+      className={`border border-dashed rounded-md p-4 text-center transition-colors ${
         isDragging
           ? 'border-blue-500 bg-blue-50'
           : isDarkMode
@@ -21,9 +21,9 @@ export const DropZone = ({
       onDragLeave={onDragLeave}
       onDrop={onDrop}
     >
-      <div className="flex flex-col items-center space-y-4">
+      <div className="flex flex-col items-center space-y-2">
         <Upload 
-          size={48} 
+          size={32} 
           className={`${
             isDragging 
               ? 'text-blue-500' 
@@ -33,7 +33,7 @@ export const DropZone = ({
           }`} 
         />
         <div>
-          <p className={`text-lg font-medium ${
+          <p className={`text-base font-medium ${
             isDragging 
               ? 'text-blue-700' 
               : isDarkMode 
@@ -42,7 +42,7 @@ export const DropZone = ({
           }`}>
             {isDragging ? 'Drop your file here' : 'Drop markdown file here or click to browse'}
           </p>
-          <p className={`text-sm mt-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+          <p className={`text-xs mt-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
             Supports .md and .markdown files
           </p>
         </div>
