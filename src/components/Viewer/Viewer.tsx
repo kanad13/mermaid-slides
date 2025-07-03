@@ -70,7 +70,7 @@ export const Viewer: React.FC<ViewerProps> = ({
       </div>
 
       {/* Keyboard shortcuts help - only show in single view */}
-      {!isGridView && <KeyboardShortcutsHelp isDarkMode={isDarkMode} />}
+      {!isGridView && <KeyboardShortcutsHelp isDarkMode={isDarkMode} currentIndex={currentIndex} />}
     </div>
   );
 };
