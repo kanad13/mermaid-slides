@@ -47,13 +47,13 @@ Transform your markdown content with mermaid diagrams and images into beautiful 
 
 ### Option 1: Use Online (Recommended)
 
-Visit **[Mermaid Slides](https://your-deployment-url.com)** and start creating presentations immediately.
+Visit **[Mermaid Slides](https://kanad13.github.io/mermaid-slides/)** and start creating presentations immediately.
 
 ### Option 2: Run Locally
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/mermaid-slides.git
+git clone https://github.com/kanad13/mermaid-slides.git
 cd mermaid-slides
 
 # Install dependencies
@@ -62,7 +62,7 @@ npm install
 # Start development server
 npm run dev
 
-# Open http://localhost:5173 in your browser (Vite default port)
+# Open http://localhost:3000 in your browser
 ```
 
 ### Option 3: Production Build
@@ -107,12 +107,14 @@ python -m http.server 8000 -d dist
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: React 18 with Hooks
-- **Styling**: Tailwind CSS 3.x
-- **Diagram Rendering**: Mermaid.js 10.6.1
+- **Frontend**: React 19 with TypeScript
+- **Build Tool**: Vite 7.0
+- **Styling**: Tailwind CSS 3.4
+- **Diagram Rendering**: Mermaid.js 11.7
 - **Icons**: Lucide React
-- **Build**: No build process (single HTML file)
-- **Deployment**: Static hosting compatible
+- **Testing**: Vitest + React Testing Library
+- **Deployment**: GitHub Actions → GitHub Pages
+- **Architecture**: Modular TypeScript with 8 custom hooks
 
 ## 📋 Supported Content Types
 
@@ -196,13 +198,33 @@ We welcome contributions! Please see our [Contributing Guidelines](docs/CONTRIBU
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/mermaid-slides.git
+git clone https://github.com/kanad13/mermaid-slides.git
 cd mermaid-slides
 
-# No build process needed - just open index.html
-# For development with live reload:
-npx serve . --live-reload
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Run tests
+npm test
+
+# Build for production
+npm run build
+
+# Lint code
+npm run lint
 ```
+
+### Automated Deployment
+
+The project uses GitHub Actions for automated deployment:
+
+- **Trigger**: Push to `master` branch
+- **Process**: Install → Test → Build → Deploy to GitHub Pages
+- **URL**: https://kanad13.github.io/mermaid-slides/
+- **Status**: Check the Actions tab for deployment status
 
 ### Reporting Issues
 

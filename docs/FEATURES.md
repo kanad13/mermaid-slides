@@ -1,5 +1,7 @@
 # 🚀 Mermaid Slides Features
 
+**Live Demo**: [https://kanad13.github.io/mermaid-slides/](https://kanad13.github.io/mermaid-slides/)
+
 ## ✨ Core Features
 
 ### 📁 **File Handling**
@@ -30,10 +32,19 @@
 - **Offline Capable**: Works without internet connection
 
 ### 🔧 **Developer Features**
-- **Modern Tech Stack**: React 19, TypeScript, Tailwind CSS
+- **Modern Tech Stack**: React 19, TypeScript, Vite 7.0, Tailwind CSS
 - **Component Architecture**: Modular, reusable components
-- **Custom Hooks**: Separation of concerns with custom React hooks
+- **Custom Hooks**: 8 specialized hooks for separation of concerns
 - **Error Handling**: Graceful error states and user feedback
+- **Testing**: Vitest + React Testing Library with 42 passing tests
+- **Type Safety**: Full TypeScript implementation
+
+### 🌐 **Deployment & Distribution**
+- **Web Version**: Live at GitHub Pages with automated deployment
+- **GitHub Actions**: CI/CD pipeline with testing and deployment
+- **Automated Updates**: Push to master automatically deploys
+- **Static Hosting**: Works on any static hosting platform
+- **Mobile Responsive**: Optimized for all device sizes
 
 ## 🎯 **Supported Content Types**
 
@@ -55,13 +66,37 @@
 - **SVG** - Scalable vector graphics (as images, not inline)
 - **Auto-sizing** - Responsive scaling and optimal centering
 
-## 🚀 **Upcoming Features**
+## 🚀 **Current Development Phases**
 
+### ✅ **Phase 1: Complete** - Testing Foundation
+- [x] Comprehensive test suite (42 tests)
+- [x] Testing infrastructure with Vitest
+- [x] Error handling and validation tests
+- [x] Build process verification
+
+### ✅ **Phase 2: Complete** - Web Deployment  
+- [x] GitHub Pages deployment
+- [x] Automated CI/CD pipeline
+- [x] Enhanced landing page with help sections
+- [x] Mobile responsiveness verification
+- [x] Production-ready web version
+
+### 🚧 **Phase 3: In Planning** - Offline Version
+- [ ] Self-contained offline package
+- [ ] Local server setup options
+- [ ] No external dependencies
+- [ ] Cross-platform compatibility
+
+### 📋 **Phase 4: Planned** - VS Code Extension
+- [ ] VS Code marketplace extension
+- [ ] Markdown file integration
+- [ ] Preview command integration
+- [ ] Live file watching
+
+### 🔮 **Future Enhancements**
 - [ ] Export to PDF/PNG
-- [ ] Custom themes
-- [ ] Slide transitions
-- [ ] Speaker notes
-- [ ] VS Code extension
-- [ ] Collaborative editing
-- [ ] Cloud sync
-- [ ] Advanced animations
+- [ ] Custom theme creation
+- [ ] Slide transitions and animations
+- [ ] Speaker notes support
+- [ ] Collaborative editing features
+- [ ] Cloud synchronization
