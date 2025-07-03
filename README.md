@@ -9,9 +9,26 @@ Transform your markdown content with mermaid diagrams and images into beautiful 
 
 ## 🚀 Quick Start
 
-**Online (Recommended)**: Visit **[Mermaid Slides](https://kanad13.github.io/mermaid-slides/)** and start creating presentations immediately.
+### 🌐 **Online (Recommended)**
+Visit **[Mermaid Slides](https://kanad13.github.io/mermaid-slides/)** and start creating presentations immediately.
 
-**Local Development**:
+### 💾 **Offline Package (New!)**
+Download the complete offline package for local use without internet dependency:
+```bash
+# Download from GitHub Releases (coming soon)
+# Or build from source:
+git clone https://github.com/kanad13/mermaid-slides.git
+cd mermaid-slides
+npm install && npm run build
+cd offline-package
+# Choose your preferred server:
+python3 start-server.py  # Python option
+node start-server.js     # Node.js option
+./start-server.sh        # Auto-detect (macOS/Linux)
+start-server.bat         # Auto-detect (Windows)
+```
+
+### 🛠️ **Local Development**
 ```bash
 git clone https://github.com/kanad13/mermaid-slides.git
 cd mermaid-slides
@@ -27,6 +44,8 @@ npm run dev
 - **🧭 Navigation** - Keyboard controls, progress bar, grid view, thumbnails
 - **🎯 Presentation Mode** - Full-screen, distraction-free experience
 - **📱 Responsive** - Works on desktop, tablet, and mobile devices
+- **💾 Offline Ready** - Complete offline package with zero internet dependency
+- **🌐 Multi-Platform** - Web, offline package, VS Code extension (coming soon)
 
 ## 📚 Documentation
 

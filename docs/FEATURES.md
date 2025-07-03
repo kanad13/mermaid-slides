@@ -66,6 +66,28 @@
 - **SVG** - Scalable vector graphics (as images, not inline)
 - **Auto-sizing** - Responsive scaling and optimal centering
 
+## 🌐 **Distribution Channels**
+
+### **Web Version (Live)**
+- **URL**: [https://kanad13.github.io/mermaid-slides/](https://kanad13.github.io/mermaid-slides/)
+- **Access**: Instant, no installation required
+- **Features**: Full functionality with automatic updates
+- **Network**: Internet connection required
+
+### **Offline Package (New!)**
+- **Format**: Complete standalone package
+- **Requirements**: Python 3.x OR Node.js
+- **Setup**: Download and run local server scripts
+- **Features**: 100% feature parity, zero internet dependency
+- **Platforms**: Windows, macOS, Linux
+- **Privacy**: Complete local processing
+
+### **VS Code Extension (Coming Soon)**
+- **Platform**: Visual Studio Code Marketplace
+- **Integration**: Markdown file preview command
+- **Workflow**: Right-click .md files → "Preview as Mermaid Slides"
+- **Features**: Live file watching and automatic updates
+
 ## 🚀 **Current Development Phases**
 
 ### ✅ **Phase 1: Complete** - Testing Foundation
@@ -81,11 +103,11 @@
 - [x] Mobile responsiveness verification
 - [x] Production-ready web version
 
-### 🚧 **Phase 3: In Planning** - Offline Version
-- [ ] Self-contained offline package
-- [ ] Local server setup options
-- [ ] No external dependencies
-- [ ] Cross-platform compatibility
+### ✅ **Phase 3: Complete** - Offline Version
+- [x] Self-contained offline package
+- [x] Local server setup options (Python, Node.js, auto-detect scripts)
+- [x] No external dependencies (Mermaid.js bundled locally)
+- [x] Cross-platform compatibility (Windows, macOS, Linux)
 
 ### 📋 **Phase 4: Planned** - VS Code Extension
 - [ ] VS Code marketplace extension

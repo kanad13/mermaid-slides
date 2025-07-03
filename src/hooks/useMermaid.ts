@@ -1,22 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
+import mermaid from 'mermaid';
 import { MermaidTheme } from '../types/diagram';
 
-interface MermaidAPI {
-  initialize: (config: MermaidConfig) => void;
-  render: (id: string, code: string) => Promise<{ svg: string }>;
-}
 
-interface MermaidConfig {
-  startOnLoad: boolean;
-  theme: string;
-  securityLevel: string;
-}
-
-declare global {
-  interface Window {
-    mermaid?: MermaidAPI;
-  }
-}
 
 interface UseMermaidReturn {
   isLoaded: boolean;
@@ -29,22 +15,9 @@ export const useMermaid = (theme: MermaidTheme = 'default'): UseMermaidReturn =>
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadMermaid = async (): Promise<void> => {
+    const initializeMermaid = (): void => {
       try {
-        if (!window.mermaid) {
-          const script = document.createElement('script');
-          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js';
-          
-          const loadPromise = new Promise<void>((resolve, reject) => {
-            script.onload = () => resolve();
-            script.onerror = () => reject(new Error('Failed to load script'));
-          });
-          
-          document.head.appendChild(script);
-          await loadPromise;
-        }
-
-        window.mermaid?.initialize({
+        mermaid.initialize({
           startOnLoad: false,
           theme: theme,
           securityLevel: 'loose'
@@ -53,16 +26,16 @@ export const useMermaid = (theme: MermaidTheme = 'default'): UseMermaidReturn =>
         setIsLoaded(true);
         setError(null);
       } catch {
-        setError('Failed to load Mermaid library');
+        setError('Failed to initialize Mermaid library');
         setIsLoaded(false);
       }
     };
 
-    loadMermaid();
+    initializeMermaid();
   }, [theme]);
 
   const renderDiagram = useCallback(async (elementId: string, code: string): Promise<SVGElement | null> => {
-    if (!window.mermaid || !isLoaded) {
+    if (!isLoaded) {
       throw new Error('Mermaid not loaded');
     }
 
@@ -73,7 +46,7 @@ export const useMermaid = (theme: MermaidTheme = 'default'): UseMermaidReturn =>
 
     element.innerHTML = '';
     const uniqueId = `${elementId}-${Date.now()}`;
-    const { svg } = await window.mermaid.render(uniqueId, code);
+    const { svg } = await mermaid.render(uniqueId, code);
     element.innerHTML = svg;
 
     return element.querySelector('svg');

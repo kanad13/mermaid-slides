@@ -49,7 +49,7 @@ export const EditorHeader = ({ isDarkMode }) => {
             💻 Local Package
           </div>
           <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Self-hosted for complete privacy (coming soon)
+            Self-hosted for complete privacy (available now)
           </div>
         </div>
         
