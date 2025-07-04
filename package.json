@@ -19,7 +19,8 @@
 		"extension:watch": "cd extension && npm run watch",
 		"extension:package": "cd extension && npm run package",
 		"extension:lint": "cd extension && npm run lint",
-		"build:all": "npm run build && npm run extension:compile"
+		"build:extension-app": "vite build --config config/vite.extension.config.js",
+		"build:all": "npm run build && npm run build:extension-app && npm run extension:compile"
 	},
 	"keywords": [
 		"mermaid",

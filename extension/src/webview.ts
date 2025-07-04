@@ -70,13 +70,10 @@ export class MermaidSlidesProvider {
     }
 
     private getWebviewContent(webview: vscode.Webview, markdownContent: string): string {
-        // Get configuration
-        const config = vscode.workspace.getConfiguration('mermaidSlides');
-        const theme = config.get<string>('theme', 'light');
-
-        // Get paths for resources
-        const assetsPath = vscode.Uri.joinPath(this.extensionUri, 'assets');
-        const assetsUri = webview.asWebviewUri(assetsPath);
+        // Get paths for the built React app
+        const distPath = vscode.Uri.joinPath(this.extensionUri, 'dist');
+        const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(distPath, 'mermaid-slides.js'));
+        const styleUri = webview.asWebviewUri(vscode.Uri.joinPath(distPath, 'assets', 'app.css'));
 
         // Generate nonce for security
         const nonce = getNonce();
@@ -88,6 +85,7 @@ export class MermaidSlidesProvider {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}' ${webview.cspSource}; img-src ${webview.cspSource} data: https:; font-src ${webview.cspSource};">
     <title>Mermaid Slides</title>
+    <link rel="stylesheet" href="${styleUri}">
     <style>
         body {
             margin: 0;
@@ -95,6 +93,13 @@ export class MermaidSlidesProvider {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
             background-color: var(--vscode-editor-background);
             color: var(--vscode-editor-foreground);
+            overflow: hidden;
+        }
+        
+        #mermaid-slides-root {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
         }
         
         .loading {
@@ -128,22 +133,10 @@ export class MermaidSlidesProvider {
             margin: 20px;
             border-radius: 4px;
         }
-        
-        .app-container {
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-        }
-        
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
     </style>
 </head>
 <body>
-    <div id="app" class="app-container">
+    <div id="mermaid-slides-root">
         <div class="loading">
             <div class="loading-spinner"></div>
             <p>Loading Mermaid Slides...</p>
@@ -154,140 +147,38 @@ export class MermaidSlidesProvider {
         const vscode = acquireVsCodeApi();
         let currentContent = '';
         
-        // Initialize the app
-        window.addEventListener('DOMContentLoaded', () => {
-            initializeApp();
-        });
-        
-        function initializeApp() {
-            try {
-                // Create iframe to hold the React app
-                const iframe = document.createElement('iframe');
-                iframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(getAppHTML());
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                iframe.style.border = 'none';
-                
-                // Replace loading content with iframe
-                const appContainer = document.getElementById('app');
-                appContainer.innerHTML = '';
-                appContainer.appendChild(iframe);
-                
-                // Set up message handling between iframe and extension
-                window.addEventListener('message', (event) => {
-                    if (event.source === iframe.contentWindow) {
-                        // Handle messages from the React app
-                        handleAppMessage(event.data);
-                    }
-                });
-                
-                // Send ready message to extension
-                vscode.postMessage({ type: 'ready' });
-                
-            } catch (error) {
-                showError('Failed to initialize Mermaid Slides: ' + error.message);
-            }
-        }
-        
-        function getAppHTML() {
-            // This will contain the embedded React app HTML
-            // For now, we'll create a simple placeholder that will be replaced with the actual app
-            return \`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Mermaid Slides App</title>
-                    <style>
-                        body {
-                            margin: 0;
-                            padding: 20px;
-                            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-                            background-color: #f5f5f5;
-                        }
-                        .container {
-                            max-width: 800px;
-                            margin: 0 auto;
-                            background: white;
-                            padding: 20px;
-                            border-radius: 8px;
-                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                        }
-                        .placeholder {
-                            text-align: center;
-                            color: #666;
-                            padding: 40px;
-                        }
-                        .code-block {
-                            background: #f8f9fa;
-                            border: 1px solid #e1e4e8;
-                            border-radius: 6px;
-                            padding: 16px;
-                            font-family: 'SFMono-Regular', Consolas, monospace;
-                            white-space: pre-wrap;
-                            margin: 20px 0;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <div class="placeholder">
-                            <h2>Mermaid Slides Extension</h2>
-                            <p>This is a placeholder for the embedded React application.</p>
-                            <p>The full React app will be embedded here once the build system is configured.</p>
-                            <div class="code-block" id="content-preview"></div>
-                        </div>
-                    </div>
-                    <script>
-                        // Listen for content updates from the extension
-                        window.addEventListener('message', (event) => {
-                            if (event.data.type === 'loadContent') {
-                                const contentDiv = document.getElementById('content-preview');
-                                contentDiv.textContent = event.data.content.substring(0, 500) + '...';
-                            }
-                        });
-                    </script>
-                </body>
-                </html>
-            \`;
-        }
-        
-        function handleAppMessage(message) {
-            // Forward app messages to VS Code extension
-            vscode.postMessage(message);
-        }
-        
-        function showError(message) {
-            const appContainer = document.getElementById('app');
-            appContainer.innerHTML = \`
-                <div class="error">
-                    <h3>Error</h3>
-                    <p>\${message}</p>
-                </div>
-            \`;
-            vscode.postMessage({ type: 'error', text: message });
-        }
-        
         // Handle messages from the extension
         window.addEventListener('message', event => {
             const message = event.data;
             switch (message.type) {
                 case 'loadContent':
                     currentContent = message.content;
-                    // Forward to the React app iframe
-                    const iframe = document.querySelector('iframe');
-                    if (iframe && iframe.contentWindow) {
-                        iframe.contentWindow.postMessage(message, '*');
-                    }
+                    // The React app will handle content loading internally
                     break;
                 case 'refresh':
-                    // Refresh the app
-                    initializeApp();
+                    // Refresh the page
+                    location.reload();
                     break;
             }
         });
+        
+        // Send ready message once the React app is loaded
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                vscode.postMessage({ type: 'ready' });
+            }, 1000);
+        });
+        
+        // Error handling
+        window.addEventListener('error', (event) => {
+            vscode.postMessage({ 
+                type: 'error', 
+                text: 'JavaScript Error: ' + event.error?.message || event.message 
+            });
+        });
     </script>
+    
+    <script nonce="${nonce}" type="module" src="${scriptUri}"></script>
 </body>
 </html>`;
     }

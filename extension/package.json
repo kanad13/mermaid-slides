@@ -1,7 +1,7 @@
 {
   "name": "mermaid-slides-extension",
-  "displayName": "Mermaid Slides",
-  "description": "Transform your markdown mermaid diagrams into beautiful presentation slides",
+  "displayName": "🧜‍♀️ Mermaid Slides",
+  "description": "Transform your markdown mermaid diagrams into beautiful presentation slides with privacy-first design",
   "version": "1.0.0",
   "publisher": "mermaid-slides",
   "icon": "media/icon.png",
@@ -38,25 +38,11 @@
     "commands": [
       {
         "command": "mermaidSlides.previewSlides",
-        "title": "Preview Mermaid Slides",
+        "title": "🧜‍♀️ Preview Mermaid Slides",
         "icon": "$(preview)"
       }
     ],
     "menus": {
-      "editor/context": [
-        {
-          "command": "mermaidSlides.previewSlides",
-          "when": "editorLangId == markdown",
-          "group": "navigation"
-        }
-      ],
-      "explorer/context": [
-        {
-          "command": "mermaidSlides.previewSlides",
-          "when": "resourceExtname == .md",
-          "group": "navigation"
-        }
-      ],
       "editor/title": [
         {
           "command": "mermaidSlides.previewSlides",
