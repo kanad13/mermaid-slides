@@ -4,7 +4,6 @@
   "description": "Transform your markdown mermaid diagrams into beautiful presentation slides with privacy-first design",
   "version": "1.0.0",
   "publisher": "mermaid-slides",
-  "icon": "media/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/yourusername/mermaid-slides.git"

@@ -144,7 +144,8 @@ export class MermaidSlidesProvider {
     </div>
     
     <script nonce="${nonce}">
-        const vscode = acquireVsCodeApi();
+        // Acquire VS Code API once and store it globally
+        window.vscodeApi = acquireVsCodeApi();
         let currentContent = '';
         
         // Handle messages from the extension
@@ -165,16 +166,20 @@ export class MermaidSlidesProvider {
         // Send ready message once the React app is loaded
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
-                vscode.postMessage({ type: 'ready' });
+                if (window.vscodeApi) {
+                    window.vscodeApi.postMessage({ type: 'ready' });
+                }
             }, 1000);
         });
         
         // Error handling
         window.addEventListener('error', (event) => {
-            vscode.postMessage({ 
-                type: 'error', 
-                text: 'JavaScript Error: ' + event.error?.message || event.message 
-            });
+            if (window.vscodeApi) {
+                window.vscodeApi.postMessage({ 
+                    type: 'error', 
+                    text: 'JavaScript Error: ' + event.error?.message || event.message 
+                });
+            }
         });
     </script>
     

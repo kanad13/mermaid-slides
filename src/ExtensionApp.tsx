@@ -13,6 +13,7 @@ interface VSCodeAPI {
 declare global {
   interface Window {
     acquireVsCodeApi: () => VSCodeAPI;
+    vscodeApi: VSCodeAPI;
   }
 }
 
@@ -22,12 +23,12 @@ export default function ExtensionApp() {
   const { diagrams, error, processDiagrams, isProcessing } = useDiagramParser();
 
   useEffect(() => {
-    // Get VS Code API
-    const vscode = window.acquireVsCodeApi?.();
+    // Get VS Code API from global window object
+    const vscode = window.vscodeApi;
     
     if (!vscode) {
       // Fallback for development/testing
-      setError('VS Code API not available - running in development mode');
+      console.error('VS Code API not available - running in development mode');
       setIsLoading(false);
       return;
     }
@@ -89,7 +90,7 @@ export default function ExtensionApp() {
   const handleBackToEditor = () => {
     // In extension context, we don't have an editor to go back to
     // Instead, we could show a message or reload
-    const vscode = window.acquireVsCodeApi?.();
+    const vscode = window.vscodeApi;
     if (vscode) {
       vscode.postMessage({ type: 'info', text: 'Modify the markdown file to update the preview' });
     }

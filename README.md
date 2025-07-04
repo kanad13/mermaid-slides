@@ -87,8 +87,12 @@ npm run dev
 
 ### **Installation**
 ```bash
-# Search for "Mermaid Slides" in VS Code Extensions marketplace
-# Or install directly from VSIX file (development)
+# Option 1: From VS Code Marketplace (coming soon)
+# Search for "Mermaid Slides" in VS Code Extensions
+
+# Option 2: Install from VSIX file (development/beta)
+# Download mermaid-slides-extension-1.0.0.vsix from releases
+# In VS Code: Extensions → ... → Install from VSIX
 ```
 
 ## 🔒 Privacy & Security
