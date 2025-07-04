@@ -1,0 +1,115 @@
+{
+  "name": "mermaid-slides-extension",
+  "displayName": "Mermaid Slides",
+  "description": "Transform your markdown mermaid diagrams into beautiful presentation slides",
+  "version": "1.0.0",
+  "publisher": "mermaid-slides",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/mermaid-slides.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/mermaid-slides/issues"
+  },
+  "homepage": "https://github.com/yourusername/mermaid-slides#readme",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "mermaid",
+    "markdown",
+    "presentation",
+    "slides",
+    "diagrams",
+    "visualization",
+    "preview"
+  ],
+  "activationEvents": [
+    "onCommand:mermaidSlides.previewSlides",
+    "onLanguage:markdown"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "mermaidSlides.previewSlides",
+        "title": "Preview Mermaid Slides",
+        "icon": "$(preview)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "mermaidSlides.previewSlides",
+          "when": "editorLangId == markdown",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "mermaidSlides.previewSlides",
+          "when": "resourceExtname == .md",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "mermaidSlides.previewSlides",
+          "when": "editorLangId == markdown",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Mermaid Slides",
+      "properties": {
+        "mermaidSlides.theme": {
+          "type": "string",
+          "default": "light",
+          "enum": [
+            "light",
+            "dark",
+            "neutral",
+            "base",
+            "forest",
+            "default"
+          ],
+          "description": "Default theme for Mermaid Slides presentations"
+        },
+        "mermaidSlides.autoDetect": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically detect mermaid diagrams in markdown files"
+        },
+        "mermaidSlides.showPreviewButton": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show preview button in editor title bar"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.60.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.0",
+    "typescript": "^4.9.0",
+    "vsce": "^2.15.0"
+  }
+}
