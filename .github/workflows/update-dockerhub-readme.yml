@@ -1,0 +1,36 @@
+# .github/workflows/update-dockerhub-readme.yml
+
+name: Update Docker Hub Description
+
+# This action will trigger on pushes to the main branch.
+# You can change this to a different branch or add other triggers like releases.
+on:
+  push:
+    branches:
+      - main
+    # Only run if the README.md file has been changed
+    paths:
+      - 'README.md'
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Check out the repository's code, so the action can access the README.md
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Step 2: Update the Docker Hub description with the README.md content
+      - name: Update Docker Hub Description
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          # Your Docker Hub username
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          # Your Docker Hub access token (NOT your password)
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          # The Docker Hub repository to update (e.g., your-username/your-image)
+          repository: kunalpathak13/mermaid-slides
+          # (Optional) A short description for the repository
+          short-description: "Visulaize your mermaid diagrams inside markdown files as a nice slideshow."
+          # (Optional) The path to the README file in your repository
+          readme-filepath: ./README.md
