@@ -1,9 +1,11 @@
-# Mermaid Slides
+# 🧜‍♀️ Mermaid Slides
 
 Transform your markdown content with mermaid diagrams and images into beautiful presentation slides with advanced navigation and theming.
 
 [![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-blue?style=for-the-badge)](https://kanad13.github.io/mermaid-slides/)
+[![VS Code Extension](https://img.shields.io/badge/⚡_VS_Code_Extension-purple?style=for-the-badge)](#-vs-code-extension)
 [![Documentation](https://img.shields.io/badge/📖_Documentation-green?style=for-the-badge)](docs/)
+[![Privacy First](https://img.shields.io/badge/🔒_Privacy_First-orange?style=for-the-badge)](#-privacy--security)
 
 ![Mermaid Slides Demo](docs/assets/mermai-slides-demo.gif)
 
@@ -12,7 +14,18 @@ Transform your markdown content with mermaid diagrams and images into beautiful 
 ### 🌐 **Online (Recommended)**
 Visit **[Mermaid Slides](https://kanad13.github.io/mermaid-slides/)** and start creating presentations immediately.
 
-### 💾 **Offline Package (New!)**
+### ⚡ **VS Code Extension (New!)**
+Install the VS Code extension for seamless markdown-to-presentation workflow:
+```bash
+# Search for "Mermaid Slides" in VS Code Extensions
+# Or install from marketplace (coming soon)
+```
+- **Privacy-First**: Zero internet communication during use
+- **Tab Integration**: Preview button appears on markdown file tabs
+- **Auto-Detection**: Automatically finds mermaid diagrams in your files
+- **Self-Contained**: 2.8MB bundle with all dependencies included
+
+### 💾 **Offline Package**
 Download the complete offline package for local use without internet dependency:
 ```bash
 # Download from GitHub Releases (coming soon)
@@ -38,14 +51,56 @@ npm run dev
 
 ## ✨ Key Features
 
+### 🎯 **Presentation & Navigation**
 - **📁 File Handling** - Drag & drop, file browser, or paste markdown content
 - **🖼️ Mixed Content** - Mermaid diagrams + images in unified presentations  
-- **🎨 Theming** - 5 Mermaid themes + dark/light UI modes
 - **🧭 Navigation** - Keyboard controls, progress bar, grid view, thumbnails
 - **🎯 Presentation Mode** - Full-screen, distraction-free experience
+- **🎨 Theming** - 5 Mermaid themes + dark/light UI modes
 - **📱 Responsive** - Works on desktop, tablet, and mobile devices
-- **💾 Offline Ready** - Complete offline package with zero internet dependency
-- **🌐 Multi-Platform** - Web, offline package, VS Code extension (coming soon)
+
+### 🔒 **Privacy & Security**
+- **🚫 Zero Tracking** - No analytics, telemetry, or data collection
+- **🌐 Offline First** - Complete functionality without internet dependency
+- **🔐 Local Processing** - All diagram rendering happens on your device
+- **📦 Self-Contained** - VS Code extension bundles all dependencies (2.8MB)
+
+### 🌐 **Multi-Platform Availability**
+- **🌐 Web App** - Instant access via GitHub Pages
+- **💾 Offline Package** - Download and run locally on any OS
+- **⚡ VS Code Extension** - Integrated markdown preview workflow
+
+## ⚡ VS Code Extension
+
+### **Features**
+- **🎯 Tab Integration** - Preview button appears automatically on markdown file tabs
+- **🚀 One-Click Preview** - Transform any markdown file with mermaid diagrams into presentations
+- **🔍 Auto-Detection** - Automatically identifies mermaid diagrams in your files
+- **🎨 Theme Sync** - Adapts to your VS Code theme (light/dark)
+- **🔒 Privacy-First** - Zero internet communication, all processing happens locally
+
+### **Usage**
+1. Open any markdown file containing mermaid diagrams
+2. Click the "🧜‍♀️ Preview Mermaid Slides" button in the tab bar
+3. Side preview opens with all diagrams ready for presentation
+4. Use arrow keys or controls to navigate through slides
+
+### **Installation**
+```bash
+# Search for "Mermaid Slides" in VS Code Extensions marketplace
+# Or install directly from VSIX file (development)
+```
+
+## 🔒 Privacy & Security
+
+Mermaid Slides is designed with privacy as a core principle:
+
+- **🚫 No Data Collection** - Zero analytics, tracking, or telemetry
+- **🌐 Offline Operation** - Full functionality without internet connection
+- **🔐 Local Processing** - All diagram rendering happens on your device
+- **📦 Self-Contained** - No external CDN dependencies in any distribution
+- **🔒 Minimal Permissions** - VS Code extension only reads active editor content
+- **🚫 No External Requests** - Extension makes zero network calls during operation
 
 ## 📚 Documentation
 

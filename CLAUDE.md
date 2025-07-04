@@ -34,7 +34,24 @@ npm test
 
 # Validation
 npm run validate:all
+
+# Extension development
+npm run build:extension-app    # Build React app for extension
+npm run extension:compile      # Compile extension TypeScript
+npm run extension:install      # Install extension dependencies
+npm run build:all             # Build everything
 ```
+
+### **Session Checkpoint Protocol**
+When approaching context limits, create a session checkpoint by:
+1. Updating the current status in `docs/ACTION_PLAN.md`
+2. Marking todos as completed in TodoWrite tool
+3. Creating a "Session Checkpoint" section with:
+   - Current phase percentage complete
+   - Files created/modified in this session
+   - Next steps for continuation
+   - Any blockers or issues encountered
+4. Summarizing progress concisely for smooth handoff
 
 ### **Key Files to Understand**
 - `src/App.tsx` - Main application component (TypeScript)
