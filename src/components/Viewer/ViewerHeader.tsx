@@ -16,19 +16,25 @@ export const ViewerHeader = ({
   onPrevious,
   onNext,
   onFirst,
-  onLast
+  onLast,
+  isExtensionMode = false
 }) => {
   return (
     <div className={`border-b shadow-sm ${
       isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
     }`}>
       {/* Main Header */}
-      <div className="px-6 py-4 flex justify-between items-center">
-        {/* Left: Back button */}
-        <BackButton 
-          onBackToEditor={onBackToEditor} 
-          isDarkMode={isDarkMode} 
-        />
+      <div className={`px-6 py-4 flex items-center ${isExtensionMode ? 'justify-between' : 'justify-between'}`}>
+        {/* Left: Back button - only show in non-extension mode */}
+        {!isExtensionMode ? (
+          <BackButton 
+            onBackToEditor={onBackToEditor} 
+            isDarkMode={isDarkMode}
+            isExtensionMode={isExtensionMode}
+          />
+        ) : (
+          <div></div>
+        )}
 
         {/* Center: Navigation controls with counter */}
         <HeaderNavigation 

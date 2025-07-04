@@ -42,10 +42,13 @@ export default function ExtensionApp() {
           try {
             setIsLoading(true);
             const markdownContent = message.content;
+            console.log('ExtensionApp: Received content:', markdownContent.substring(0, 200) + '...');
             await processDiagrams(markdownContent);
+            console.log('ExtensionApp: Processed diagrams, count:', diagrams.length);
             setIsLoading(false);
           } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+            console.log('ExtensionApp: Error processing diagrams:', errorMessage);
             vscode.postMessage({ type: 'error', text: errorMessage });
             setIsLoading(false);
           }
@@ -88,11 +91,13 @@ export default function ExtensionApp() {
   }, [processDiagrams]);
 
   const handleBackToEditor = () => {
-    // In extension context, we don't have an editor to go back to
-    // Instead, we could show a message or reload
+    // In extension context, focus back to the editor
     const vscode = window.vscodeApi;
     if (vscode) {
-      vscode.postMessage({ type: 'info', text: 'Modify the markdown file to update the preview' });
+      console.log('ExtensionApp: Sending focusEditor message');
+      vscode.postMessage({ type: 'focusEditor' });
+    } else {
+      console.log('ExtensionApp: No vscode API available');
     }
   };
 
@@ -155,6 +160,7 @@ graph TD
       diagrams={diagrams}
       onBackToEditor={handleBackToEditor}
       isDarkMode={isDarkMode}
+      isExtensionMode={true}
     />
   );
 }

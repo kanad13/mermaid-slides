@@ -44,6 +44,11 @@ export class MermaidSlidesProvider {
                     case 'info':
                         vscode.window.showInformationMessage(message.text);
                         break;
+                    case 'focusEditor':
+                        // Focus back to the editor when user clicks back
+                        console.log('Extension: Received focusEditor message, executing command');
+                        vscode.commands.executeCommand('workbench.action.focusActiveEditorGroup');
+                        break;
                     case 'ready':
                         // Send initial content when webview is ready
                         panel.webview.postMessage({
@@ -83,7 +88,7 @@ export class MermaidSlidesProvider {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}' ${webview.cspSource}; img-src ${webview.cspSource} data: https:; font-src ${webview.cspSource};">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}' ${webview.cspSource}; img-src ${webview.cspSource} data: https: blob:; font-src ${webview.cspSource}; connect-src 'none';">
     <title>Mermaid Slides</title>
     <link rel="stylesheet" href="${styleUri}">
     <style>

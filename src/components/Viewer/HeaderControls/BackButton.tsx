@@ -1,6 +1,8 @@
 import { FileText } from 'lucide-react';
 
-export const BackButton = ({ onBackToEditor, isDarkMode }) => {
+export const BackButton = ({ onBackToEditor, isDarkMode, isExtensionMode = false }) => {
+  const buttonText = isExtensionMode ? 'Focus Editor' : 'Back to Editor';
+  
   return (
     <button
       onClick={onBackToEditor}
@@ -11,7 +13,7 @@ export const BackButton = ({ onBackToEditor, isDarkMode }) => {
       }`}
     >
       <FileText size={18} />
-      <span className="font-medium">Back to Editor</span>
+      <span className="font-medium">{buttonText}</span>
     </button>
   );
 };

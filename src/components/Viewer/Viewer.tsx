@@ -11,7 +11,8 @@ import { ViewerProps } from '../../types/components';
 export const Viewer: React.FC<ViewerProps> = ({ 
   diagrams, 
   onBackToEditor,
-  isDarkMode
+  isDarkMode,
+  isExtensionMode = false
 }) => {
   const { mermaidTheme, setMermaidTheme } = useTheme();
   const {
@@ -49,6 +50,7 @@ export const Viewer: React.FC<ViewerProps> = ({
         onNext={goToNext}
         onFirst={goToFirst}
         onLast={goToLast}
+        isExtensionMode={isExtensionMode}
       />
 
       <div className={`flex-1 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
