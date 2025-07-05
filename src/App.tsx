@@ -6,7 +6,7 @@ import { Diagram } from './types/diagram';
 function App() {
   const [isViewMode, setIsViewMode] = useState(false);
   const [diagrams, setDiagrams] = useState<Diagram[]>([]);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode] = useState(false);
 
   const handleViewDiagrams = (extractedDiagrams: Diagram[]) => {
     setDiagrams(extractedDiagrams);

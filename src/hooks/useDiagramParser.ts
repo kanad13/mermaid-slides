@@ -6,7 +6,7 @@ interface UseDiagramParserReturn {
   diagrams: Diagram[];
   error: string;
   isProcessing: boolean;
-  processDiagrams: (markdownText: string) => Promise<void>;
+  processDiagrams: (_markdownText: string) => Promise<void>;
   clearDiagrams: () => void;
 }
 

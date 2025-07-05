@@ -1,57 +1,298 @@
-name: Deploy to GitHub Pages
+name: 🚀 Deploy Mermaid Slides
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [main, master]
+  workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: "deploy"
   cancel-in-progress: false
 
 jobs:
-  build:
+  # ==========================================
+  # Job 1: Build and Test
+  # ==========================================
+  build-and-test:
+    name: 🔨 Build & Test
     runs-on: ubuntu-latest
+    
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      
     steps:
-      - name: Checkout
+      - name: 📥 Checkout Code
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
+        
+      - name: 📦 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: 📥 Install Dependencies
+        run: npm ci
+        
+      - name: 🧪 Run Tests
         run: npm test
-
-      - name: Build project
+        
+      - name: 🔍 Run Linting
+        run: npm run lint
+        
+      - name: 🏗️ Build Web Application
         run: npm run build
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        
+      - name: ✅ Validate Cross-Platform Compatibility
+        run: npm run validate:compatibility
+        
+      - name: 📋 Extract Version
+        id: version
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+        
+      - name: 📁 Upload Build Artifacts
+        uses: actions/upload-artifact@v4
         with:
-          path: './dist'
+          name: build-artifacts
+          path: |
+            dist/
+            offline-package/
+          retention-days: 1
 
-  deploy:
+  # ==========================================
+  # Job 2: Deploy to GitHub Pages
+  # ==========================================
+  deploy-pages:
+    name: 🌐 Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.ref == 'refs/heads/master'
+      
     steps:
-      - name: Deploy to GitHub Pages
+      - name: 📥 Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          
+      - name: 🔧 Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: 📁 Upload to Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+          
+      - name: 🚀 Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # ==========================================
+  # Job 3: Create GitHub Release with Offline Package
+  # ==========================================
+  create-release:
+    name: 📦 Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: 📥 Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          
+      - name: 📦 Create Offline Package Archive
+        run: |
+          # Create versioned archive name
+          VERSION="${{ needs.build-and-test.outputs.version }}"
+          ARCHIVE_NAME="mermaid-slides-offline-v${VERSION}.zip"
+          
+          # Create the archive
+          cd offline-package
+          zip -r "../${ARCHIVE_NAME}" . -x "*.DS_Store" "*.git*"
+          cd ..
+          
+          # Create checksum
+          sha256sum "${ARCHIVE_NAME}" > "${ARCHIVE_NAME}.sha256"
+          
+          echo "ARCHIVE_NAME=${ARCHIVE_NAME}" >> $GITHUB_ENV
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          
+      - name: 📝 Generate Release Notes
+        run: |
+          cat > release-notes.md << EOF
+          # 🧜‍♀️ Mermaid Slides v${{ env.VERSION }}
+          
+          Transform your markdown mermaid diagrams into beautiful presentation slides!
+          
+          ## 🎯 Distribution Channels
+          
+          ### 🌐 Web Application
+          - **Live Demo**: [https://kanad13.github.io/mermaid-slides/](https://kanad13.github.io/mermaid-slides/)
+          - **Features**: Instant access, mobile responsive, no installation required
+          
+          ### 💾 Offline Package
+          - **Download**: See assets below
+          - **Requirements**: Python 3.x OR Node.js
+          - **Features**: Complete offline functionality, cross-platform compatibility
+          
+          ### 🐳 Docker Image
+          - **Pull**: \`docker pull kunalpathak13/mermaid-slides:${{ env.VERSION }}\`
+          - **Run**: \`docker run -p 3000:3000 kunalpathak13/mermaid-slides:${{ env.VERSION }}\`
+          
+          ## 🚀 Quick Start (Offline Package)
+          
+          1. Download \`${{ env.ARCHIVE_NAME }}\` below
+          2. Extract the archive
+          3. Run the appropriate server script:
+             - **Windows**: Double-click \`start-server.bat\`
+             - **macOS/Linux**: \`chmod +x start-server.sh && ./start-server.sh\`
+             - **Manual**: \`python3 start-server.py\` or \`node start-server.js\`
+          4. Open your browser to \`http://localhost:3000\`
+          
+          ## ✨ What's New
+          
+          - Latest mermaid.js version support
+          - Enhanced cross-platform compatibility
+          - Improved offline package generation
+          - Updated documentation and testing
+          
+          ## 🔒 Security & Privacy
+          
+          - ✅ Zero external network requests (offline mode)
+          - ✅ All processing happens locally
+          - ✅ No data collection or tracking
+          - ✅ Open source and transparent
+          
+          ---
+          
+          **📊 Build Info**
+          - Version: ${{ env.VERSION }}
+          - Commit: \`${{ github.sha }}\`
+          - Built: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          - Tests: ✅ All passing
+          - Compatibility: ✅ Cross-platform validated
+          EOF
+          
+      - name: 🏷️ Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ env.VERSION }}
+          name: "🧜‍♀️ Mermaid Slides v${{ env.VERSION }}"
+          body_path: release-notes.md
+          draft: false
+          prerelease: false
+          files: |
+            ${{ env.ARCHIVE_NAME }}
+            ${{ env.ARCHIVE_NAME }}.sha256
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ==========================================
+  # Job 4: Build and Push Docker Image
+  # ==========================================
+  docker-build-push:
+    name: 🐳 Build & Push Docker Image
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: 📥 Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          
+      - name: 🔧 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      - name: 🔑 Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          
+      - name: 🏷️ Extract Metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: kunalpathak13/mermaid-slides
+          tags: |
+            type=raw,value=latest
+            type=raw,value=${{ needs.build-and-test.outputs.version }}
+            type=sha,prefix={{branch}}-
+            
+      - name: 🐳 Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          
+      - name: 📋 Docker Image Summary
+        run: |
+          echo "## 🐳 Docker Images Published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Images:" >> $GITHUB_STEP_SUMMARY
+          echo "- \`kunalpathak13/mermaid-slides:latest\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`kunalpathak13/mermaid-slides:${{ needs.build-and-test.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🚀 Usage:" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+          echo "docker run -p 3000:3000 kunalpathak13/mermaid-slides:${{ needs.build-and-test.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
+  # ==========================================
+  # Job 5: Deployment Summary
+  # ==========================================
+  deployment-summary:
+    name: 📊 Deployment Summary
+    runs-on: ubuntu-latest
+    needs: [build-and-test, deploy-pages, create-release, docker-build-push]
+    if: always()
+    
+    steps:
+      - name: 📋 Create Deployment Summary
+        run: |
+          echo "# 🚀 Deployment Summary - v${{ needs.build-and-test.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 📊 Status Overview" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Channel | Status | Access |" >> $GITHUB_STEP_SUMMARY
+          echo "|---------|--------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 🌐 Web App | ${{ needs.deploy-pages.result == 'success' && '✅ Deployed' || '❌ Failed' }} | [Live Demo](https://kanad13.github.io/mermaid-slides/) |" >> $GITHUB_STEP_SUMMARY
+          echo "| 📦 Offline Package | ${{ needs.create-release.result == 'success' && '✅ Released' || '❌ Failed' }} | [Download](https://github.com/kanad13/mermaid-slides/releases/latest) |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🐳 Docker Image | ${{ needs.docker-build-push.result == 'success' && '✅ Pushed' || '❌ Failed' }} | \`docker pull kunalpathak13/mermaid-slides:${{ needs.build-and-test.outputs.version }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 🎯 Quick Access" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🌐 Web Application" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: https://kanad13.github.io/mermaid-slides/" >> $GITHUB_STEP_SUMMARY
+          echo "- **Features**: Instant access, mobile responsive" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 💾 Offline Package" >> $GITHUB_STEP_SUMMARY
+          echo "- **Download**: [Latest Release](https://github.com/kanad13/mermaid-slides/releases/latest)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Requirements**: Python 3.x OR Node.js" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🐳 Docker Container" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+          echo "docker run -p 3000:3000 kunalpathak13/mermaid-slides:${{ needs.build-and-test.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "*🤖 Automated deployment completed at $(date -u +"%Y-%m-%d %H:%M:%S UTC")*" >> $GITHUB_STEP_SUMMARY

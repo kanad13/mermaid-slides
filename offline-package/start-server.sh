@@ -1,4 +1,4 @@
-#!/bin/bash
+#\!/bin/bash
 echo "🧜‍♀️ Mermaid Slides - Starting Server..."
 echo "Checking for Python 3..."
 
@@ -13,3 +13,4 @@ else
     echo "Please install Python 3 or Node.js to run the server."
     exit 1
 fi
+EOF < /dev/null

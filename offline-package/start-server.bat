@@ -28,3 +28,4 @@ echo Please install Python 3 or Node.js to run the server.
 pause
 
 :end
+EOF < /dev/null

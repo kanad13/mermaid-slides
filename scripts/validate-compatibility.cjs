@@ -139,7 +139,7 @@ console.log('\n📚 Testing documentation...');
 try {
     const readmeContent = fs.readFileSync('offline-package/README.md', 'utf8');
     
-    if (readmeContent.includes('localhost:3005')) {
+    if (readmeContent.includes('localhost:3000') || readmeContent.includes('port 3000')) {
         logSuccess('README contains server port information');
     } else {
         logError('README missing server port information');

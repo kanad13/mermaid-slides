@@ -5,14 +5,13 @@ This is a self-contained offline version of Mermaid Slides that runs locally wit
 ## Quick Start
 
 ### Windows
-Double-click `start-server.bat` and open http://localhost:3005
+Double-click `start-server.bat`
 
 ### macOS/Linux
 ```bash
 chmod +x start-server.sh
 ./start-server.sh
 ```
-Then open http://localhost:3005 in your browser.
 
 ### Manual Start
 ```bash
@@ -22,7 +21,6 @@ python3 start-server.py
 # With Node.js
 node start-server.js
 ```
-Both servers will start on **localhost:3005**
 
 ## Requirements
 - Python 3.x OR Node.js
@@ -34,4 +32,4 @@ Both servers will start on **localhost:3005**
 - Cross-platform compatibility
 - Automatic browser opening
 
-The server will start at http://localhost:3000
+The server will start at http://localhost:3000 (port 3000)

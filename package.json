@@ -13,14 +13,7 @@
 		"test:run": "vitest run --config config/vite.config.js",
 		"validate:compatibility": "node scripts/validate-compatibility.cjs",
 		"validate:continuity": "node scripts/validate-continuity.cjs",
-		"validate:all": "npm test && npm run validate:compatibility && npm run validate:continuity",
-		"extension:install": "cd extension && npm install",
-		"extension:compile": "cd extension && npm run compile",
-		"extension:watch": "cd extension && npm run watch",
-		"extension:package": "cd extension && npm run package",
-		"extension:lint": "cd extension && npm run lint",
-		"build:extension-app": "vite build --config config/vite.extension.config.js",
-		"build:all": "npm run build && npm run build:extension-app && npm run extension:compile"
+		"validate:all": "npm test && npm run validate:compatibility && npm run validate:continuity"
 	},
 	"keywords": [
 		"mermaid",

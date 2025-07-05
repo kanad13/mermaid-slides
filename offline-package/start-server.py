@@ -32,19 +32,19 @@ def main():
     # Change to the directory containing this script
     script_dir = Path(__file__).parent
     os.chdir(script_dir)
-    
+
     print("🧜‍♀️ Mermaid Slides - Offline Server")
     print("=" * 40)
-    
+
     # Find available port
     port = find_available_port(PORT)
     if port is None:
         print(f"❌ Error: Could not find an available port starting from {PORT}")
         sys.exit(1)
-    
+
     # Set up the server
     handler = http.server.SimpleHTTPRequestHandler
-    
+
     try:
         with socketserver.TCPServer((HOST, port), handler) as httpd:
             url = f"http://{HOST}:{port}"
@@ -52,13 +52,13 @@ def main():
             print(f"📁 Serving files from: {script_dir}")
             print("\n🚀 Opening in your default browser...")
             print("💡 Press Ctrl+C to stop the server\n")
-            
+
             # Open browser
             webbrowser.open(url)
-            
+
             # Start serving
             httpd.serve_forever()
-            
+
     except KeyboardInterrupt:
         print("\n👋 Server stopped. Thanks for using Mermaid Slides!")
     except Exception as e:

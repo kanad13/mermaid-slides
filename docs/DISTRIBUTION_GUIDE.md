@@ -1,14 +1,10 @@
 # Distribution Guide - Mermaid Slides
 
-**Created**: 2025-07-03  
-**Phase**: 3.5 - Quality Assurance & Distribution Strategy  
-**Status**: Complete Documentation  
-
----
-
 ## Overview
 
-This guide provides comprehensive instructions for distributing Mermaid Slides across all three supported channels: Web, Offline, and VS Code Extension (planned).
+This guide provides comprehensive instructions for distributing Mermaid Slides across the two active channels: Web and Offline. The VS Code Extension has been removed to eliminate feature drift.
+
+**🚀 NEW: Automated CI/CD Pipeline** - All distribution channels are now automated via GitHub Actions!
 
 ## Channel Summary
 
@@ -16,7 +12,7 @@ This guide provides comprehensive instructions for distributing Mermaid Slides a
 |---------|--------|-----------------|-------------------|
 | **Web** | ✅ Live | General users, quick testing | GitHub Pages |
 | **Offline** | ✅ Ready | Corporate, air-gapped environments | Download package |
-| **VS Code** | 📋 Planned | Developers, markdown users | VS Code Marketplace |
+| **VS Code** | 🚫 Removed | Future redesign | Future consideration |
 
 ---
 
@@ -130,29 +126,6 @@ node start-server.js        # Manual Node.js
 
 ---
 
-## VS Code Extension Distribution (Planned)
-
-### Current Status: 📋 PLANNED FOR PHASE 4
-
-### Distribution Process (Planned)
-1. **Extension Development**: Create VS Code extension project
-2. **Marketplace Submission**: Publish to VS Code Marketplace
-3. **Installation Method**: Standard VS Code extension installation
-
-### Planned Features
-- **Right-click Preview**: Context menu for `.md` files
-- **Command Palette**: "Preview Mermaid Slides" command
-- **Auto-detection**: Automatic mermaid diagram recognition
-- **Live Updates**: Real-time preview as files change
-
-### Target Users
-- Developers working with markdown documentation
-- Technical writers using VS Code
-- Teams documenting system architectures
-- Open source project maintainers
-
----
-
 ## Quality Assurance
 
 ### Pre-Distribution Checklist
@@ -176,11 +149,6 @@ node start-server.js        # Manual Node.js
 - [ ] No external URL dependencies
 - [ ] Cross-platform server testing complete
 
-#### VS Code Extension Specific (When Ready)
-- [ ] Extension manifest valid
-- [ ] Webview integration working
-- [ ] Commands properly registered
-- [ ] Marketplace guidelines followed
 
 ### Testing Procedures
 
@@ -225,28 +193,12 @@ node scripts/validate-compatibility.cjs
 2. **Build All Channels**: Web and offline builds
 3. **Quality Assurance**: Run all validation scripts
 4. **Git Tagging**: Tag release with version number
-5. **Distribution**: Deploy web, package offline, prepare extension
+5. **Distribution**: Deploy web, package offline
 
 ### Version Display
 Each channel displays version information:
 - **Web**: Footer or about section
 - **Offline**: Server startup message and HTML meta tags
-- **VS Code**: Extension manifest and status bar
-
----
-
-## Distribution Metrics
-
-### Success Metrics
-- **Web Channel**: Page views, user engagement, session duration
-- **Offline Channel**: Download count, setup completion rate
-- **VS Code Extension**: Install count, usage metrics, ratings
-
-### Quality Metrics
-- **Functionality**: Core features work across all channels
-- **Performance**: Load times under 30 seconds
-- **Reliability**: >99% uptime for web, <5% setup failure rate for offline
-- **Documentation**: Complete setup guides with troubleshooting
 
 ---
 
@@ -295,6 +247,6 @@ Each channel displays version information:
 
 ---
 
-**Distribution Status**: Web and Offline channels ready for production use  
-**Next Phase**: VS Code Extension development and distribution  
-**Quality Assurance**: All compatibility tests passing ✅  
+**Distribution Status**: Web and Offline channels ready for production use
+**Next Phase**: VS Code Extension development and distribution
+**Quality Assurance**: All compatibility tests passing ✅

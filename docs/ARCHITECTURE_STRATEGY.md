@@ -1,14 +1,15 @@
 # Multi-Channel Architecture Strategy
 
 **Created**: 2025-07-03  
-**Phase**: 3.5 - Quality Assurance & Distribution Strategy  
+**Updated**: 2025-07-05  
+**Phase**: 3.5+ - Automated Multi-Channel Deployment  
 **Status**: Strategic Framework Document  
 
 ---
 
 ## Executive Summary
 
-This document defines the architecture strategy for distributing Mermaid Slides across three channels: Web, Offline, and VS Code Extension. The strategy ensures maintainability, consistency, and scalability while minimizing complexity.
+This document defines the architecture strategy for distributing Mermaid Slides across two active channels: Web and Offline. The VS Code Extension channel has been removed to eliminate feature drift and will be redesigned from scratch in a future phase. The strategy ensures maintainability, consistency, and scalability while minimizing complexity.
 
 ## Recommended Architecture: Single Repository with Channel-Specific Builds
 
@@ -28,7 +29,6 @@ mermaid-slides/                    # Main repository
 ├── src/                          # Core React application (shared)
 ├── public/                       # Web-specific assets
 ├── offline-package/              # Offline distribution build
-├── extension/                    # VS Code extension (planned)
 ├── scripts/                      # Build and deployment scripts
 ├── docs/                         # Documentation
 ├── config/                       # Build configurations
@@ -49,11 +49,10 @@ mermaid-slides/                    # Main repository
 - **Assets**: All dependencies bundled locally
 - **Servers**: Python, Node.js, batch, and shell scripts
 
-#### 3. VS Code Extension (📋 Planned)
-- **Build Target**: Webview-compatible bundle
-- **Configuration**: Extension manifest + React webview
-- **Assets**: Embedded within extension package
-- **Integration**: Command palette and right-click context
+#### 3. VS Code Extension (🚫 Removed)
+- **Status**: Removed due to feature drift
+- **Future**: Will be redesigned from scratch in a future phase
+- **Reason**: Eliminated to maintain focus on core functionality
 
 ---
 
@@ -71,7 +70,7 @@ mermaid-slides/                    # Main repository
 
 1. **Single Version Source**: `package.json` version is authoritative
 2. **Build-Time Injection**: Version injected into all builds
-3. **Channel Tagging**: Git tags format `v1.2.3-web`, `v1.2.3-offline`, `v1.2.3-extension`
+3. **Channel Tagging**: Git tags format `v1.2.3-web`, `v1.2.3-offline`
 4. **Release Coordination**: All channels built from same commit
 
 ### Version Display Strategy
@@ -99,24 +98,25 @@ main                      # Production-ready code, all channels
 └── hotfix/xxx           # Critical bug fixes
 ```
 
-### Channel Release Process
+### Channel Release Process ✅ AUTOMATED
 
 1. **Feature Development**: `feature/xxx` → `develop`
 2. **Release Preparation**: `develop` → `release/v1.2.3`
-3. **Channel Testing**: Test all three channels from release branch
+3. **Channel Testing**: Test all channels from release branch
 4. **Production Release**: `release/v1.2.3` → `main`
-5. **Channel Deployment**: Automated deployment to all channels
+5. **🚀 Automated Deployment**: GitHub Actions deploys to ALL channels
 
-### Release Automation
+### Release Automation ✅ IMPLEMENTED
 
+**GitHub Actions Workflow**: `.github/workflows/deploy.yml`
 ```bash
-# Automated release script (planned)
-./scripts/release.sh 1.2.3
-# - Creates release branch
+# Triggers automatically on push to main
+# - Runs tests and linting
 # - Builds all channels
-# - Runs cross-platform tests
-# - Creates distribution packages
-# - Tags and merges to main
+# - Deploys web app to GitHub Pages
+# - Creates GitHub Release with offline package
+# - Builds and pushes Docker image
+# - Provides comprehensive deployment summary
 ```
 
 ---
@@ -125,11 +125,11 @@ main                      # Production-ready code, all channels
 
 ### Testing Matrix
 
-| Platform | Web | Offline | VS Code | Status |
-|----------|-----|---------|---------|--------|
-| **Windows** | ✅ Chrome/Edge/Firefox | ✅ Python/Node.js | 📋 Planned | Ready |
-| **macOS** | ✅ Safari/Chrome/Firefox | ✅ Python/Node.js | 📋 Planned | Ready |
-| **Linux** | ✅ Chrome/Firefox | ✅ Python/Node.js | 📋 Planned | Ready |
+| Platform | Web | Offline | Status |
+|----------|-----|---------|--------|
+| **Windows** | ✅ Chrome/Edge/Firefox | ✅ Python/Node.js | Ready |
+| **macOS** | ✅ Safari/Chrome/Firefox | ✅ Python/Node.js | Ready |
+| **Linux** | ✅ Chrome/Firefox | ✅ Python/Node.js | Ready |
 
 ### Compatibility Requirements
 
@@ -144,9 +144,7 @@ main                      # Production-ready code, all channels
 - **Dependencies**: Zero external network requirements
 
 #### VS Code Extension
-- **VS Code**: 1.60.0+ (minimum)
-- **Node.js**: Bundled with VS Code
-- **Webview**: Chromium-based, same as web channel
+- **Status**: Removed - will be redesigned in future phase
 
 ---
 
@@ -165,13 +163,11 @@ main                      # Production-ready code, all channels
 - **Audience**: End users, corporate environments
 
 #### 3. VS Code Extension Documentation
-- **Location**: `extension/README.md` (planned)
-- **Content**: Installation, usage, keyboard shortcuts
-- **Audience**: VS Code users, developers
+- **Status**: Removed - will be created in future phase
 
 ### Unified Documentation Hub
 
-- **Master README**: Overview of all three channels
+- **Master README**: Overview of both active channels
 - **Quick Start**: 30-second setup for each channel
 - **Feature Comparison**: Channel-specific capabilities
 - **Migration Guide**: Moving between channels
@@ -210,8 +206,8 @@ main                      # Production-ready code, all channels
 - [ ] Comprehensive distribution documentation
 - [ ] Automated build and release scripts
 
-### Phase 4 Preparation
-- [ ] VS Code extension project structure
+### Phase 4 (Future)
+- [ ] VS Code extension redesign from scratch
 - [ ] Extension-specific build configuration
 - [ ] Webview integration testing
 
