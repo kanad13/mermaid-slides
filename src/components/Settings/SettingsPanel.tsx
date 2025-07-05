@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { Settings, X, Palette, Eye, EyeOff, Info } from 'lucide-react';
+import { MermaidTheme } from '../../types/diagram';
+
+interface ThemeOption {
+  value: MermaidTheme;
+  label: string;
+}
 
 interface SettingsPanelProps {
   isDarkMode: boolean;
-  mermaidTheme: string;
-  onThemeChange: (theme: string) => void;
+  mermaidTheme: MermaidTheme;
+  onThemeChange: (theme: MermaidTheme) => void;
   autoHideEnabled: boolean;
   onAutoHideToggle: (enabled: boolean) => void;
   isExtensionMode?: boolean;
@@ -20,7 +26,7 @@ export const SettingsPanel = ({
 }: SettingsPanelProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const themeOptions = [
+  const themeOptions: ThemeOption[] = [
     { value: 'default', label: 'Default' },
     { value: 'dark', label: 'Dark' },
     { value: 'forest', label: 'Forest' },
