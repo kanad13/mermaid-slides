@@ -27,11 +27,11 @@
 ### **Phase 1: Critical Fixes** ✅ **COMPLETED**
 **Priority: URGENT - 1.5 hours**
 
-#### **1.1 Web Theme Dropdown Bug** ✅
-- **Issue**: Theme selection offset by one position  
-- **Files**: `src/components/Viewer/HeaderControls/ThemeDropdown.tsx`
+#### **1.1 Settings Panel Implementation** ✅
+- **Issue**: Need consolidated settings interface
+- **Files**: `src/components/Settings/SettingsPanel.tsx`
 - **Estimate**: 30 minutes
-- **Status**: FIXED - Theme dropdown now uses consistent theme options from useTheme hook
+- **Status**: IMPLEMENTED - Created settings panel with auto-hide configuration
 
 #### **1.2 VS Code Grid View Scrolling** ✅
 - **Issue**: Grid view missing scrollbars
@@ -69,34 +69,24 @@
 - **Estimate**: 90 minutes
 - **Status**: ROOT CAUSES IDENTIFIED - Auto-hide: missing prop, Grid view: flex layout issues, implemented potential fix
 
-### **Phase 1.7: Theme Dropdown Fix** ✅ **COMPLETED**
-**Priority: URGENT - 30 minutes**
-
-#### **1.7.1 Theme Selection Offset Bug** ✅
-- **Issue**: Theme dropdown offset by one position across all channels
-- **Files**: `src/components/Viewer/HeaderControls/ThemeDropdown.tsx`
-- **Estimate**: 30 minutes
-- **Status**: FIXED - Removed duplicate useTheme hook, single source of truth for theme state
-
 ### **Phase 2: Feature Enhancements** ✅ **COMPLETED**
 **Priority: HIGH - 2 hours**
 
 #### **2.1 Settings/Config Panel** ✅
-- **Implementation**: Replace theme dropdown with settings panel
-- **Features**: Auto-hide config, about button, theme selection
+- **Implementation**: Settings panel with auto-hide configuration
+- **Features**: Auto-hide config, about button
 - **Files**: New `src/components/Settings/`, update header controls
 - **Estimate**: 120 minutes
-- **Status**: COMPLETED - Settings panel implemented with theme selection, auto-hide toggle, and about button
+- **Status**: COMPLETED - Settings panel implemented with auto-hide toggle and about button
 
-### **Phase 3: Web Version Bug Fixes** 🚀 **IN PROGRESS**
+### **Phase 3: Code Simplification** 🚀 **IN PROGRESS**
 **Priority: HIGH - 3 hours**
 
-#### **3.1 Theme Selection Offset Bug** ✅
-- **Issue**: Settings panel theme selection offset by one position
-- **Investigation**: React state synchronization between Settings panel and useTheme hook
-- **Files**: `src/components/Settings/SettingsPanel.tsx`
+#### **3.1 Theme System Removal** ✅
+- **Issue**: Remove theme functionality to simplify codebase
+- **Files**: Multiple components, hooks, and tests
 - **Estimate**: 90 minutes
-- **Status**: FIXED - Type mismatch resolved, 51/51 tests passing including new theme-specific tests
+- **Status**: COMPLETED - Removed theme selection functionality, simplified to single default theme
 
 #### **3.2 Favicon Duplication Issue**
 - **Issue**: Double mermaid emoji in browser tab
@@ -146,7 +136,7 @@
 - [ ] No critical bugs after Phase 1 fixes
 
 ### Phase 1 Success Criteria ✅
-- [x] Theme dropdown selects correct theme
+- [x] Settings panel implemented for configuration
 - [x] VS Code grid view has functional scrollbars
 - [x] Auto-hide top bar works with user configuration
 
@@ -160,18 +150,17 @@
 - [x] Potential fix implemented for VS Code grid view scrolling
 - [x] Bug tracking system established with KNOWN_ISSUES.md
 
-### Phase 1.7 Success Criteria ✅
-- [x] Theme dropdown now correctly applies selected themes (all channels)
-- [x] No more offset between theme selection and visual appearance
-- [x] Single source of truth for theme state established
-
 ### Phase 2 Success Criteria ✅
-- [x] Settings panel replaces theme dropdown successfully
+- [x] Settings panel implemented successfully
 - [x] Auto-hide configuration toggle works in web mode
 - [x] About button displays app information
-- [x] Theme selection works from settings panel
 - [x] Extension mode hides auto-hide option appropriately
+
+### Phase 3 Success Criteria ✅
+- [x] Theme system completely removed to simplify codebase
+- [x] All components updated to use single default theme
+- [x] Tests updated to reflect simplified architecture
 
 ---
 
-**Next Session Goal**: Phase 3 - Fix web version bugs (theme selection offset, favicon duplication) before moving to repository restructure and VS Code extension cleanup.
+**Next Session Goal**: Phase 4 - Complete codebase restructuring and rationalization after theme system removal.

@@ -18,10 +18,9 @@ import { useLayoutCalculations } from '../../hooks/useLayoutCalculations';
 export const DiagramViewer = ({ 
   diagram, 
   isDarkMode, 
-  mermaidTheme,
   onError 
 }) => {
-  const { isLoaded, error, renderDiagram } = useMermaid(mermaidTheme);
+  const { isLoaded, error, renderDiagram } = useMermaid();
   const { availableHeight, availableWidth } = useLayoutCalculations(true);
 
   useEffect(() => {
@@ -88,7 +87,7 @@ export const DiagramViewer = ({
     };
 
     renderContent();
-  }, [isLoaded, diagram, renderDiagram, mermaidTheme, availableHeight, availableWidth]);
+  }, [isLoaded, diagram, renderDiagram, availableHeight, availableWidth]);
 
   return (
     <div className="flex-1 flex items-center justify-center p-4" style={{ height: 'calc(100vh - 120px)' }}>

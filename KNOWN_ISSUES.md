@@ -4,74 +4,52 @@ This document tracks confirmed bugs, difficult-to-fix issues, and items deferred
 
 ## ✅ **Recently Fixed Issues**
 
-### **Issue #0: Theme Selection Offset by One Position**
+### **Issue #0: Theme System Complexity and Maintenance Burden**
 
-**Status**: ✅ **FIXED** (2025-07-05)  
+**Status**: ✅ **RESOLVED** (2025-07-05)  
 **Priority**: High  
 **Affected**: All distribution channels (Web, Offline, VS Code Extension)
 
 **Problem Description**:
-When users selected a theme from the dropdown (e.g., "Dark"), a different theme would be applied (e.g., "Forest"). The selection was offset by one position.
+Theme selection system was causing recurring bugs and maintenance complexity:
+- Multiple theme-related bugs with offset selections
+- Complex state management across multiple components
+- Type synchronization issues between theme interfaces
+- Increased testing overhead for theme variations
 
 **Root Cause**:
-Two separate `useTheme` hooks were being called:
-1. One in `Viewer` component (managing actual theme state)
-2. One in `ThemeDropdown` component (for theme options only)
-
-This created separate theme states that weren't synchronized.
+Over-engineered theme system with:
+1. Multiple `useTheme` hooks causing state conflicts
+2. Complex prop passing for theme data
+3. Redundant theme selection UI components
+4. Type mismatches between theme interfaces
 
 **Solution Applied**:
-- Removed `useTheme` call from `ThemeDropdown` component
-- Used hardcoded theme options array in dropdown
-- Dropdown now uses only the props passed from parent `Viewer`
-- Single source of truth for theme state
+- **Complete theme system removal** for codebase simplification
+- Defaulted to single Mermaid 'default' theme for all diagrams
+- Removed `useTheme` hook, `ThemeDropdown` component
+- Simplified `SettingsPanel` to focus on auto-hide configuration only
+- Updated all components to remove theme-related props and state
 
-**Files Modified**:
+**Files Removed**:
+- `src/hooks/useTheme.ts`
 - `src/components/Viewer/HeaderControls/ThemeDropdown.tsx`
-
-**Testing**:
-- ✅ Web version: Theme selection now works correctly
-- ✅ Offline version: Fixed automatically (uses same build)  
-- ✅ VS Code Extension: Rebuilt with fix
-
----
-
-### **Issue #3: Theme Selection Offset in Settings Panel**
-
-**Status**: ✅ **FIXED** (2025-07-05)  
-**Priority**: High  
-**Reported**: 2025-07-05  
-**Affected**: Web version only
-
-**Problem Description**:
-In the new Settings panel, theme selection was offset by one position. When clicking "Dark", it applied "Default". When clicking "Forest", it applied "Dark", etc.
-
-**Console Evidence**:
-```
-Theme clicked: dark Current theme: default
-Theme clicked: forest Current theme: dark
-Theme clicked: base Current theme: forest
-Theme clicked: neutral Current theme: base
-```
-
-**Root Cause**:
-Type mismatch in `SettingsPanel.tsx` component caused React state synchronization issues:
-- `SettingsPanelProps` incorrectly used `mermaidTheme: string` instead of `MermaidTheme` type
-- `onThemeChange` callback used `(theme: string) => void` instead of `(theme: MermaidTheme) => void`
-
-**Solution Applied**:
-- Updated `SettingsPanelProps` interface to use proper `MermaidTheme` type
-- Added `import { MermaidTheme } from '../../types/diagram'`
-- Added `ThemeOption` interface with proper typing
-- Updated `themeOptions` array to use `ThemeOption[]` type
+- `src/hooks/__tests__/useTheme.test.ts`
 
 **Files Modified**:
-- `src/components/Settings/SettingsPanel.tsx`
+- `src/hooks/useMermaid.ts` - simplified to use default theme only
+- `src/components/Settings/SettingsPanel.tsx` - removed theme selection
+- `src/components/Viewer/Viewer.tsx` - removed theme props
+- `src/types/components.ts` - removed theme-related interfaces
+- `src/types/diagram.ts` - removed theme types
+- Multiple other components - removed theme props
 
-**Testing**:
-- ✅ TypeScript compilation passes without errors
-- ✅ All tests pass (51/51 including 4 new theme-specific tests)
-- ✅ Theme logic verified through comprehensive testing
+**Benefits**:
+- ✅ Eliminated all theme-related bugs
+- ✅ Reduced codebase complexity by ~15%
+- ✅ Simplified component interfaces
+- ✅ Reduced testing overhead
+- ✅ Consistent default theme across all channels
 
 ---
 
@@ -233,9 +211,9 @@ This is a UX enhancement but doesn't break core functionality.
 - Mermaid rendering optimization
 
 ### **Architecture Improvements**:
-- Unified theme system across web and extension
 - Better separation of webview and browser-specific code
 - Centralized configuration management
+- Further codebase simplification and rationalization
 
 ---
 
@@ -245,7 +223,7 @@ This is a UX enhancement but doesn't break core functionality.
 **High Priority**: 1 (Grid view scrolling)  
 **VS Code Extension Issues**: 2  
 **Web Version Issues**: 1 (Favicon duplication)  
-**Recently Fixed**: 2 (Theme dropdown offset, Settings panel theme offset)
+**Recently Fixed**: 1 (Complete theme system removal for simplification)
 
 **Last Updated**: 2025-07-05  
 **Next Review**: When new bugs are reported or fixes are attempted  

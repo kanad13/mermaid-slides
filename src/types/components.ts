@@ -1,5 +1,5 @@
 import React from 'react';
-import { Diagram, MermaidTheme } from './diagram';
+import { Diagram } from './diagram';
 
 // Common Props
 export interface CommonProps {
@@ -40,24 +40,20 @@ export interface NavigationControlsProps extends CommonProps {
 export interface ViewerHeaderProps extends CommonProps {
   currentIndex: number;
   totalDiagrams: number;
-  mermaidTheme: MermaidTheme;
   isGridView: boolean;
   onBackToEditor: () => void;
-  onThemeChange: (theme: MermaidTheme) => void;
   onToggleGridView: () => void;
 }
 
 // Diagram Viewer Props
 export interface DiagramViewerProps extends CommonProps {
   diagram: Diagram;
-  mermaidTheme: MermaidTheme;
 }
 
 // Grid View Props
 export interface GridViewProps extends CommonProps {
   diagrams: Diagram[];
   currentIndex: number;
-  mermaidTheme: MermaidTheme;
   onDiagramSelect: (index: number) => void;
 }
 

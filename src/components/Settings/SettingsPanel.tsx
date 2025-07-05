@@ -1,16 +1,8 @@
 import { useState } from 'react';
-import { Settings, X, Palette, Eye, EyeOff, Info } from 'lucide-react';
-import { MermaidTheme } from '../../types/diagram';
-
-interface ThemeOption {
-  value: MermaidTheme;
-  label: string;
-}
+import { Settings, X, Eye, EyeOff, Info } from 'lucide-react';
 
 interface SettingsPanelProps {
   isDarkMode: boolean;
-  mermaidTheme: MermaidTheme;
-  onThemeChange: (theme: MermaidTheme) => void;
   autoHideEnabled: boolean;
   onAutoHideToggle: (enabled: boolean) => void;
   isExtensionMode?: boolean;
@@ -18,21 +10,11 @@ interface SettingsPanelProps {
 
 export const SettingsPanel = ({
   isDarkMode,
-  mermaidTheme,
-  onThemeChange,
   autoHideEnabled,
   onAutoHideToggle,
   isExtensionMode = false
 }: SettingsPanelProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const themeOptions: ThemeOption[] = [
-    { value: 'default', label: 'Default' },
-    { value: 'dark', label: 'Dark' },
-    { value: 'forest', label: 'Forest' },
-    { value: 'base', label: 'Base' },
-    { value: 'neutral', label: 'Neutral' }
-  ];
 
   const handleAbout = () => {
     window.open('https://github.com/kanad13/mermaid-slides', '_blank', 'noopener,noreferrer');
@@ -89,37 +71,6 @@ export const SettingsPanel = ({
 
             {/* Settings Content */}
             <div className="p-4 space-y-4">
-              {/* Theme Selection */}
-              <div>
-                <div className="flex items-center space-x-2 mb-2">
-                  <Palette size={16} className={isDarkMode ? 'text-gray-400' : 'text-gray-500'} />
-                  <label className={`text-sm font-medium ${
-                    isDarkMode ? 'text-white' : 'text-gray-900'
-                  }`}>
-                    Theme
-                  </label>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  {themeOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      onClick={() => onThemeChange(option.value)}
-                      className={`px-3 py-2 text-sm rounded-md border transition-colors ${
-                        mermaidTheme === option.value
-                          ? isDarkMode
-                            ? 'bg-blue-600 border-blue-600 text-white'
-                            : 'bg-blue-50 border-blue-200 text-blue-700'
-                          : isDarkMode
-                          ? 'border-gray-600 bg-gray-800 text-gray-200 hover:bg-gray-700'
-                          : 'border-gray-200 bg-gray-50 text-gray-700 hover:bg-gray-100'
-                      }`}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               {/* Auto-hide Configuration - only show in non-extension mode */}
               {!isExtensionMode && (
                 <div>
@@ -138,6 +89,7 @@ export const SettingsPanel = ({
                     </div>
                     <button
                       onClick={() => onAutoHideToggle(!autoHideEnabled)}
+                      data-testid="auto-hide-toggle"
                       className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
                         autoHideEnabled 
                           ? 'bg-blue-600' 

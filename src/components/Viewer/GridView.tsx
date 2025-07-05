@@ -6,11 +6,10 @@ export const GridView = ({
   diagrams, 
   currentIndex, 
   isDarkMode, 
-  mermaidTheme,
   onDiagramSelect,
   isExtensionMode = false
 }) => {
-  const { isLoaded, renderDiagram } = useMermaid(mermaidTheme);
+  const { isLoaded, renderDiagram } = useMermaid();
 
   useEffect(() => {
     if (diagrams.length === 0) {return;}
@@ -57,7 +56,7 @@ export const GridView = ({
     };
 
     setTimeout(renderGridContent, 100);
-  }, [isLoaded, diagrams, mermaidTheme, renderDiagram]);
+  }, [isLoaded, diagrams, renderDiagram]);
 
   return (
     <div className={`${isExtensionMode ? 'h-[80vh] overflow-y-auto' : 'flex-1 overflow-auto'} p-6`}>

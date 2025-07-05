@@ -5,7 +5,6 @@ import { GridView } from './GridView';
 import { KeyboardShortcutsHelp } from './ViewerComponents/KeyboardShortcutsHelp';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 import { useViewerNavigation } from '../../hooks/useViewerNavigation';
-import { useTheme } from '../../hooks/useTheme';
 import { ViewerProps } from '../../types/components';
 
 export const Viewer: React.FC<ViewerProps> = ({ 
@@ -15,7 +14,6 @@ export const Viewer: React.FC<ViewerProps> = ({
   isExtensionMode = false,
   autoHideEnabled = false
 }) => {
-  const { mermaidTheme, setMermaidTheme } = useTheme();
   const [autoHideState, setAutoHideState] = useState(autoHideEnabled);
   const {
     currentIndex,
@@ -43,10 +41,8 @@ export const Viewer: React.FC<ViewerProps> = ({
         currentIndex={currentIndex}
         totalDiagrams={diagrams.length}
         isDarkMode={isDarkMode}
-        mermaidTheme={mermaidTheme}
         isGridView={isGridView}
         onBackToEditor={onBackToEditor}
-        onThemeChange={setMermaidTheme}
         onToggleGridView={toggleGridView}
         onPrevious={goToPrevious}
         onNext={goToNext}
@@ -63,7 +59,6 @@ export const Viewer: React.FC<ViewerProps> = ({
             diagrams={diagrams}
             currentIndex={currentIndex}
             isDarkMode={isDarkMode}
-            mermaidTheme={mermaidTheme}
             onDiagramSelect={handleDiagramSelect}
             isExtensionMode={isExtensionMode}
           />
@@ -71,7 +66,6 @@ export const Viewer: React.FC<ViewerProps> = ({
           <DiagramViewer
             diagram={diagrams[currentIndex]}
             isDarkMode={isDarkMode}
-            mermaidTheme={mermaidTheme}
           />
         )}
       </div>

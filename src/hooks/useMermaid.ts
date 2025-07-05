@@ -1,7 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { MermaidTheme } from '../types/diagram';
-
-
 
 interface UseMermaidReturn {
   isLoaded: boolean;
@@ -9,7 +6,7 @@ interface UseMermaidReturn {
   renderDiagram: (elementId: string, code: string) => Promise<SVGElement | null>;
 }
 
-export const useMermaid = (theme: MermaidTheme = 'default'): UseMermaidReturn => {
+export const useMermaid = (): UseMermaidReturn => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [mermaidInstance, setMermaidInstance] = useState<any>(null);
@@ -22,7 +19,7 @@ export const useMermaid = (theme: MermaidTheme = 'default'): UseMermaidReturn =>
         
         mermaid.initialize({
           startOnLoad: false,
-          theme: theme,
+          theme: 'default',
           securityLevel: 'loose'
         });
 
@@ -36,7 +33,7 @@ export const useMermaid = (theme: MermaidTheme = 'default'): UseMermaidReturn =>
     };
 
     initializeMermaid();
-  }, [theme]);
+  }, []);
 
   const renderDiagram = useCallback(async (elementId: string, code: string): Promise<SVGElement | null> => {
     if (!isLoaded || !mermaidInstance) {

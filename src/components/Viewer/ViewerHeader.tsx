@@ -9,10 +9,8 @@ export const ViewerHeader = ({
   currentIndex,
   totalDiagrams,
   isDarkMode,
-  mermaidTheme,
   isGridView,
   onBackToEditor,
-  onThemeChange,
   onToggleGridView,
   onPrevious,
   onNext,
@@ -58,8 +56,6 @@ export const ViewerHeader = ({
         <div className="flex items-center space-x-3">
           <SettingsPanel 
             isDarkMode={isDarkMode}
-            mermaidTheme={mermaidTheme}
-            onThemeChange={onThemeChange}
             autoHideEnabled={autoHideEnabled}
             onAutoHideToggle={onAutoHideToggle}
             isExtensionMode={isExtensionMode}
