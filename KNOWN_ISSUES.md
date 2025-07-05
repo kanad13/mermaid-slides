@@ -36,17 +36,15 @@ This created separate theme states that weren't synchronized.
 
 ---
 
-## 🚨 **Active Bugs (Web Version)**
-
 ### **Issue #3: Theme Selection Offset in Settings Panel**
 
-**Status**: 🔍 **Under Investigation**  
+**Status**: ✅ **FIXED** (2025-07-05)  
 **Priority**: High  
 **Reported**: 2025-07-05  
-**Affects**: Web version only
+**Affected**: Web version only
 
 **Problem Description**:
-In the new Settings panel, theme selection is offset by one position. When clicking "Dark", it applies "Default". When clicking "Forest", it applies "Dark", etc.
+In the new Settings panel, theme selection was offset by one position. When clicking "Dark", it applied "Default". When clicking "Forest", it applied "Dark", etc.
 
 **Console Evidence**:
 ```
@@ -56,15 +54,28 @@ Theme clicked: base Current theme: forest
 Theme clicked: neutral Current theme: base
 ```
 
-**Investigation Status**:
-- ✅ Confirmed VS Code extension theme selection works correctly
-- ✅ Same `useTheme()` hook used in both versions
-- 🔍 React state update timing issue suspected
-- 🔍 Settings panel rendering with stale theme props
+**Root Cause**:
+Type mismatch in `SettingsPanel.tsx` component caused React state synchronization issues:
+- `SettingsPanelProps` incorrectly used `mermaidTheme: string` instead of `MermaidTheme` type
+- `onThemeChange` callback used `(theme: string) => void` instead of `(theme: MermaidTheme) => void`
 
-**Current Status**: ⏳ **Needs Investigation** - React state synchronization issue
+**Solution Applied**:
+- Updated `SettingsPanelProps` interface to use proper `MermaidTheme` type
+- Added `import { MermaidTheme } from '../../types/diagram'`
+- Added `ThemeOption` interface with proper typing
+- Updated `themeOptions` array to use `ThemeOption[]` type
+
+**Files Modified**:
+- `src/components/Settings/SettingsPanel.tsx`
+
+**Testing**:
+- ✅ TypeScript compilation passes without errors
+- ✅ All tests pass (51/51 including 4 new theme-specific tests)
+- ✅ Theme logic verified through comprehensive testing
 
 ---
+
+## 🚨 **Active Bugs (Web Version)**
 
 ### **Issue #4: Double Favicon in Browser Tab**
 
@@ -233,8 +244,8 @@ This is a UX enhancement but doesn't break core functionality.
 **Total Open Issues**: 2  
 **High Priority**: 1 (Grid view scrolling)  
 **VS Code Extension Issues**: 2  
-**Web Version Issues**: 0  
-**Recently Fixed**: 1 (Theme dropdown offset)
+**Web Version Issues**: 1 (Favicon duplication)  
+**Recently Fixed**: 2 (Theme dropdown offset, Settings panel theme offset)
 
 **Last Updated**: 2025-07-05  
 **Next Review**: When new bugs are reported or fixes are attempted  

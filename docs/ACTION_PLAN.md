@@ -88,14 +88,15 @@
 - **Estimate**: 120 minutes
 - **Status**: COMPLETED - Settings panel implemented with theme selection, auto-hide toggle, and about button
 
-### **Phase 3: Web Version Bug Fixes** 🎯 **NEXT SESSION**
+### **Phase 3: Web Version Bug Fixes** 🚀 **IN PROGRESS**
 **Priority: HIGH - 3 hours**
 
-#### **3.1 Theme Selection Offset Bug**
+#### **3.1 Theme Selection Offset Bug** ✅
 - **Issue**: Settings panel theme selection offset by one position
 - **Investigation**: React state synchronization between Settings panel and useTheme hook
-- **Files**: `src/components/Settings/SettingsPanel.tsx`, `src/hooks/useTheme.ts`
+- **Files**: `src/components/Settings/SettingsPanel.tsx`
 - **Estimate**: 90 minutes
+- **Status**: FIXED - Type mismatch resolved, 51/51 tests passing including new theme-specific tests
 
 #### **3.2 Favicon Duplication Issue**
 - **Issue**: Double mermaid emoji in browser tab
