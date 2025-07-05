@@ -3,6 +3,7 @@ import { HeaderNavigation } from './HeaderControls/HeaderNavigation';
 import { ThemeDropdown } from './HeaderControls/ThemeDropdown';
 import { GridViewToggle } from './HeaderControls/GridViewToggle';
 import { ProgressBar } from './HeaderControls/ProgressBar';
+import { useAutoHide } from '../../hooks/useAutoHide';
 
 export const ViewerHeader = ({
   currentIndex,
@@ -17,12 +18,17 @@ export const ViewerHeader = ({
   onNext,
   onFirst,
   onLast,
-  isExtensionMode = false
+  isExtensionMode = false,
+  autoHideEnabled = false
 }) => {
+  const { isVisible } = useAutoHide({
+    timeout: autoHideEnabled ? 3000 : 0,
+    initiallyVisible: true
+  });
   return (
-    <div className={`border-b shadow-sm ${
+    <div className={`border-b shadow-sm transition-transform duration-300 ${
       isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-    }`}>
+    } ${autoHideEnabled && !isVisible ? '-translate-y-full' : 'translate-y-0'}`}>
       {/* Main Header */}
       <div className={`px-6 py-4 flex items-center ${isExtensionMode ? 'justify-between' : 'justify-between'}`}>
         {/* Left: Back button - only show in non-extension mode */}

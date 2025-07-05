@@ -16,6 +16,7 @@ export interface ViewerProps extends CommonProps {
   diagrams: Diagram[];
   onBackToEditor: () => void;
   isExtensionMode?: boolean;
+  autoHideEnabled?: boolean;
 }
 
 // File Upload Props

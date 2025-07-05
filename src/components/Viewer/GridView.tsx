@@ -7,7 +7,8 @@ export const GridView = ({
   currentIndex, 
   isDarkMode, 
   mermaidTheme,
-  onDiagramSelect 
+  onDiagramSelect,
+  isExtensionMode = false
 }) => {
   const { isLoaded, renderDiagram } = useMermaid(mermaidTheme);
 
@@ -59,7 +60,7 @@ export const GridView = ({
   }, [isLoaded, diagrams, mermaidTheme, renderDiagram]);
 
   return (
-    <div className="flex-1 p-6 overflow-auto">
+    <div className={`${isExtensionMode ? 'h-[80vh] overflow-y-auto' : 'flex-1 overflow-auto'} p-6`}>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {diagrams.map((diagram, index) => (
           <div

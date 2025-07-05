@@ -40,9 +40,12 @@ export const useAutoHide = ({
     clearExistingTimeout();
     setIsVisible(true);
     
-    timeoutRef.current = setTimeout(() => {
-      setIsVisible(false);
-    }, timeout);
+    // Only set timeout if timeout > 0
+    if (timeout > 0) {
+      timeoutRef.current = setTimeout(() => {
+        setIsVisible(false);
+      }, timeout);
+    }
   }, [timeout, clearExistingTimeout]);
 
   // Set up activity listeners

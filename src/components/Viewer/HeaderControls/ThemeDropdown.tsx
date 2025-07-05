@@ -3,7 +3,7 @@ import { Palette, ChevronDown, Check } from 'lucide-react';
 
 export const ThemeDropdown = ({ mermaidTheme, onThemeChange, isDarkMode }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  
   const themeOptions = [
     { value: 'default', label: 'Default' },
     { value: 'dark', label: 'Dark' },

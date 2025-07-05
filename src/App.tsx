@@ -29,6 +29,7 @@ function App() {
         diagrams={diagrams}
         onBackToEditor={handleBackToEditor}
         isDarkMode={isDarkMode}
+        autoHideEnabled={true}
       />
     );
   }

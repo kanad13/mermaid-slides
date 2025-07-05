@@ -12,7 +12,8 @@ export const Viewer: React.FC<ViewerProps> = ({
   diagrams, 
   onBackToEditor,
   isDarkMode,
-  isExtensionMode = false
+  isExtensionMode = false,
+  autoHideEnabled = false
 }) => {
   const { mermaidTheme, setMermaidTheme } = useTheme();
   const {
@@ -36,7 +37,7 @@ export const Viewer: React.FC<ViewerProps> = ({
   });
 
   return (
-    <div className={`min-h-screen flex flex-col relative ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
+    <div className={`${isExtensionMode ? 'h-screen' : 'min-h-screen'} flex flex-col relative ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
       <ViewerHeader
         currentIndex={currentIndex}
         totalDiagrams={diagrams.length}
@@ -51,6 +52,7 @@ export const Viewer: React.FC<ViewerProps> = ({
         onFirst={goToFirst}
         onLast={goToLast}
         isExtensionMode={isExtensionMode}
+        autoHideEnabled={autoHideEnabled}
       />
 
       <div className={`flex-1 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
@@ -61,6 +63,7 @@ export const Viewer: React.FC<ViewerProps> = ({
             isDarkMode={isDarkMode}
             mermaidTheme={mermaidTheme}
             onDiagramSelect={handleDiagramSelect}
+            isExtensionMode={isExtensionMode}
           />
         ) : (
           <DiagramViewer
