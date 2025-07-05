@@ -15,7 +15,7 @@ export default defineConfig({
     assetsDir: 'assets',
     rollupOptions: {
       input: {
-        app: './extension-template.html'
+        app: './extension/extension-template.html'
       },
       output: {
         // Generate a single HTML file with all assets inlined

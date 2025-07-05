@@ -18,7 +18,7 @@ export const useKeyboardNavigation = ({
   onEscape
 }: UseKeyboardNavigationProps): void => {
   useEffect(() => {
-    if (!isActive) { return; }
+    if (!isActive) { return undefined; }
 
     const handleKeyPress = (e: KeyboardEvent): void => {
       switch (e.key) {

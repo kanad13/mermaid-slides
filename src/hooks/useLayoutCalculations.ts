@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { LAYOUT_CONSTANTS } from '../constants/layout';
 
 interface LayoutCalculations {
   availableHeight: string;
@@ -33,11 +34,10 @@ export const useLayoutCalculations = (hasNavigation: boolean = true): LayoutCalc
     }
 
     // Simple and consistent approach: reserve space for navigation
-    // Navigation controls need about 100px (more conservative than before)
-    const navigationHeight = 100;
+    const navigationHeight = LAYOUT_CONSTANTS.NAVIGATION_HEIGHT;
 
     setCalculations({
-      availableHeight: 'calc(100vh - 120px)', // Reserve 120px for header + navigation
+      availableHeight: `calc(100vh - ${LAYOUT_CONSTANTS.HEADER_NAVIGATION_HEIGHT}px)`,
       availableWidth: '90vw',
       navigationHeight
     });

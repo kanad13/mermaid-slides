@@ -17,11 +17,6 @@ function App() {
     setIsViewMode(false);
   };
 
-  // Dark mode toggle - can be used later for UI controls
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
 
   if (isViewMode && diagrams.length > 0) {
     return (

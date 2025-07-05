@@ -42,13 +42,11 @@ export default function ExtensionApp() {
           try {
             setIsLoading(true);
             const markdownContent = message.content;
-            console.log('ExtensionApp: Received content:', markdownContent.substring(0, 200) + '...');
             await processDiagrams(markdownContent);
-            console.log('ExtensionApp: Processed diagrams, count:', diagrams.length);
             setIsLoading(false);
           } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-            console.log('ExtensionApp: Error processing diagrams:', errorMessage);
+            // Error logged to VS Code console via postMessage
             vscode.postMessage({ type: 'error', text: errorMessage });
             setIsLoading(false);
           }
@@ -94,10 +92,7 @@ export default function ExtensionApp() {
     // In extension context, focus back to the editor
     const vscode = window.vscodeApi;
     if (vscode) {
-      console.log('ExtensionApp: Sending focusEditor message');
       vscode.postMessage({ type: 'focusEditor' });
-    } else {
-      console.log('ExtensionApp: No vscode API available');
     }
   };
 
