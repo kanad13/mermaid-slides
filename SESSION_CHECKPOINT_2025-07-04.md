@@ -98,28 +98,32 @@ Complete VS Code extension development and finalize Phase 4 of the Mermaid Slide
 - Privacy architecture: Zero external network calls
 
 ### **What Doesn't Work** ❌
-- Extension content display (core functionality)
-- Message communication between extension and React app
-- Diagram parsing due to regex mismatch
+- ~~Extension content display (core functionality)~~ ✅ **RESOLVED** - Working after VS Code restart
+- ~~Message communication between extension and React app~~ ✅ **RESOLVED**
+- ~~Diagram parsing due to regex mismatch~~ ✅ **RESOLVED**
+
+### **NEW PRIORITY ISSUES IDENTIFIED**
+- Web theme dropdown selection offset (critical UX issue)
+- VS Code grid view missing scrollbars (functionality issue)
 
 ## 🗂️ **Project Status**
 
 ### **Distribution Channels**
 - 🌐 **Web Deployment**: ✅ **COMPLETE** - Live at GitHub Pages
 - 💾 **Offline Package**: ✅ **COMPLETE** - Self-contained local distribution
-- ⚡ **VS Code Extension**: 🚧 **90% COMPLETE** - Packages but needs content fix
+- ⚡ **VS Code Extension**: ✅ **COMPLETE** - Working after VS Code restart
 
 ### **Overall Progress**
 - **Phases 1-3.5**: ✅ **COMPLETE**
-- **Phase 4**: 🚧 **REQUIRES CONTENT FIX**
+- **Phase 4**: ✅ **COMPLETE** - Extension working correctly
 
 ## 🔄 **Session Handoff**
 
 ### **For Next Session**
-1. **Priority**: Fix the 3 critical content communication issues
-2. **Expected Outcome**: Working VS Code extension that displays mermaid slides
-3. **Time Estimate**: 90 minutes to complete all fixes
-4. **Success Criteria**: Extension shows mermaid diagrams as navigable slides
+1. **Priority**: Fix web theme dropdown bug and VS Code grid view scrolling
+2. **Expected Outcome**: Resolve critical UX issues in web and VS Code channels
+3. **Time Estimate**: 75 minutes (30 min theme + 45 min grid view)
+4. **Success Criteria**: Theme dropdown works correctly, grid view has scrollbars
 
 ### **Documentation Updated**
 - ✅ `docs/ACTION_PLAN.md` - Comprehensive issue analysis and fix plan

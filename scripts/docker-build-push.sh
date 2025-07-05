@@ -30,7 +30,7 @@ set -e
 
 # --- Configuration ---
 # Your Docker Hub username / organization
-DOCKER_HUB_USER="kanad13"
+DOCKER_HUB_USER="kunalpathak13"
 # Base name for the Docker image (without user/org prefix)
 IMAGE_BASE_NAME="mermaid-slides"
 # Full Docker image name
@@ -123,19 +123,19 @@ def main():
     # Change to the directory containing this script
     script_dir = Path(__file__).parent
     os.chdir(script_dir)
-    
+
     print("🧜‍♀️ Mermaid Slides - Offline Server")
     print("=" * 40)
-    
+
     # Find available port
     port = find_available_port(PORT)
     if port is None:
         print(f"❌ Error: Could not find an available port starting from {PORT}")
         sys.exit(1)
-    
+
     # Set up the server
     handler = http.server.SimpleHTTPRequestHandler
-    
+
     try:
         with socketserver.TCPServer((HOST, port), handler) as httpd:
             url = f"http://{HOST}:{port}"
@@ -143,13 +143,13 @@ def main():
             print(f"📁 Serving files from: {script_dir}")
             print("\n🚀 Opening in your default browser...")
             print("💡 Press Ctrl+C to stop the server\n")
-            
+
             # Open browser
             webbrowser.open(url)
-            
+
             # Start serving
             httpd.serve_forever()
-            
+
     except KeyboardInterrupt:
         print("\n👋 Server stopped. Thanks for using Mermaid Slides!")
     except Exception as e:
@@ -191,23 +191,23 @@ const mimeTypes = {
 
 const server = http.createServer((req, res) => {
     let filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url);
-    
+
     if (!fs.existsSync(filePath)) {
         res.writeHead(404);
         res.end('File not found');
         return;
     }
-    
+
     const extname = path.extname(filePath).toLowerCase();
     const contentType = mimeTypes[extname] || 'application/octet-stream';
-    
+
     fs.readFile(filePath, (err, content) => {
         if (err) {
             res.writeHead(500);
             res.end('Server error');
             return;
         }
-        
+
         res.writeHead(200, { 'Content-Type': contentType });
         res.end(content);
     });
@@ -221,7 +221,7 @@ server.listen(PORT, HOST, () => {
     console.log(`📁 Serving files from: ${__dirname}`);
     console.log('\n🚀 Opening in your default browser...');
     console.log('💡 Press Ctrl+C to stop the server\n');
-    
+
     // Open browser
     const start = process.platform === 'darwin' ? 'open' :
                   process.platform === 'win32' ? 'start' : 'xdg-open';
@@ -323,7 +323,7 @@ EOF
 
 # Make scripts executable
 chmod +x offline-package/start-server.py
-chmod +x offline-package/start-server.js  
+chmod +x offline-package/start-server.js
 chmod +x offline-package/start-server.sh
 
 # Copy examples if they exist in public directory
