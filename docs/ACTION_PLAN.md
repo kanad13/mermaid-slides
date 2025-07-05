@@ -2,7 +2,7 @@
 
 **Created**: 2025-07-05  
 **Last Updated**: 2025-07-05
-**Current Status**: Phase 1 (Critical Fixes) COMPLETE ✅ - Phase 2 (Feature Enhancements) ready
+**Current Status**: Phase 1 (Critical Fixes) COMPLETE ✅ - Phase 2 (Feature Enhancements) COMPLETE ✅ - Phase 3 (Web Bug Fixes) ready
 **Live Site**: https://kanad13.github.io/mermaid-slides/
 
 ---
@@ -78,23 +78,59 @@
 - **Estimate**: 30 minutes
 - **Status**: FIXED - Removed duplicate useTheme hook, single source of truth for theme state
 
-### **Phase 2: Feature Enhancements** 🎯 **FOLLOWING SESSION**
+### **Phase 2: Feature Enhancements** ✅ **COMPLETED**
 **Priority: HIGH - 2 hours**
 
-#### **2.1 Settings/Config Panel**
+#### **2.1 Settings/Config Panel** ✅
 - **Implementation**: Replace theme dropdown with settings panel
 - **Features**: Auto-hide config, about button, theme selection
 - **Files**: New `src/components/Settings/`, update header controls
 - **Estimate**: 120 minutes
+- **Status**: COMPLETED - Settings panel implemented with theme selection, auto-hide toggle, and about button
 
-### **Phase 3: Maintenance** 🔧 **LATER SESSIONS**
-**Priority: MEDIUM**
+### **Phase 3: Web Version Bug Fixes** 🎯 **NEXT SESSION**
+**Priority: HIGH - 3 hours**
 
-#### **3.1 File Structure Cleanup**
-- **Actions**: Move test files, organize scripts, clean root
+#### **3.1 Theme Selection Offset Bug**
+- **Issue**: Settings panel theme selection offset by one position
+- **Investigation**: React state synchronization between Settings panel and useTheme hook
+- **Files**: `src/components/Settings/SettingsPanel.tsx`, `src/hooks/useTheme.ts`
+- **Estimate**: 90 minutes
+
+#### **3.2 Favicon Duplication Issue**
+- **Issue**: Double mermaid emoji in browser tab
+- **Investigation**: Vite dev server interference, browser default favicon behavior
+- **Files**: `index.html`, vite config, public assets
 - **Estimate**: 45 minutes
 
-#### **3.2 Cross-Channel Feature Consistency**
+#### **3.3 Web Version Polish & Testing**
+- **Implementation**: Comprehensive testing of all web features
+- **Validation**: Ensure web version is production-ready before extending to other channels
+- **Estimate**: 45 minutes
+
+### **Phase 4: Repository Restructure** 🗂️ **FOLLOWING SESSION**
+**Priority: MEDIUM - 2 hours**
+
+#### **4.1 VS Code Extension Cleanup**
+- **Action**: Remove VS Code extension folder and all related files
+- **Rationale**: Focus on web version first, eliminate distraction and maintenance overhead
+- **Files**: `/extension/*`, build scripts, documentation references
+- **Estimate**: 30 minutes
+
+#### **4.2 File Structure Reorganization**
+- **Evaluation**: Analyze each file and folder for relevance and organization
+- **Actions**: 
+  - Move test files to proper locations
+  - Organize scripts and configs
+  - Clean root directory
+  - Consolidate documentation
+- **Goal**: Clear, maintainable structure focused on web deployment
+- **Estimate**: 90 minutes
+
+### **Phase 5: Advanced Web Features** 🚀 **FUTURE SESSIONS**
+**Priority: LOW**
+
+#### **5.1 Cross-Channel Feature Consistency**
 - **Implementation**: Automated feature parity validation
 - **Estimate**: 90 minutes
 
@@ -128,6 +164,13 @@
 - [x] No more offset between theme selection and visual appearance
 - [x] Single source of truth for theme state established
 
+### Phase 2 Success Criteria ✅
+- [x] Settings panel replaces theme dropdown successfully
+- [x] Auto-hide configuration toggle works in web mode
+- [x] About button displays app information
+- [x] Theme selection works from settings panel
+- [x] Extension mode hides auto-hide option appropriately
+
 ---
 
-**Next Session Goal**: Begin Phase 2 feature enhancements - implement settings/config panel to replace theme dropdown with comprehensive configuration options.
+**Next Session Goal**: Phase 3 - Fix web version bugs (theme selection offset, favicon duplication) before moving to repository restructure and VS Code extension cleanup.

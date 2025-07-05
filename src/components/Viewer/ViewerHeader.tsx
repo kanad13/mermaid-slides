@@ -1,6 +1,6 @@
 import { BackButton } from './HeaderControls/BackButton';
 import { HeaderNavigation } from './HeaderControls/HeaderNavigation';
-import { ThemeDropdown } from './HeaderControls/ThemeDropdown';
+import { SettingsPanel } from '../Settings/SettingsPanel';
 import { GridViewToggle } from './HeaderControls/GridViewToggle';
 import { ProgressBar } from './HeaderControls/ProgressBar';
 import { useAutoHide } from '../../hooks/useAutoHide';
@@ -19,7 +19,8 @@ export const ViewerHeader = ({
   onFirst,
   onLast,
   isExtensionMode = false,
-  autoHideEnabled = false
+  autoHideEnabled = false,
+  onAutoHideToggle
 }) => {
   const { isVisible } = useAutoHide({
     timeout: autoHideEnabled ? 3000 : 0,
@@ -55,10 +56,13 @@ export const ViewerHeader = ({
 
         {/* Right: Controls */}
         <div className="flex items-center space-x-3">
-          <ThemeDropdown 
+          <SettingsPanel 
+            isDarkMode={isDarkMode}
             mermaidTheme={mermaidTheme}
             onThemeChange={onThemeChange}
-            isDarkMode={isDarkMode}
+            autoHideEnabled={autoHideEnabled}
+            onAutoHideToggle={onAutoHideToggle}
+            isExtensionMode={isExtensionMode}
           />
           
           <GridViewToggle 

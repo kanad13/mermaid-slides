@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ViewerHeader } from './ViewerHeader';
 import { DiagramViewer } from './DiagramViewer';
 import { GridView } from './GridView';
@@ -16,6 +16,7 @@ export const Viewer: React.FC<ViewerProps> = ({
   autoHideEnabled = false
 }) => {
   const { mermaidTheme, setMermaidTheme } = useTheme();
+  const [autoHideState, setAutoHideState] = useState(autoHideEnabled);
   const {
     currentIndex,
     isGridView,
@@ -52,7 +53,8 @@ export const Viewer: React.FC<ViewerProps> = ({
         onFirst={goToFirst}
         onLast={goToLast}
         isExtensionMode={isExtensionMode}
-        autoHideEnabled={autoHideEnabled}
+        autoHideEnabled={autoHideState}
+        onAutoHideToggle={setAutoHideState}
       />
 
       <div className={`flex-1 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>

@@ -36,6 +36,56 @@ This created separate theme states that weren't synchronized.
 
 ---
 
+## 🚨 **Active Bugs (Web Version)**
+
+### **Issue #3: Theme Selection Offset in Settings Panel**
+
+**Status**: 🔍 **Under Investigation**  
+**Priority**: High  
+**Reported**: 2025-07-05  
+**Affects**: Web version only
+
+**Problem Description**:
+In the new Settings panel, theme selection is offset by one position. When clicking "Dark", it applies "Default". When clicking "Forest", it applies "Dark", etc.
+
+**Console Evidence**:
+```
+Theme clicked: dark Current theme: default
+Theme clicked: forest Current theme: dark
+Theme clicked: base Current theme: forest
+Theme clicked: neutral Current theme: base
+```
+
+**Investigation Status**:
+- ✅ Confirmed VS Code extension theme selection works correctly
+- ✅ Same `useTheme()` hook used in both versions
+- 🔍 React state update timing issue suspected
+- 🔍 Settings panel rendering with stale theme props
+
+**Current Status**: ⏳ **Needs Investigation** - React state synchronization issue
+
+---
+
+### **Issue #4: Double Favicon in Browser Tab**
+
+**Status**: 🔍 **Under Investigation**  
+**Priority**: Medium  
+**Reported**: 2025-07-05  
+**Affects**: Web version (development mode)
+
+**Problem Description**:
+Browser tab shows two mermaid emoji favicons instead of one.
+
+**Investigation Results**:
+- ✅ HTML contains only single favicon definition
+- ✅ Tried various favicon formats (SVG with charset, single vs multiple definitions)
+- 🔍 Possible Vite dev server interference
+- 🔍 Browser default favicon loading behavior
+
+**Current Status**: ⏳ **Low Priority** - Cosmetic issue, may resolve in production
+
+---
+
 ## 🚨 **Active Bugs (VS Code Extension)**
 
 ### **Issue #1: Auto-Hide Feature Not Working in VS Code Extension**
