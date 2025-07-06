@@ -3,9 +3,9 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { fileURLToPath, URL } from 'node:url'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
-  base: process.env.NODE_ENV === 'production' ? '/mermaid-slides/' : '/',
+  base: mode === 'offline' ? './' : (process.env.NODE_ENV === 'production' ? '/mermaid-slides/' : '/'),
   root: fileURLToPath(new URL('..', import.meta.url)),
   css: {
     postcss: './config/postcss.config.js'
@@ -36,4 +36,4 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     globals: true
   }
-})
+}))

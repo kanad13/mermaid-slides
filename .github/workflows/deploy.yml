@@ -47,6 +47,9 @@ jobs:
       - name: 🏗️ Build Web Application
         run: npm run build
         
+      - name: 📦 Build Offline Package
+        run: npm run build:offline
+        
       - name: ✅ Validate Cross-Platform Compatibility
         run: npm run validate:compatibility
         
