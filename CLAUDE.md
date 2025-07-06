@@ -22,7 +22,7 @@ npm run validate:all   # Full validation
 
 ## 🌐 **Distribution Channels**
 
-1. **Web**: https://kanad13.github.io/mermaid-slides/ (automated)
+1. **Web**: https://mermaid-slides.com/ (automated)
 2. **Offline**: Package + Docker `kunalpathak13/mermaid-slides` (automated)
 3. **VS Code Extension**: Planned for future development
 
@@ -40,5 +40,5 @@ npm run validate:all   # Full validation
 
 ---
 
-**Live Demo**: https://kanad13.github.io/mermaid-slides/  
+**Live Demo**: https://mermaid-slides.com/  
 **Phase**: Automated CI/CD complete, VS Code Extension planned

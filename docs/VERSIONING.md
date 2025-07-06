@@ -249,7 +249,7 @@ v1.1.0-alpha.2  # Alpha release
 - Corrected file upload validation
 
 ## 📦 Download
-- [Web Version](https://kanad13.github.io/mermaid-slides/)
+- [Web Version](https://mermaid-slides.com/)
 - [Offline Package](https://github.com/user/repo/releases/v1.2.0)
 
 ## 🔄 Upgrade Notes

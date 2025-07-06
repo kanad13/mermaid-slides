@@ -76,7 +76,7 @@ If the specified port is unavailable, the Python server will automatically find 
 
 ## 🌐 Alternative Access
 
-- **Web Version**: https://kanad13.github.io/mermaid-slides/
+- **Web Version**: https://mermaid-slides.com/
 - **Docker**: `docker run -p 3000:3000 kunalpathak13/mermaid-slides:latest`
 
 ## 🔒 Privacy & Security

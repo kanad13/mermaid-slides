@@ -35,7 +35,7 @@
 	"bugs": {
 		"url": "https://github.com/kanad13/mermaid-slides/issues"
 	},
-	"homepage": "https://kanad13.github.io/mermaid-slides/",
+	"homepage": "https://mermaid-slides.com/",
 	"dependencies": {
 		"lucide-react": "^0.525.0",
 		"mermaid": "^11.7.0",

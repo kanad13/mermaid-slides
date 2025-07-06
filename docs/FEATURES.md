@@ -1,6 +1,6 @@
 # 🚀 Mermaid Slides Features
 
-**Live Demo**: [https://kanad13.github.io/mermaid-slides/](https://kanad13.github.io/mermaid-slides/)
+**Live Demo**: [https://mermaid-slides.com/](https://mermaid-slides.com/)
 
 ## ✨ Core Features
 
@@ -67,7 +67,7 @@
 ## 🌐 **Distribution Channels**
 
 ### **Web Version (Live)**
-- **URL**: [https://kanad13.github.io/mermaid-slides/](https://kanad13.github.io/mermaid-slides/)
+- **URL**: [https://mermaid-slides.com/](https://mermaid-slides.com/)
 - **Access**: Instant, no installation required
 - **Features**: Full functionality with automatic updates
 - **Network**: Internet connection required

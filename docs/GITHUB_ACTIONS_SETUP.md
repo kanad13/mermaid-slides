@@ -59,7 +59,7 @@ The workflow has these permissions configured:
   - Configure GitHub Pages
   - Upload dist/ folder to Pages
   - Deploy to GitHub Pages
-- **Result**: Live web app at https://kanad13.github.io/mermaid-slides/
+- **Result**: Live web app at https://mermaid-slides.com/
 
 ### 3. 📦 Create GitHub Release
 - **Purpose**: Package and release offline version
@@ -123,7 +123,7 @@ Each GitHub release includes:
 ## 🔗 Access Points After Deployment
 
 ### Web Application
-- **URL**: https://kanad13.github.io/mermaid-slides/
+- **URL**: https://mermaid-slides.com/
 - **Update**: Automatic on every commit to main
 
 ### Offline Package

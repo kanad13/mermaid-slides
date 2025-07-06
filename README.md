@@ -2,7 +2,7 @@
 
 Transform your markdown content with mermaid diagrams and images into beautiful presentation slides with advanced navigation and theming.
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-blue?style=for-the-badge)](https://kanad13.github.io/mermaid-slides/)
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-blue?style=for-the-badge)](https://mermaid-slides.com/)
 [![Docker Image](https://img.shields.io/badge/🐳_Docker_Image-blue?style=for-the-badge)](https://hub.docker.com/r/kunalpathak13/mermaid-slides)
 [![VS Code Extension](https://img.shields.io/badge/⚡_VS_Code_Extension-purple?style=for-the-badge)](#-vs-code-extension-planned)
 [![Documentation](https://img.shields.io/badge/📖_Documentation-green?style=for-the-badge)](docs/)
@@ -14,7 +14,7 @@ Transform your markdown content with mermaid diagrams and images into beautiful 
 
 ### 🌐 **Online (Recommended)**
 
-Visit **[Mermaid Slides](https://kanad13.github.io/mermaid-slides/)** and start creating presentations immediately.
+Visit **[Mermaid Slides](https://mermaid-slides.com/)** and start creating presentations immediately.
 
 ### 🐳 **Docker Container**
 
@@ -185,4 +185,4 @@ See [package.json](package.json) for a complete list of all dependencies.
 
 ---
 
-**[🌐 Try it now](https://kanad13.github.io/mermaid-slides/) | [📖 Full Documentation](docs/) | [🐛 Report Issues](https://github.com/kanad13/mermaid-slides/issues)**
+**[🌐 Try it now](https://mermaid-slides.com/) | [📖 Full Documentation](docs/) | [🐛 Report Issues](https://github.com/kanad13/mermaid-slides/issues)**

@@ -19,7 +19,7 @@ This guide provides comprehensive instructions for distributing Mermaid Slides a
 ## Web Channel Distribution
 
 ### Current Status: ✅ LIVE
-**URL**: https://kanad13.github.io/mermaid-slides/
+**URL**: https://mermaid-slides.com/
 
 ### Deployment Process
 1. **Automatic Deployment**: Triggered on pushes to `main` branch

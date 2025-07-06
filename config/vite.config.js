@@ -5,7 +5,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig(({ mode }) => ({
   plugins: [react()],
-  base: mode === 'offline' ? './' : (process.env.NODE_ENV === 'production' ? '/mermaid-slides/' : '/'),
+  base: mode === 'offline' ? './' : '/',
   root: fileURLToPath(new URL('..', import.meta.url)),
   css: {
     postcss: './config/postcss.config.js'
