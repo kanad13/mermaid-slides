@@ -11,7 +11,7 @@ import { Instructions } from './EditorComponents/Instructions';
 import { Diagram } from '../../types/diagram';
 
 interface EditorProps {
-  onViewDiagrams: (diagrams: Diagram[]) => void;
+  onViewDiagrams: (_diagrams: Diagram[]) => void;
   isDarkMode: boolean;
 }
 
@@ -161,7 +161,9 @@ This privacy policy may be updated from time to time. The latest version will al
                 // Close modal handlers
                 const closeModal = () => document.body.removeChild(modal);
                 modal.addEventListener('click', (e) => {
-                  if (e.target === modal) closeModal();
+                  if (e.target === modal) {
+                    closeModal();
+                  }
                 });
                 modal.querySelector('#close-privacy')?.addEventListener('click', closeModal);
               }}
@@ -226,7 +228,9 @@ This privacy policy may be updated from time to time. The latest version will al
                 // Close modal handlers
                 const closeModal = () => document.body.removeChild(modal);
                 modal.addEventListener('click', (e) => {
-                  if (e.target === modal) closeModal();
+                  if (e.target === modal) {
+                    closeModal();
+                  }
                 });
                 modal.querySelector('#close-legal')?.addEventListener('click', closeModal);
               }}

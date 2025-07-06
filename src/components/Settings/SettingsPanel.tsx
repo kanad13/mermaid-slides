@@ -4,7 +4,7 @@ import { Settings, X, Eye, EyeOff, Info } from 'lucide-react';
 interface SettingsPanelProps {
   isDarkMode: boolean;
   autoHideEnabled: boolean;
-  onAutoHideToggle: (enabled: boolean) => void;
+  onAutoHideToggle: (_enabled: boolean) => void;
   isExtensionMode?: boolean;
 }
 

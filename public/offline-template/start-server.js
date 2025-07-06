@@ -47,7 +47,7 @@ const mimeTypes = {
 };
 
 const server = http.createServer((req, res) => {
-    let filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url);
+    const filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url);
 
     if (!fs.existsSync(filePath)) {
         res.writeHead(404);

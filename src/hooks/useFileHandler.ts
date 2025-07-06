@@ -7,18 +7,18 @@ interface FileResult {
 }
 
 interface DragEvents {
-  onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDrop: (e: React.DragEvent<HTMLDivElement>, onFileLoad: (content: string, name: string) => void) => Promise<void>;
+  onDragOver: (_e: React.DragEvent<HTMLDivElement>) => void;
+  onDragLeave: (_e: React.DragEvent<HTMLDivElement>) => void;
+  onDrop: (_e: React.DragEvent<HTMLDivElement>, _onFileLoad: (_content: string, _name: string) => void) => Promise<void>;
 }
 
 interface UseFileHandlerReturn {
   fileName: string;
   isDragging: boolean;
-  handleFileSelect: (event: React.ChangeEvent<HTMLInputElement>, onFileLoad: (content: string, name: string) => void) => Promise<void>;
+  handleFileSelect: (_event: React.ChangeEvent<HTMLInputElement>, _onFileLoad: (_content: string, _name: string) => void) => Promise<void>;
   handleDragEvents: DragEvents;
   resetFile: () => void;
-  setFileName: (name: string) => void;
+  setFileName: (_name: string) => void;
 }
 
 export const useFileHandler = (): UseFileHandlerReturn => {
