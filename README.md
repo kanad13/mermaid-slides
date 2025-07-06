@@ -3,7 +3,8 @@
 Transform your markdown content with mermaid diagrams and images into beautiful presentation slides with advanced navigation and theming.
 
 [![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-blue?style=for-the-badge)](https://kanad13.github.io/mermaid-slides/)
-[![VS Code Extension](https://img.shields.io/badge/⚡_VS_Code_Extension-purple?style=for-the-badge)](#-vs-code-extension)
+[![Docker Image](https://img.shields.io/badge/🐳_Docker_Image-blue?style=for-the-badge)](https://hub.docker.com/r/kunalpathak13/mermaid-slides)
+[![VS Code Extension](https://img.shields.io/badge/⚡_VS_Code_Extension-purple?style=for-the-badge)](#-vs-code-extension-planned)
 [![Documentation](https://img.shields.io/badge/📖_Documentation-green?style=for-the-badge)](docs/)
 [![Privacy First](https://img.shields.io/badge/🔒_Privacy_First-orange?style=for-the-badge)](#-privacy--security)
 
@@ -14,31 +15,36 @@ Transform your markdown content with mermaid diagrams and images into beautiful 
 ### 🌐 **Online (Recommended)**
 Visit **[Mermaid Slides](https://kanad13.github.io/mermaid-slides/)** and start creating presentations immediately.
 
-### ⚡ **VS Code Extension (New!)**
-Install the VS Code extension for seamless markdown-to-presentation workflow:
+### 🐳 **Docker Container**
+Run Mermaid Slides in a Docker container for easy deployment:
 ```bash
-# Search for "Mermaid Slides" in VS Code Extensions
-# Or install from marketplace (coming soon)
+# Pull and run the latest version
+docker pull kunalpathak13/mermaid-slides:latest
+docker run -p 3000:3000 kunalpathak13/mermaid-slides:latest
+
+# Open browser to http://localhost:3000
 ```
-- **Privacy-First**: Zero internet communication during use
-- **Tab Integration**: Preview button appears on markdown file tabs
-- **Auto-Detection**: Automatically finds mermaid diagrams in your files
-- **Self-Contained**: 2.8MB bundle with all dependencies included
+- **Container Ready**: Multi-platform support (AMD64, ARM64)
+- **Isolated Environment**: Complete containerized solution
+- **Easy Deployment**: Perfect for corporate environments
 
 ### 💾 **Offline Package**
 Download the complete offline package for local use without internet dependency:
 ```bash
-# Download from GitHub Releases (coming soon)
-# Or build from source:
-git clone https://github.com/kanad13/mermaid-slides.git
-cd mermaid-slides
-npm install && npm run build
-cd offline-package
+# Download from GitHub Releases
+# Visit: https://github.com/kanad13/mermaid-slides/releases/latest
+
+# Extract and run:
+unzip mermaid-slides-offline-v*.zip
+cd mermaid-slides-offline
+
 # Choose your preferred server:
 python3 start-server.py  # Python option
 node start-server.js     # Node.js option
 ./start-server.sh        # Auto-detect (macOS/Linux)
 start-server.bat         # Auto-detect (Windows)
+
+# Open browser to http://localhost:3005
 ```
 
 ### 🛠️ **Local Development**
@@ -63,37 +69,39 @@ npm run dev
 - **🚫 Zero Tracking** - No analytics, telemetry, or data collection
 - **🌐 Offline First** - Complete functionality without internet dependency
 - **🔐 Local Processing** - All diagram rendering happens on your device
-- **📦 Self-Contained** - VS Code extension bundles all dependencies (2.8MB)
+- **📦 Self-Contained** - All distributions bundle dependencies locally
 
 ### 🌐 **Multi-Platform Availability**
 - **🌐 Web App** - Instant access via GitHub Pages
 - **💾 Offline Package** - Download and run locally on any OS
-- **⚡ VS Code Extension** - Integrated markdown preview workflow
+- **🐳 Docker Container** - Containerized deployment for any environment
+- **⚡ VS Code Extension** - Planned for integrated markdown workflow
 
-## ⚡ VS Code Extension
+## ⚡ VS Code Extension (Planned)
 
-### **Features**
-- **🎯 Tab Integration** - Preview button appears automatically on markdown file tabs
+### **Planned Features**
+- **🎯 Tab Integration** - Preview button will appear automatically on markdown file tabs
 - **🚀 One-Click Preview** - Transform any markdown file with mermaid diagrams into presentations
-- **🔍 Auto-Detection** - Automatically identifies mermaid diagrams in your files
-- **🎨 Theme Sync** - Adapts to your VS Code theme (light/dark)
+- **🔍 Auto-Detection** - Automatically identify mermaid diagrams in your files
+- **🎨 Theme Sync** - Adapt to your VS Code theme (light/dark)
 - **🔒 Privacy-First** - Zero internet communication, all processing happens locally
 
-### **Usage**
+### **Planned Usage**
 1. Open any markdown file containing mermaid diagrams
 2. Click the "🧜‍♀️ Preview Mermaid Slides" button in the tab bar
 3. Side preview opens with all diagrams ready for presentation
 4. Use arrow keys or controls to navigate through slides
 
-### **Installation**
+### **Future Installation**
 ```bash
-# Option 1: From VS Code Marketplace (coming soon)
+# Will be available on VS Code Marketplace
 # Search for "Mermaid Slides" in VS Code Extensions
 
-# Option 2: Install from VSIX file (development/beta)
-# Download mermaid-slides-extension-1.0.0.vsix from releases
-# In VS Code: Extensions → ... → Install from VSIX
+# Also available as VSIX download from GitHub Releases
+# Install via: Extensions → ... → Install from VSIX
 ```
+
+**Status**: Currently planned for future development. Follow the repository for updates!
 
 ## 🔒 Privacy & Security
 
@@ -103,8 +111,8 @@ Mermaid Slides is designed with privacy as a core principle:
 - **🌐 Offline Operation** - Full functionality without internet connection
 - **🔐 Local Processing** - All diagram rendering happens on your device
 - **📦 Self-Contained** - No external CDN dependencies in any distribution
-- **🔒 Minimal Permissions** - VS Code extension only reads active editor content
-- **🚫 No External Requests** - Extension makes zero network calls during operation
+- **🔒 Minimal Permissions** - Planned VS Code extension will only read active editor content
+- **🚫 No External Requests** - All distributions make zero network calls during operation
 
 ## 📚 Documentation
 

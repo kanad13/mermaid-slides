@@ -9,7 +9,7 @@
 
 ## Executive Summary
 
-This document defines the architecture strategy for distributing Mermaid Slides across two active channels: Web and Offline. The VS Code Extension channel has been removed to eliminate feature drift and will be redesigned from scratch in a future phase. The strategy ensures maintainability, consistency, and scalability while minimizing complexity.
+This document defines the architecture strategy for distributing Mermaid Slides across three channels: Web, Offline, and VS Code Extension. The VS Code Extension is currently planned for future development. The strategy ensures maintainability, consistency, and scalability while minimizing complexity.
 
 ## Recommended Architecture: Single Repository with Channel-Specific Builds
 
@@ -44,15 +44,17 @@ mermaid-slides/                    # Main repository
 - **Deployment**: Automated via GitHub Actions
 
 #### 2. Offline Channel (✅ Complete)
-- **Build Target**: Self-contained package with local servers
+- **Build Target**: Self-contained package with local servers and Docker image
 - **Configuration**: Modified build for relative paths
 - **Assets**: All dependencies bundled locally
+- **Distribution**: Download package or Docker container
 - **Servers**: Python, Node.js, batch, and shell scripts
 
-#### 3. VS Code Extension (🚫 Removed)
-- **Status**: Removed due to feature drift
-- **Future**: Will be redesigned from scratch in a future phase
-- **Reason**: Eliminated to maintain focus on core functionality
+#### 3. VS Code Extension (📋 Planned)
+- **Status**: Planned for future development
+- **Build Target**: VS Code extension package (.vsix)
+- **Integration**: Webview-based preview with tab integration
+- **Distribution**: VS Code Marketplace
 
 ---
 
@@ -143,8 +145,10 @@ main                      # Production-ready code, all channels
 - **Systems**: Windows 10+, macOS 10.15+, Ubuntu 18.04+
 - **Dependencies**: Zero external network requirements
 
-#### VS Code Extension
-- **Status**: Removed - will be redesigned in future phase
+#### VS Code Extension (Planned)
+- **Runtime**: VS Code 1.60+
+- **Engine**: Webview API with local bundled assets
+- **Distribution**: VS Code Marketplace (.vsix package)
 
 ---
 
@@ -162,12 +166,14 @@ main                      # Production-ready code, all channels
 - **Content**: Download, setup, server options, troubleshooting
 - **Audience**: End users, corporate environments
 
-#### 3. VS Code Extension Documentation
-- **Status**: Removed - will be created in future phase
+#### 3. VS Code Extension Documentation (Planned)
+- **Location**: `docs/VSCODE_EXTENSION.md` (to be created)
+- **Content**: Installation, usage, development setup
+- **Audience**: VS Code users, extension developers
 
 ### Unified Documentation Hub
 
-- **Master README**: Overview of both active channels
+- **Master README**: Overview of all three channels
 - **Quick Start**: 30-second setup for each channel
 - **Feature Comparison**: Channel-specific capabilities
 - **Migration Guide**: Moving between channels
@@ -206,10 +212,11 @@ main                      # Production-ready code, all channels
 - [ ] Comprehensive distribution documentation
 - [ ] Automated build and release scripts
 
-### Phase 4 (Future)
-- [ ] VS Code extension redesign from scratch
-- [ ] Extension-specific build configuration
+### Phase 4 (Planned)
+- [ ] VS Code extension development
+- [ ] Extension-specific build configuration  
 - [ ] Webview integration testing
+- [ ] VS Code Marketplace publication
 
 ---
 

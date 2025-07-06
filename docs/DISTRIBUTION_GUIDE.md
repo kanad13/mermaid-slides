@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide provides comprehensive instructions for distributing Mermaid Slides across the two active channels: Web and Offline. The VS Code Extension has been removed to eliminate feature drift.
+This guide provides comprehensive instructions for distributing Mermaid Slides across three channels: Web, Offline, and VS Code Extension. The VS Code Extension is currently planned for future development.
 
 **🚀 NEW: Automated CI/CD Pipeline** - All distribution channels are now automated via GitHub Actions!
 
@@ -11,8 +11,8 @@ This guide provides comprehensive instructions for distributing Mermaid Slides a
 | Channel | Status | Target Audience | Distribution Method |
 |---------|--------|-----------------|-------------------|
 | **Web** | ✅ Live | General users, quick testing | GitHub Pages |
-| **Offline** | ✅ Ready | Corporate, air-gapped environments | Download package |
-| **VS Code** | 🚫 Removed | Future redesign | Future consideration |
+| **Offline** | ✅ Ready | Corporate, air-gapped environments | Download package + Docker |
+| **VS Code** | 📋 Planned | Developers, VS Code users | VS Code Marketplace |
 
 ---
 
@@ -52,7 +52,8 @@ npm run build
 ## Offline Channel Distribution
 
 ### Current Status: ✅ READY FOR DISTRIBUTION
-**Package Location**: `offline-package/` directory
+**Package Location**: `offline-package/` directory  
+**Docker Image**: `kunalpathak13/mermaid-slides` on Docker Hub
 
 ### Distribution Package Contents
 ```
@@ -93,6 +94,7 @@ node scripts/validate-compatibility.cjs
 - Network file shares
 - Intranet download portals
 - USB drives for air-gapped environments
+- Docker registry/harbor deployments
 
 #### 3. User Setup Process
 ```bash
@@ -108,14 +110,20 @@ node start-server.js        # Manual Node.js
 
 # Open in browser
 # http://localhost:3005
+
+# OR use Docker
+docker pull kunalpathak13/mermaid-slides:latest
+docker run -p 3000:3000 kunalpathak13/mermaid-slides:latest
+# Open browser to http://localhost:3000
 ```
 
 ### Offline Channel Features
 - **Zero Network Dependencies**: Works completely offline
-- **Multiple Server Options**: Python, Node.js, or shell scripts
+- **Multiple Server Options**: Python, Node.js, shell scripts, or Docker
 - **Cross-Platform**: Windows, macOS, Linux
 - **Self-Contained**: All assets bundled locally
 - **Examples Included**: Sample markdown files provided
+- **Container Ready**: Docker image for easy deployment
 
 ### Target Users
 - Corporate environments with restricted internet
@@ -123,6 +131,59 @@ node start-server.js        # Manual Node.js
 - Remote locations with poor connectivity
 - Educational institutions with network restrictions
 - Developers wanting local development environment
+
+---
+
+## VS Code Extension Distribution
+
+### Current Status: 📋 PLANNED FOR FUTURE DEVELOPMENT
+
+### Distribution Process (Planned)
+
+#### 1. Extension Development
+```bash
+# Development commands (planned)
+npm run build:extension     # Build extension package
+npm run package:extension   # Create .vsix package
+npm run publish:extension   # Publish to marketplace
+```
+
+#### 2. Distribution Methods (Planned)
+
+**VS Code Marketplace**
+- Primary distribution channel
+- Automatic updates via VS Code
+- Global discovery and installation
+
+**Manual Installation**
+- Download .vsix from GitHub Releases
+- Install via VS Code: Extensions → Install from VSIX
+- Corporate/internal distribution
+
+#### 3. User Installation (Planned)
+```bash
+# Method 1: VS Code Marketplace
+# Search "Mermaid Slides" in VS Code Extensions
+
+# Method 2: Command line
+code --install-extension mermaid-slides
+
+# Method 3: Manual VSIX
+# Download .vsix and install via VS Code interface
+```
+
+### VS Code Extension Features (Planned)
+- **Tab Integration**: Preview button on markdown file tabs
+- **Auto-Detection**: Identifies mermaid diagrams automatically
+- **Webview Preview**: Side-by-side presentation view
+- **Theme Sync**: Adapts to VS Code light/dark theme
+- **Privacy-First**: Zero network calls, local processing only
+
+### Target Users (Planned)
+- Developers working with markdown documentation
+- Technical writers using VS Code
+- Teams wanting integrated presentation workflow
+- Users preferring editor-based tools
 
 ---
 
@@ -145,9 +206,17 @@ node start-server.js        # Manual Node.js
 #### Offline Channel Specific
 - [ ] Package integrity validated (`node scripts/validate-compatibility.cjs`)
 - [ ] All server scripts functional
+- [ ] Docker image builds and runs correctly
 - [ ] Documentation includes port information
 - [ ] No external URL dependencies
 - [ ] Cross-platform server testing complete
+
+#### VS Code Extension Specific (Planned)
+- [ ] Extension packages without errors
+- [ ] Webview integration functional
+- [ ] VS Code marketplace guidelines met
+- [ ] Auto-detection works correctly
+- [ ] Theme adaptation verified
 
 
 ### Testing Procedures
@@ -177,6 +246,20 @@ node scripts/validate-compatibility.cjs
 # 3. Confirm complete offline functionality
 # 4. Validate setup documentation
 # 5. Test in isolated network environment
+# 6. Verify Docker image functionality
+```
+
+#### VS Code Extension Testing (Planned)
+```bash
+# Development testing (planned)
+npm run test:extension
+
+# Manual testing steps
+# 1. Install extension in VS Code
+# 2. Open markdown file with mermaid diagrams
+# 3. Verify preview button appears
+# 4. Test presentation functionality
+# 5. Verify theme adaptation
 ```
 
 ---
@@ -198,7 +281,8 @@ node scripts/validate-compatibility.cjs
 ### Version Display
 Each channel displays version information:
 - **Web**: Footer or about section
-- **Offline**: Server startup message and HTML meta tags
+- **Offline**: Server startup message and HTML meta tags  
+- **VS Code Extension**: Extension manifest and about page
 
 ---
 
@@ -216,10 +300,11 @@ Each channel displays version information:
 - **Assets Not Loading**: Ensure relative paths, check server directory
 - **Cross-Platform Issues**: Use appropriate server script for platform
 
-#### VS Code Extension (When Available)
-- **Installation Issues**: Check VS Code version compatibility
+#### VS Code Extension (Planned)
+- **Installation Issues**: Check VS Code version compatibility (1.60+)
 - **Preview Not Working**: Verify mermaid diagram syntax, check extension activation
 - **Performance Issues**: Large files may need processing time
+- **Webview Issues**: Check VS Code developer tools, verify local assets
 
 ### Support Resources
 - **Documentation**: Complete guides for each distribution channel
@@ -244,9 +329,10 @@ Each channel displays version information:
 - **Sandbox**: Webview operates in secure context
 - **Permissions**: Minimal required permissions only
 - **File Access**: Limited to workspace files only
+- **Network Isolation**: Zero external network requests
 
 ---
 
-**Distribution Status**: Web and Offline channels ready for production use
-**Next Phase**: VS Code Extension development and distribution
+**Distribution Status**: Web and Offline channels ready for production use  
+**Next Phase**: VS Code Extension development and distribution (planned)
 **Quality Assurance**: All compatibility tests passing ✅
