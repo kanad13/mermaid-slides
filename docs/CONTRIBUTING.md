@@ -65,26 +65,26 @@ mermaid-slides/
 ├── CLAUDE.md                 # Claude Code session guide
 ├── package.json             # Project dependencies and scripts
 ├── index.html               # HTML entry point
-├── 
+├──
 ├── src/                     # Source code (TypeScript)
 │   ├── App.tsx              # Main application component
 │   ├── components/          # Modular React components
 │   ├── hooks/               # 8 custom React hooks
 │   ├── utils/               # Utility functions
 │   └── types/               # TypeScript type definitions
-├── 
+├──
 ├── docs/                    # Comprehensive documentation
 │   ├── README.md            # Complete documentation
 │   ├── ACTION_PLAN.md       # Distribution roadmap
 │   ├── FEATURES.md          # Feature overview
 │   ├── CONTRIBUTING.md      # This file
 │   └── DEPLOYMENT.md        # Deployment guide
-├── 
+├──
 ├── config/                  # Configuration files
 │   ├── vite.config.js       # Build configuration
 │   ├── tailwind.config.js   # Styling configuration
 │   └── eslint.config.js     # Linting rules
-├── 
+├──
 ├── public/                  # Static assets
 └── dist/                    # Built files (after npm run build)
 ```
@@ -127,7 +127,6 @@ const parseMermaidDiagrams = (markdownText: string): DiagramItem[] => {
 - [ ] File upload (drag & drop, file picker)
 - [ ] Markdown parsing with various diagram types
 - [ ] Navigation (keyboard, buttons, thumbnails)
-- [ ] Theme switching (dark/light, mermaid themes)
 - [ ] Grid view and single view modes
 - [ ] Responsive design on different screen sizes
 - [ ] Error handling for invalid content

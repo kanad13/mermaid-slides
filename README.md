@@ -13,10 +13,13 @@ Transform your markdown content with mermaid diagrams and images into beautiful 
 ## 🚀 Quick Start
 
 ### 🌐 **Online (Recommended)**
+
 Visit **[Mermaid Slides](https://kanad13.github.io/mermaid-slides/)** and start creating presentations immediately.
 
 ### 🐳 **Docker Container**
+
 Run Mermaid Slides in a Docker container for easy deployment:
+
 ```bash
 # Pull and run the latest version
 docker pull kunalpathak13/mermaid-slides:latest
@@ -24,12 +27,15 @@ docker run -p 3000:3000 kunalpathak13/mermaid-slides:latest
 
 # Open browser to http://localhost:3000
 ```
+
 - **Container Ready**: Multi-platform support (AMD64, ARM64)
 - **Isolated Environment**: Complete containerized solution
 - **Easy Deployment**: Perfect for corporate environments
 
 ### 💾 **Offline Package**
+
 Download the complete offline package for local use without internet dependency:
+
 ```bash
 # Download from GitHub Releases
 # Visit: https://github.com/kanad13/mermaid-slides/releases/latest
@@ -48,6 +54,7 @@ start-server.bat         # Auto-detect (Windows)
 ```
 
 ### 🛠️ **Local Development**
+
 ```bash
 git clone https://github.com/kanad13/mermaid-slides.git
 cd mermaid-slides
@@ -58,20 +65,22 @@ npm run dev
 ## ✨ Key Features
 
 ### 🎯 **Presentation & Navigation**
+
 - **📁 File Handling** - Drag & drop, file browser, or paste markdown content
-- **🖼️ Mixed Content** - Mermaid diagrams + images in unified presentations  
+- **🖼️ Mixed Content** - Mermaid diagrams + images in unified presentations
 - **🧭 Navigation** - Keyboard controls, progress bar, grid view, thumbnails
 - **🎯 Presentation Mode** - Full-screen, distraction-free experience
-- **🎨 Theming** - 5 Mermaid themes + dark/light UI modes
 - **📱 Responsive** - Works on desktop, tablet, and mobile devices
 
 ### 🔒 **Privacy & Security**
+
 - **🚫 Zero Tracking** - No analytics, telemetry, or data collection
 - **🌐 Offline First** - Complete functionality without internet dependency
 - **🔐 Local Processing** - All diagram rendering happens on your device
 - **📦 Self-Contained** - All distributions bundle dependencies locally
 
 ### 🌐 **Multi-Platform Availability**
+
 - **🌐 Web App** - Instant access via GitHub Pages
 - **💾 Offline Package** - Download and run locally on any OS
 - **🐳 Docker Container** - Containerized deployment for any environment
@@ -80,19 +89,21 @@ npm run dev
 ## ⚡ VS Code Extension (Planned)
 
 ### **Planned Features**
+
 - **🎯 Tab Integration** - Preview button will appear automatically on markdown file tabs
 - **🚀 One-Click Preview** - Transform any markdown file with mermaid diagrams into presentations
 - **🔍 Auto-Detection** - Automatically identify mermaid diagrams in your files
-- **🎨 Theme Sync** - Adapt to your VS Code theme (light/dark)
 - **🔒 Privacy-First** - Zero internet communication, all processing happens locally
 
 ### **Planned Usage**
+
 1. Open any markdown file containing mermaid diagrams
 2. Click the "🧜‍♀️ Preview Mermaid Slides" button in the tab bar
 3. Side preview opens with all diagrams ready for presentation
 4. Use arrow keys or controls to navigate through slides
 
 ### **Future Installation**
+
 ```bash
 # Will be available on VS Code Marketplace
 # Search for "Mermaid Slides" in VS Code Extensions
@@ -117,6 +128,7 @@ Mermaid Slides is designed with privacy as a core principle:
 ## 📚 Documentation
 
 ### **🏗️ Architecture & Development**
+
 - **[Architecture Strategy](docs/ARCHITECTURE_STRATEGY.md)** - Multi-channel architecture and development strategy
 - **[Distribution Guide](docs/DISTRIBUTION_GUIDE.md)** - Complete distribution process for all channels
 - **[Contributing Guide](docs/CONTRIBUTING.md)** - Development setup and contribution guidelines
@@ -132,12 +144,12 @@ Mermaid Slides is designed with privacy as a core principle:
 
 ## 🛠️ Technology
 
-**Frontend**: React 19 + TypeScript | **Build**: Vite 7.0 | **Styling**: Tailwind CSS 3.4  
+**Frontend**: React 19 + TypeScript | **Build**: Vite 7.0 | **Styling**: Tailwind CSS 3.4
 **Diagrams**: Mermaid.js 11.7 | **Testing**: Vitest + React Testing Library | **Deployment**: GitHub Pages
 
 ## 📋 Supported Content
 
-**Mermaid Diagrams**: Flowcharts, Sequence, ER, Class, State, Gantt, Pie Charts, Git Graphs  
+**Mermaid Diagrams**: Flowcharts, Sequence, ER, Class, State, Gantt, Pie Charts, Git Graphs
 **Images**: PNG, JPEG, GIF, WebP with automatic scaling and responsive display
 
 ## 🤝 Contributing
@@ -147,6 +159,25 @@ We welcome contributions! See our [Contributing Guidelines](docs/CONTRIBUTING.md
 ## 📄 License
 
 MIT License - see [LICENSE](LICENSE) for details.
+
+## 🙏 Acknowledgments
+
+Mermaid Slides is built with and redistributes the following open source projects. I am grateful for their contributions to the community:
+
+- **[Mermaid.js](https://github.com/mermaid-js/mermaid)** (MIT License) — Copyright (c) Knut Sveidqvist
+  _The core diagramming engine that makes this project possible_
+- **[React](https://github.com/facebook/react)** (MIT License) — Copyright (c) Meta Platforms, Inc.
+  _The foundation for our modern, interactive user interface_
+- **[Vite](https://github.com/vitejs/vite)** (MIT License) — Copyright (c) Evan You
+  _Lightning-fast development and build tooling_
+- **[Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)** (MIT License) — Copyright (c) Tailwind Labs, Inc.
+  _Utility-first CSS framework for rapid UI development_
+- **[TypeScript](https://github.com/microsoft/TypeScript)** (Apache-2.0 License) — Copyright (c) Microsoft Corporation
+  _Type safety and developer experience enhancements_
+
+See [package.json](package.json) for a complete list of all dependencies.
+
+**Special thanks to the Mermaid.js team** for creating such a powerful and flexible diagramming library that enables developers to create beautiful diagrams with simple text syntax.
 
 ---
 

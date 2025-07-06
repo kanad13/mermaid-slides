@@ -52,7 +52,7 @@ npm run build
 ## Offline Channel Distribution
 
 ### Current Status: ✅ READY FOR DISTRIBUTION
-**Package Location**: `offline-package/` directory  
+**Package Location**: `offline-package/` directory
 **Docker Image**: `kunalpathak13/mermaid-slides` on Docker Hub
 
 ### Distribution Package Contents
@@ -176,7 +176,6 @@ code --install-extension mermaid-slides
 - **Tab Integration**: Preview button on markdown file tabs
 - **Auto-Detection**: Identifies mermaid diagrams automatically
 - **Webview Preview**: Side-by-side presentation view
-- **Theme Sync**: Adapts to VS Code light/dark theme
 - **Privacy-First**: Zero network calls, local processing only
 
 ### Target Users (Planned)
@@ -216,7 +215,6 @@ code --install-extension mermaid-slides
 - [ ] Webview integration functional
 - [ ] VS Code marketplace guidelines met
 - [ ] Auto-detection works correctly
-- [ ] Theme adaptation verified
 
 
 ### Testing Procedures
@@ -259,7 +257,6 @@ npm run test:extension
 # 2. Open markdown file with mermaid diagrams
 # 3. Verify preview button appears
 # 4. Test presentation functionality
-# 5. Verify theme adaptation
 ```
 
 ---
@@ -281,7 +278,7 @@ npm run test:extension
 ### Version Display
 Each channel displays version information:
 - **Web**: Footer or about section
-- **Offline**: Server startup message and HTML meta tags  
+- **Offline**: Server startup message and HTML meta tags
 - **VS Code Extension**: Extension manifest and about page
 
 ---
@@ -333,6 +330,6 @@ Each channel displays version information:
 
 ---
 
-**Distribution Status**: Web and Offline channels ready for production use  
+**Distribution Status**: Web and Offline channels ready for production use
 **Next Phase**: VS Code Extension development and distribution (planned)
 **Quality Assurance**: All compatibility tests passing ✅

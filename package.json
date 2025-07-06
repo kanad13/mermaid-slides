@@ -26,16 +26,16 @@
 		"react",
 		"documentation"
 	],
-	"author": "Your Name <your-email@example.com>",
+	"author": "Kunal Pathak <kunal.pathak13@gmail.com>",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/yourusername/mermaid-slides.git"
+		"url": "https://github.com/kanad13/mermaid-slides.git"
 	},
 	"bugs": {
-		"url": "https://github.com/yourusername/mermaid-slides/issues"
+		"url": "https://github.com/kanad13/mermaid-slides/issues"
 	},
-	"homepage": "https://github.com/yourusername/mermaid-slides#readme",
+	"homepage": "https://kanad13.github.io/mermaid-slides/",
 	"dependencies": {
 		"lucide-react": "^0.525.0",
 		"mermaid": "^11.7.0",
