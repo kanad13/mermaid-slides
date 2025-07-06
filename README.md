@@ -62,6 +62,10 @@ npm install
 npm run dev
 ```
 
+## 🙏 Thanks Mermaid.js Team!
+
+> **⚠️ Important Notice:** This is an independent, community-driven project and is **not an official product** of the Mermaid.js team. Mermaid Slides (this project) is built with deep gratitude to the Mermaid.js creators and uses their library under the MIT License. All credit for the core diagramming functionality goes to the [Mermaid.js project](https://github.com/mermaid-js/mermaid).
+
 ## ✨ Key Features
 
 ### 🎯 **Presentation & Navigation**

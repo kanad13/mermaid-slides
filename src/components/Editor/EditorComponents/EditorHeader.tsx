@@ -35,10 +35,10 @@ export const EditorHeader = ({ isDarkMode }) => {
       }`}>
         <div className="text-center flex-1">
           <div className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-            🌐 Try Online
+            🌐 Web App
           </div>
           <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Use it right here in your browser
+            Start creating slides instantly
           </div>
         </div>
         
@@ -46,10 +46,10 @@ export const EditorHeader = ({ isDarkMode }) => {
         
         <div className="text-center flex-1">
           <div className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-            💻 Local Package
+            💻 Use Locally
           </div>
           <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Self-hosted for complete privacy (available now)
+            Docker or Offline Package
           </div>
         </div>
         
@@ -60,7 +60,7 @@ export const EditorHeader = ({ isDarkMode }) => {
             🔧 VS Code Extension
           </div>
           <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Work directly in your editor (in progress)
+            Coming Soon
           </div>
         </div>
       </div>

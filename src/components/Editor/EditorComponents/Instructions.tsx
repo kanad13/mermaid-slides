@@ -23,6 +23,35 @@ export const Instructions = ({ isDarkMode }) => {
         </ol>
       </div>
 
+      {/* Key Features */}
+      <div className={`p-4 border rounded-lg ${
+        isDarkMode
+          ? 'bg-purple-900 border-purple-700'
+          : 'bg-purple-50 border-purple-200'
+      }`}>
+        <h3 className={`font-medium mb-3 ${
+          isDarkMode ? 'text-purple-200' : 'text-purple-900'
+        }`}>
+          ✨ Key Features
+        </h3>
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-3 text-sm ${
+          isDarkMode ? 'text-purple-300' : 'text-purple-800'
+        }`}>
+          <div>
+            <div><strong>🎯 Presentation Mode</strong> - Full-screen, distraction-free slides</div>
+            <div><strong>📁 File Handling</strong> - Drag & drop, browse, or paste content</div>
+            <div><strong>🧭 Smart Navigation</strong> - Shortcuts, progress bar, grid view</div>
+            <div><strong>🖼️ Mixed Content</strong> - Mermaid diagrams + images together</div>
+          </div>
+          <div>
+            <div><strong>🚫 Zero Tracking</strong> - No analytics or data collection</div>
+            <div><strong>🔐 Local Processing</strong> - Everything runs in your browser</div>
+            <div><strong>📱 Responsive Design</strong> - Works on desktop, tablet, mobile</div>
+            <div><strong>🌐 Offline Ready</strong> - No internet required for core features</div>
+          </div>
+        </div>
+      </div>
+
       {/* Keyboard Shortcuts */}
       <div className={`p-4 border rounded-lg ${
         isDarkMode
@@ -50,30 +79,6 @@ export const Instructions = ({ isDarkMode }) => {
         </div>
       </div>
 
-      {/* Supported Diagram Types */}
-      <div className={`p-4 border rounded-lg ${
-        isDarkMode
-          ? 'bg-purple-900 border-purple-700'
-          : 'bg-purple-50 border-purple-200'
-      }`}>
-        <h3 className={`font-medium mb-3 ${
-          isDarkMode ? 'text-purple-200' : 'text-purple-900'
-        }`}>
-          📋 Supported Diagram Types
-        </h3>
-        <div className={`grid grid-cols-2 md:grid-cols-4 gap-2 text-sm ${
-          isDarkMode ? 'text-purple-300' : 'text-purple-800'
-        }`}>
-          <div>• Flowcharts</div>
-          <div>• Sequence Diagrams</div>
-          <div>• Class Diagrams</div>
-          <div>• State Diagrams</div>
-          <div>• ER Diagrams</div>
-          <div>• User Journey</div>
-          <div>• Gantt Charts</div>
-          <div>• Pie Charts</div>
-        </div>
-      </div>
 
       {/* Example and Links */}
       <div className={`p-4 border rounded-lg ${
@@ -90,15 +95,15 @@ export const Instructions = ({ isDarkMode }) => {
           isDarkMode ? 'text-gray-300' : 'text-gray-700'
         }`}>
           <div>• Click <strong>"Load Sample"</strong> to see example diagrams and learn the format</div>
-          <div>• Visit <a 
-            href="https://mermaid.js.org/syntax/flowchart.html" 
-            target="_blank" 
+          <div>• Visit <a
+            href="https://mermaid.js.org/syntax/flowchart.html"
+            target="_blank"
             rel="noopener noreferrer"
             className={`underline ${isDarkMode ? 'text-blue-400' : 'text-blue-600'} hover:opacity-80`}
           >Mermaid documentation</a> for diagram syntax</div>
-          <div>• Check our <a 
-            href="https://github.com/kanad13/mermaid-slides" 
-            target="_blank" 
+          <div>• Check our <a
+            href="https://github.com/kanad13/mermaid-slides"
+            target="_blank"
             rel="noopener noreferrer"
             className={`underline ${isDarkMode ? 'text-blue-400' : 'text-blue-600'} hover:opacity-80`}
           >GitHub repository</a> for more examples and updates</div>
