@@ -22,7 +22,6 @@ export interface ViewerProps extends CommonProps {
 // File Upload Props
 export interface FileUploadProps extends CommonProps {
   onFileLoad: (content: string, name: string) => void;
-  fileName: string;
   onLoadSample: () => void;
   onViewDiagrams: () => void;
   onClear: () => void;
@@ -72,12 +71,10 @@ export interface MarkdownTextareaProps extends CommonProps {
 export interface ActionButtonsProps {
   onProcessDiagrams: () => void;
   onViewDiagrams: () => void;
-  diagramsCount: number;
 }
 
 export interface StatusMessagesProps extends CommonProps {
   error: string;
-  diagrams: Diagram[];
 }
 
 export interface InstructionsProps extends CommonProps {}

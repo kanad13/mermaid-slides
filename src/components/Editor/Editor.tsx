@@ -19,7 +19,7 @@ export const Editor: React.FC<EditorProps> = ({
   isDarkMode
 }) => {
   const [markdownText, setMarkdownText] = useState<string>('');
-  const { fileName, setFileName } = useFileHandler();
+  const { setFileName } = useFileHandler();
   const { diagrams, error, processDiagrams } = useDiagramParser();
 
   const handleFileLoad = (content: string, name: string): void => {
@@ -57,7 +57,6 @@ export const Editor: React.FC<EditorProps> = ({
           <div className="space-y-4">
             <FileUpload
               onFileLoad={handleFileLoad}
-              fileName={fileName}
               isDarkMode={isDarkMode}
               onLoadSample={loadSample}
               onViewDiagrams={handleViewDiagrams}
@@ -75,7 +74,6 @@ export const Editor: React.FC<EditorProps> = ({
 
           <StatusMessages 
             error={error}
-            diagramsCount={diagrams.length}
             isDarkMode={isDarkMode}
           />
 

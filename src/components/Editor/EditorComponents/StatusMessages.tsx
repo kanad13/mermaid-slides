@@ -1,4 +1,4 @@
-export const StatusMessages = ({ error, diagramsCount, isDarkMode }) => {
+export const StatusMessages = ({ error, isDarkMode }) => {
   return (
     <>
       {/* Error Display */}

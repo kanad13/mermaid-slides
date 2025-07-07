@@ -5,9 +5,11 @@ import { FileUpload } from '../FileUpload'
 describe('FileUpload', () => {
   const mockProps = {
     onFileLoad: vi.fn(),
-    fileName: null,
     isDarkMode: false,
-    onLoadSample: vi.fn()
+    onLoadSample: vi.fn(),
+    onViewDiagrams: vi.fn(),
+    onClear: vi.fn(),
+    hasMarkdown: false
   }
 
   it('renders file upload interface', () => {

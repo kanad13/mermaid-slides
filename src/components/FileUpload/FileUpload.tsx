@@ -5,7 +5,7 @@ import { FileInput } from './FileUploadComponents/FileInput';
 import { ActionButtons } from './FileUploadComponents/ActionButtons';
 import { FileUploadProps } from '../../types/components';
 
-export const FileUpload: React.FC<FileUploadProps> = ({ onFileLoad, fileName, isDarkMode, onLoadSample, onViewDiagrams, onClear, hasMarkdown }) => {
+export const FileUpload: React.FC<FileUploadProps> = ({ onFileLoad, isDarkMode, onLoadSample, onViewDiagrams, onClear, hasMarkdown }) => {
   const { isDragging, handleFileSelect, handleDragEvents } = useFileHandler();
 
   const handleFileSelectWrapper = (event: React.ChangeEvent<HTMLInputElement>): void => {
