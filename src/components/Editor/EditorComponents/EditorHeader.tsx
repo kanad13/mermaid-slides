@@ -10,20 +10,6 @@ export const EditorHeader = ({ isDarkMode }) => {
             Upload <b>markdown</b> files with <b>mermaid</b> diagrams, and present the visuals in a <b>slideshow</b>.
           </p>
         </div>
-        <div className="flex space-x-2">
-          <a
-            href="https://github.com/kanad13/mermaid-slides"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`px-3 py-1 text-sm rounded border ${
-              isDarkMode
-                ? 'border-gray-600 text-gray-300 hover:bg-gray-700'
-                : 'border-gray-300 text-gray-600 hover:bg-gray-50'
-            } transition-colors`}
-          >
-            GitHub
-          </a>
-        </div>
       </div>
 
       <div className={`text-center mb-4 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>

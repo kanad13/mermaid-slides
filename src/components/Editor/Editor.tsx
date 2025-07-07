@@ -243,14 +243,6 @@ This privacy policy may be updated from time to time. The latest version will al
             >
               Legal Notice
             </a>
-            <a 
-              href="https://github.com/kanad13/mermaid-slides" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className={`hover:underline ${isDarkMode ? 'hover:text-gray-300' : 'hover:text-gray-700'}`}
-            >
-              GitHub
-            </a>
           </div>
         </div>
       </div>

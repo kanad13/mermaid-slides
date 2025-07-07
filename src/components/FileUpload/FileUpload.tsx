@@ -3,7 +3,6 @@ import { useFileHandler } from '../../hooks/useFileHandler';
 import { DropZone } from './FileUploadComponents/DropZone';
 import { FileInput } from './FileUploadComponents/FileInput';
 import { ActionButtons } from './FileUploadComponents/ActionButtons';
-import { CurrentFileDisplay } from './FileUploadComponents/CurrentFileDisplay';
 import { FileUploadProps } from '../../types/components';
 
 export const FileUpload: React.FC<FileUploadProps> = ({ onFileLoad, fileName, isDarkMode, onLoadSample, onViewDiagrams, onClear, hasMarkdown }) => {
@@ -35,10 +34,6 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileLoad, fileName, is
         />
       </DropZone>
 
-      <CurrentFileDisplay 
-        fileName={fileName}
-        isDarkMode={isDarkMode}
-      />
     </div>
   );
 };

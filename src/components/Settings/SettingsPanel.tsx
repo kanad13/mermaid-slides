@@ -148,7 +148,7 @@ export const SettingsPanel = ({
                   <p className={`text-xs mt-1 ${
                     isDarkMode ? 'text-gray-400' : 'text-gray-500'
                   }`}>
-                    Header will hide after 3 seconds of inactivity
+                    Header will hide after 2 seconds of inactivity
                   </p>
                 </div>
               )}

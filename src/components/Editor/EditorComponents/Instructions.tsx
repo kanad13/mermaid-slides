@@ -51,32 +51,6 @@ export const Instructions = ({ isDarkMode }) => {
         </div>
       </div>
 
-      {/* Keyboard Shortcuts */}
-      <div className={`p-4 border rounded-lg ${
-        isDarkMode
-          ? 'bg-green-900 border-green-700'
-          : 'bg-green-50 border-green-200'
-      }`}>
-        <h3 className={`font-medium mb-3 ${
-          isDarkMode ? 'text-green-200' : 'text-green-900'
-        }`}>
-          ⌨️ Keyboard Shortcuts (Presentation Mode)
-        </h3>
-        <div className={`grid grid-cols-1 md:grid-cols-2 gap-3 text-sm ${
-          isDarkMode ? 'text-green-300' : 'text-green-800'
-        }`}>
-          <div>
-            <div><kbd className={`px-2 py-1 rounded text-xs ${isDarkMode ? 'bg-green-800' : 'bg-green-200'}`}>←/→</kbd> Previous/Next diagram</div>
-            <div><kbd className={`px-2 py-1 rounded text-xs ${isDarkMode ? 'bg-green-800' : 'bg-green-200'}`}>Home</kbd> First diagram</div>
-            <div><kbd className={`px-2 py-1 rounded text-xs ${isDarkMode ? 'bg-green-800' : 'bg-green-200'}`}>End</kbd> Last diagram</div>
-          </div>
-          <div>
-            <div><kbd className={`px-2 py-1 rounded text-xs ${isDarkMode ? 'bg-green-800' : 'bg-green-200'}`}>G</kbd> Toggle grid view</div>
-            <div><kbd className={`px-2 py-1 rounded text-xs ${isDarkMode ? 'bg-green-800' : 'bg-green-200'}`}>?</kbd> Show/hide shortcuts</div>
-            <div><kbd className={`px-2 py-1 rounded text-xs ${isDarkMode ? 'bg-green-800' : 'bg-green-200'}`}>Esc</kbd> Return to editor</div>
-          </div>
-        </div>
-      </div>
 
 
       {/* Help Link */}

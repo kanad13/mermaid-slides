@@ -17,12 +17,6 @@ describe('FileUpload', () => {
     expect(screen.getByText(/load sample/i)).toBeInTheDocument()
   })
 
-  it('shows current file when fileName is provided', () => {
-    render(<FileUpload {...mockProps} fileName="test.md" />)
-    
-    expect(screen.getByText('test.md')).toBeInTheDocument()
-  })
-
   it('applies dark mode styles when isDarkMode is true', () => {
     render(<FileUpload {...mockProps} isDarkMode={true} />)
     

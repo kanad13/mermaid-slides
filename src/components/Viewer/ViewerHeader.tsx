@@ -23,7 +23,7 @@ export const ViewerHeader = ({
   onShowTitlesToggle
 }) => {
   const { isVisible } = useAutoHide({
-    timeout: autoHideEnabled ? 3000 : 0,
+    timeout: autoHideEnabled ? 2000 : 0,
     initiallyVisible: true
   });
   return (
