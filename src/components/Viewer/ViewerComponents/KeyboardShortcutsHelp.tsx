@@ -28,7 +28,7 @@ export const KeyboardShortcutsHelp = ({ isDarkMode, currentIndex }: KeyboardShor
           ? 'bg-gray-800/80 border-gray-600 text-gray-300' 
           : 'bg-white/80 border-gray-200 text-gray-600'
       }`}>
-        ← → Navigate • ESC Exit
+        ← → ↑ ↓ Navigate • ESC Exit
       </div>
     </div>
   );

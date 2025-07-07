@@ -145,4 +145,4 @@ architecture-beta
 
 Image taken from https://en.wikipedia.org/wiki/File:THE_VIEW_(Virtual_Reality).jpg
 
-![Virtual Reality](./examples/assets/505×636-pixel.jpg)`;
+![Virtual Reality](https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/THE_VIEW_%28Virtual_Reality%29.jpg/960px-THE_VIEW_%28Virtual_Reality%29.jpg)`;

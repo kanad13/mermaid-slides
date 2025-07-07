@@ -6,7 +6,7 @@
 
 ```bash
 npm run dev              # Development server
-npm run build           # Production build  
+npm run build           # Production build
 npm run build:offline   # Offline package
 npm test               # Test suite
 npm run lint           # Code quality
@@ -36,16 +36,15 @@ npm run validate:all   # Full validation
 ## 📚 **Key Documents**
 
 - `docs/ARCHITECTURE_STRATEGY.md` - Multi-channel strategy
-- `docs/DISTRIBUTION_GUIDE.md` - Distribution process
+- `docs/DISTRIBUTION.md` - Distribution process
 - `scripts/validate-compatibility.cjs` - Cross-platform validation
 
 ## ⚡ **Workflow**
 
-**Before coding**: Review architecture strategy, run validation  
-**After coding**: Test, lint, validate compatibility  
+**Before coding**: Review architecture strategy, run validation
+**After coding**: Test, lint, validate compatibility
 **Key principle**: Preserve functionality, maintain cross-platform compatibility
 
 ---
 
-**Live Demo**: https://mermaid-slides.com/  
-**Phase**: Automated CI/CD complete, VS Code Extension planned
+**Live Demo**: https://mermaid-slides.com/

@@ -26,6 +26,14 @@ export const EditorHeader = ({ isDarkMode }) => {
           <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             Start creating slides instantly
           </div>
+          <a 
+            href="https://mermaid-slides.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`text-xs underline mt-1 inline-block ${isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-800'}`}
+          >
+            Visit mermaid-slides.com
+          </a>
         </div>
 
         <div className={`text-lg font-bold ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>OR</div>
@@ -37,6 +45,14 @@ export const EditorHeader = ({ isDarkMode }) => {
           <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             Docker or Offline Package
           </div>
+          <a 
+            href="https://github.com/kanad13/mermaid-slides/releases/latest"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`text-xs underline mt-1 inline-block ${isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-800'}`}
+          >
+            Download offline package
+          </a>
         </div>
 
         <div className={`text-lg font-bold ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>OR</div>

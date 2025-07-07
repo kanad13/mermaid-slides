@@ -66,13 +66,13 @@
 
 ## 🌐 **Distribution Channels**
 
-### **Web Version (Live)**
+### **Web Application**
 - **URL**: [https://mermaid-slides.com/](https://mermaid-slides.com/)
 - **Access**: Instant, no installation required
 - **Features**: Full functionality with automatic updates
 - **Network**: Internet connection required
 
-### **Offline Package (New!)**
+### **Offline Package**
 - **Format**: Complete standalone package
 - **Requirements**: Python 3.x OR Node.js
 - **Setup**: Download and run local server scripts
@@ -80,43 +80,41 @@
 - **Platforms**: Windows, macOS, Linux
 - **Privacy**: Complete local processing
 
-### **VS Code Extension (Coming Soon)**
+### **Docker Container**
+- **Image**: `kunalpathak13/mermaid-slides:latest`
+- **Platform**: Multi-platform (AMD64, ARM64)
+- **Deployment**: Containerized environments
+- **Features**: Isolated, scalable deployment
+
+### **VS Code Extension (Planned)**
 - **Platform**: Visual Studio Code Marketplace
 - **Integration**: Markdown file preview command
 - **Workflow**: Right-click .md files → "Preview as Mermaid Slides"
 - **Features**: Live file watching and automatic updates
 
-## 🚀 **Current Development Phases**
+## 🚀 **Production Ready Features**
 
-### ✅ **Phase 1: Complete** - Testing Foundation
-- [x] Comprehensive test suite (42 tests)
-- [x] Testing infrastructure with Vitest
-- [x] Error handling and validation tests
-- [x] Build process verification
+### ✅ **Testing & Quality Assurance**
+- Comprehensive test suite (42+ tests)
+- Testing infrastructure with Vitest
+- Error handling and validation tests
+- Build process verification
+- Cross-platform compatibility validation
 
-### ✅ **Phase 2: Complete** - Web Deployment
-- [x] GitHub Pages deployment
-- [x] Automated CI/CD pipeline
-- [x] Enhanced landing page with help sections
-- [x] Mobile responsiveness verification
-- [x] Production-ready web version
+### ✅ **Multi-Channel Deployment**
+- Web application with automated CI/CD pipeline
+- Offline package with cross-platform server options
+- Docker container with multi-platform support
+- Enhanced landing page with help sections
+- Mobile responsiveness across all channels
 
-### ✅ **Phase 3: Complete** - Offline Version
-- [x] Self-contained offline package
-- [x] Local server setup options (Python, Node.js, auto-detect scripts)
-- [x] No external dependencies (Mermaid.js bundled locally)
-- [x] Cross-platform compatibility (Windows, macOS, Linux)
+### ✅ **Development Infrastructure**
+- Modern tech stack (React 19, TypeScript, Vite 7.0)
+- Automated build and deployment scripts
+- Comprehensive documentation
+- Version synchronization across channels
 
-### 📋 **Phase 4: Planned** - VS Code Extension
-- [ ] VS Code marketplace extension
-- [ ] Markdown file integration
-- [ ] Preview command integration
-- [ ] Live file watching
-
-### 🔮 **Future Enhancements**
-- [ ] Export to PDF/PNG
-- [ ] Custom theme creation
-- [ ] Slide transitions and animations
-- [ ] Speaker notes support
-- [ ] Collaborative editing features
-- [ ] Cloud synchronization
+### 📋 **Future Development**
+- **VS Code Extension**: Marketplace integration with markdown workflow
+- **Enhanced Features**: PDF export, custom themes, slide transitions
+- **Collaboration**: Real-time editing and cloud synchronization

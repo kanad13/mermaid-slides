@@ -140,7 +140,7 @@ jobs:
           ## 🎯 Distribution Channels
           
           ### 🌐 Web Application
-          - **Live Demo**: [https://kanad13.github.io/mermaid-slides/](https://kanad13.github.io/mermaid-slides/)
+          - **Live Demo**: [https://mermaid-slides.com/](https://mermaid-slides.com/)
           - **Features**: Instant access, mobile responsive, no installation required
           
           ### 💾 Offline Package
@@ -287,14 +287,14 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Channel | Status | Access |" >> $GITHUB_STEP_SUMMARY
           echo "|---------|--------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| 🌐 Web App | ${{ needs.deploy-pages.result == 'success' && '✅ Deployed' || '❌ Failed' }} | [Live Demo](https://kanad13.github.io/mermaid-slides/) |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🌐 Web App | ${{ needs.deploy-pages.result == 'success' && '✅ Deployed' || '❌ Failed' }} | [Live Demo](https://mermaid-slides.com/) |" >> $GITHUB_STEP_SUMMARY
           echo "| 📦 Offline Package | ${{ needs.create-release.result == 'success' && '✅ Released' || '❌ Failed' }} | [Download](https://github.com/kanad13/mermaid-slides/releases/latest) |" >> $GITHUB_STEP_SUMMARY
           echo "| 🐳 Docker Image | ${{ needs.docker-build-push.result == 'success' && '✅ Pushed' || '❌ Failed' }} | \`docker pull kunalpathak13/mermaid-slides:${{ needs.build-and-test.outputs.version }}\` |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## 🎯 Quick Access" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 🌐 Web Application" >> $GITHUB_STEP_SUMMARY
-          echo "- **URL**: https://kanad13.github.io/mermaid-slides/" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: https://mermaid-slides.com/" >> $GITHUB_STEP_SUMMARY
           echo "- **Features**: Instant access, mobile responsive" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 💾 Offline Package" >> $GITHUB_STEP_SUMMARY

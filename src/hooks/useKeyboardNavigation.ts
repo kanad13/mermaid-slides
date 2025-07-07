@@ -22,12 +22,14 @@ export const useKeyboardNavigation = ({
 
     const handleKeyPress = (e: KeyboardEvent): void => {
       switch (e.key) {
-        case 'ArrowLeft': {
+        case 'ArrowLeft':
+        case 'ArrowUp': {
           e.preventDefault();
           onPrevious?.();
           break;
         }
-        case 'ArrowRight': {
+        case 'ArrowRight':
+        case 'ArrowDown': {
           e.preventDefault();
           onNext?.();
           break;

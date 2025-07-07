@@ -38,7 +38,7 @@ export const NavigationControls = ({
           onClick={onPrevious}
           disabled={isDisabled}
           className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed text-white rounded-full transition-all hover:scale-110 disabled:hover:scale-100 shadow-md"
-          title="Previous diagram (←)"
+          title="Previous diagram (← or ↑)"
         >
           <ChevronLeft size={20} />
         </button>
@@ -53,7 +53,7 @@ export const NavigationControls = ({
           onClick={onNext}
           disabled={isDisabled}
           className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed text-white rounded-full transition-all hover:scale-110 disabled:hover:scale-100 shadow-md"
-          title="Next diagram (→)"
+          title="Next diagram (→ or ↓)"
         >
           <ChevronRight size={20} />
         </button>

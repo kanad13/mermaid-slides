@@ -2,6 +2,18 @@
 
 Transform your markdown mermaid diagrams into beautiful presentation slides - completely offline!
 
+## 🎯 Distribution Strategy
+
+Mermaid Slides is available through **3 channels** to meet different user needs:
+
+| Channel | Best For | Access Method |
+|---------|----------|---------------|
+| 🌐 **Web App** | Quick testing, mobile use | [mermaid-slides.com](https://mermaid-slides.com/) |
+| 💾 **Offline Package** | Corporate, air-gapped environments | Download package (this document) |
+| 🐳 **Docker Container** | Containerized deployments | `docker run kunalpathak13/mermaid-slides` |
+
+**You're currently viewing the Offline Package documentation** - designed for environments with limited internet connectivity or strict security requirements.
+
 ## 🚀 Quick Start
 
 ### Option 1: Automatic (Recommended)
@@ -74,10 +86,19 @@ node start-server.js -p 8080
 
 If the specified port is unavailable, the Python server will automatically find the next available port.
 
-## 🌐 Alternative Access
+## 🌐 Other Access Methods
 
-- **Web Version**: https://mermaid-slides.com/
-- **Docker**: `docker run -p 3000:3000 kunalpathak13/mermaid-slides:latest`
+If the offline package doesn't meet your needs, consider these alternatives:
+
+### 🌐 Web Application
+- **URL**: https://mermaid-slides.com/
+- **Best for**: Quick testing, mobile devices, no installation required
+- **Features**: Instant access, always up-to-date, mobile responsive
+
+### 🐳 Docker Container
+- **Command**: `docker run -p 3000:3000 kunalpathak13/mermaid-slides:latest`
+- **Best for**: Containerized environments, consistent deployments
+- **Features**: Isolated environment, easy scaling, infrastructure-as-code
 
 ## 🔒 Privacy & Security
 

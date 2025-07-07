@@ -34,7 +34,7 @@ export const HeaderNavigation = ({
             ? 'hover:bg-gray-700 text-gray-300 disabled:text-gray-500'
             : 'hover:bg-gray-100 text-gray-600 disabled:text-gray-400'
         }`}
-        title="Previous diagram (←)"
+        title="Previous diagram (← or ↑)"
       >
         <ChevronLeft size={20} />
       </button>
@@ -62,7 +62,7 @@ export const HeaderNavigation = ({
             ? 'hover:bg-gray-700 text-gray-300 disabled:text-gray-500'
             : 'hover:bg-gray-100 text-gray-600 disabled:text-gray-400'
         }`}
-        title="Next diagram (→)"
+        title="Next diagram (→ or ↓)"
       >
         <ChevronRight size={20} />
       </button>
