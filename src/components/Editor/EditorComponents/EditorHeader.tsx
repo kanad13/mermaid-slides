@@ -7,7 +7,7 @@ export const EditorHeader = ({ isDarkMode }) => {
             Mermaid Slides
           </h1>
           <p className={`text-lg mb-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Upload markdown files with Mermaid diagrams and view them as interactive presentation slides.
+            Upload <b>markdown</b> files with <b>mermaid</b> diagrams, and present the visuals in a <b>slideshow</b>.
           </p>
         </div>
         <div className="flex space-x-2">
@@ -29,7 +29,7 @@ export const EditorHeader = ({ isDarkMode }) => {
       <div className={`text-center mb-4 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
         <p className="text-sm font-medium">Choose the option that works best for you:</p>
       </div>
-      
+
       <div className={`flex flex-col md:flex-row items-center justify-center gap-4 mb-6 p-4 rounded-lg ${
         isDarkMode ? 'bg-gray-700' : 'bg-gray-100'
       }`}>
@@ -41,9 +41,9 @@ export const EditorHeader = ({ isDarkMode }) => {
             Start creating slides instantly
           </div>
         </div>
-        
+
         <div className={`text-lg font-bold ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>OR</div>
-        
+
         <div className="text-center flex-1">
           <div className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
             💻 Use Locally
@@ -52,9 +52,9 @@ export const EditorHeader = ({ isDarkMode }) => {
             Docker or Offline Package
           </div>
         </div>
-        
+
         <div className={`text-lg font-bold ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>OR</div>
-        
+
         <div className="text-center flex-1">
           <div className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
             🔧 VS Code Extension

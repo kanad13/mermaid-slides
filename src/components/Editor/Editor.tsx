@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FileUpload } from '../FileUpload/FileUpload';
 import { sampleMarkdown } from '../../utils/sampleData';
 import { useDiagramParser } from '../../hooks/useDiagramParser';
 import { useFileHandler } from '../../hooks/useFileHandler';
 import { EditorHeader } from './EditorComponents/EditorHeader';
 import { MarkdownTextarea } from './EditorComponents/MarkdownTextarea';
-import { ActionButtons } from './EditorComponents/ActionButtons';
 import { StatusMessages } from './EditorComponents/StatusMessages';
 import { Instructions } from './EditorComponents/Instructions';
 import { Diagram } from '../../types/diagram';
@@ -33,13 +32,21 @@ export const Editor: React.FC<EditorProps> = ({
     setFileName('Sample Document');
   };
 
-  const handleProcessDiagrams = (): void => {
-    processDiagrams(markdownText);
-  };
-
   const handleViewDiagrams = (): void => {
     onViewDiagrams(diagrams);
   };
+
+  const handleClear = (): void => {
+    setMarkdownText('');
+    setFileName('');
+  };
+
+  // Auto-process diagrams when markdown content changes
+  useEffect(() => {
+    if (markdownText.trim()) {
+      processDiagrams(markdownText);
+    }
+  }, [markdownText, processDiagrams]);
 
   return (
     <div className={`min-h-screen p-6 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
@@ -53,6 +60,9 @@ export const Editor: React.FC<EditorProps> = ({
               fileName={fileName}
               isDarkMode={isDarkMode}
               onLoadSample={loadSample}
+              onViewDiagrams={handleViewDiagrams}
+              onClear={handleClear}
+              hasMarkdown={markdownText.trim().length > 0}
             />
 
             <MarkdownTextarea 
@@ -61,11 +71,6 @@ export const Editor: React.FC<EditorProps> = ({
               isDarkMode={isDarkMode}
             />
 
-            <ActionButtons 
-              onProcessDiagrams={handleProcessDiagrams}
-              onViewDiagrams={handleViewDiagrams}
-              diagramsCount={diagrams.length}
-            />
           </div>
 
           <StatusMessages 

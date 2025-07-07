@@ -15,11 +15,10 @@ export const Instructions = ({ isDarkMode }) => {
         <ol className={`text-sm space-y-2 ${
           isDarkMode ? 'text-blue-300' : 'text-blue-800'
         }`}>
-          <li><strong>1. Load Content:</strong> Drop a markdown file, paste content, or try "Load Sample"</li>
-          <li><strong>2. Parse Diagrams:</strong> Click "Parse Diagrams" to extract mermaid code blocks</li>
-          <li><strong>3. Present:</strong> Click "View Diagrams" to enter full-screen presentation mode</li>
-          <li><strong>4. Navigate:</strong> Use arrow keys or navigation buttons to browse diagrams</li>
-          <li><strong>5. Exit:</strong> Press ESC or click "Back to Editor" to return</li>
+          <li><strong>1. Load Content:</strong> Choose a file or load sample content</li>
+          <li><strong>2. Present:</strong> Click "Start Slideshow" for full-screen mode</li>
+          <li><strong>3. Navigate:</strong> Use arrow keys to browse diagrams</li>
+          <li><strong>4. Exit:</strong> Press ESC to return to editor</li>
         </ol>
       </div>
 
@@ -38,16 +37,16 @@ export const Instructions = ({ isDarkMode }) => {
           isDarkMode ? 'text-purple-300' : 'text-purple-800'
         }`}>
           <div>
-            <div><strong>🎯 Presentation Mode</strong> - Full-screen, distraction-free slides</div>
-            <div><strong>📁 File Handling</strong> - Drag & drop, browse, or paste content</div>
-            <div><strong>🧭 Smart Navigation</strong> - Shortcuts, progress bar, grid view</div>
-            <div><strong>🖼️ Mixed Content</strong> - Mermaid diagrams + images together</div>
+            <div>• <strong>Presentation Mode</strong> - Full-screen, distraction-free slides</div>
+            <div>• <strong>File Handling</strong> - Drag & drop, browse, or paste content</div>
+            <div>• <strong>Smart Navigation</strong> - Shortcuts, progress bar, grid view</div>
+            <div>• <strong>Mixed Content</strong> - Mermaid diagrams + images together</div>
           </div>
           <div>
-            <div><strong>🚫 Zero Tracking</strong> - No analytics or data collection</div>
-            <div><strong>🔐 Local Processing</strong> - Everything runs in your browser</div>
-            <div><strong>📱 Responsive Design</strong> - Works on desktop, tablet, mobile</div>
-            <div><strong>🌐 Offline Ready</strong> - No internet required for core features</div>
+            <div>• <strong>Zero Tracking</strong> - No analytics or data collection</div>
+            <div>• <strong>Local Processing</strong> - Everything runs in your browser</div>
+            <div>• <strong>Responsive Design</strong> - Works on desktop, tablet, mobile</div>
+            <div>• <strong>Offline Ready</strong> - No internet required for core features</div>
           </div>
         </div>
       </div>
@@ -80,34 +79,16 @@ export const Instructions = ({ isDarkMode }) => {
       </div>
 
 
-      {/* Example and Links */}
-      <div className={`p-4 border rounded-lg ${
-        isDarkMode
-          ? 'bg-gray-700 border-gray-600'
-          : 'bg-gray-100 border-gray-300'
-      }`}>
-        <h3 className={`font-medium mb-3 ${
-          isDarkMode ? 'text-gray-200' : 'text-gray-900'
-        }`}>
-          💡 Need Help?
-        </h3>
-        <div className={`text-sm space-y-2 ${
-          isDarkMode ? 'text-gray-300' : 'text-gray-700'
-        }`}>
-          <div>• Click <strong>"Load Sample"</strong> to see example diagrams and learn the format</div>
-          <div>• Visit <a
-            href="https://mermaid.js.org/syntax/flowchart.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`underline ${isDarkMode ? 'text-blue-400' : 'text-blue-600'} hover:opacity-80`}
-          >Mermaid documentation</a> for diagram syntax</div>
-          <div>• Check our <a
+      {/* Help Link */}
+      <div className="text-center">
+        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+          For more help, visit the <a
             href="https://github.com/kanad13/mermaid-slides"
             target="_blank"
             rel="noopener noreferrer"
             className={`underline ${isDarkMode ? 'text-blue-400' : 'text-blue-600'} hover:opacity-80`}
-          >GitHub repository</a> for more examples and updates</div>
-        </div>
+          >GitHub repository</a>
+        </p>
       </div>
     </div>
   );

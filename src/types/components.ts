@@ -24,6 +24,9 @@ export interface FileUploadProps extends CommonProps {
   onFileLoad: (content: string, name: string) => void;
   fileName: string;
   onLoadSample: () => void;
+  onViewDiagrams: () => void;
+  onClear: () => void;
+  hasMarkdown: boolean;
 }
 
 // Navigation Props

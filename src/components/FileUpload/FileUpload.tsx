@@ -6,7 +6,7 @@ import { ActionButtons } from './FileUploadComponents/ActionButtons';
 import { CurrentFileDisplay } from './FileUploadComponents/CurrentFileDisplay';
 import { FileUploadProps } from '../../types/components';
 
-export const FileUpload: React.FC<FileUploadProps> = ({ onFileLoad, fileName, isDarkMode, onLoadSample }) => {
+export const FileUpload: React.FC<FileUploadProps> = ({ onFileLoad, fileName, isDarkMode, onLoadSample, onViewDiagrams, onClear, hasMarkdown }) => {
   const { isDragging, handleFileSelect, handleDragEvents } = useFileHandler();
 
   const handleFileSelectWrapper = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -29,7 +29,9 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileLoad, fileName, is
         <FileInput onFileSelect={handleFileSelectWrapper} />
         <ActionButtons 
           onLoadSample={onLoadSample}
-          isDarkMode={isDarkMode}
+          onViewDiagrams={onViewDiagrams}
+          onClear={onClear}
+          hasMarkdown={hasMarkdown}
         />
       </DropZone>
 

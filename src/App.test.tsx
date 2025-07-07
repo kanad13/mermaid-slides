@@ -8,7 +8,7 @@ describe('App', () => {
     
     // Should render the editor component initially
     expect(screen.getByText(/choose file/i)).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /parse diagrams/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /start slideshow/i })).toBeInTheDocument()
   })
 
   it('has correct initial state', () => {
