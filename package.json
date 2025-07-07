@@ -1,6 +1,6 @@
 {
 	"name": "mermaid-slides",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"description": "Transform your markdown mermaid diagrams into beautiful presentation slides",
 	"type": "module",
 	"scripts": {
