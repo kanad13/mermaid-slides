@@ -15,6 +15,7 @@ export const Viewer: React.FC<ViewerProps> = ({
   autoHideEnabled = false
 }) => {
   const [autoHideState, setAutoHideState] = useState(autoHideEnabled);
+  const [showTitles, setShowTitles] = useState(true);
   const {
     currentIndex,
     isGridView,
@@ -51,6 +52,8 @@ export const Viewer: React.FC<ViewerProps> = ({
         isExtensionMode={isExtensionMode}
         autoHideEnabled={autoHideState}
         onAutoHideToggle={setAutoHideState}
+        showTitles={showTitles}
+        onShowTitlesToggle={setShowTitles}
       />
 
       <div className={`flex-1 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
@@ -61,11 +64,13 @@ export const Viewer: React.FC<ViewerProps> = ({
             isDarkMode={isDarkMode}
             onDiagramSelect={handleDiagramSelect}
             isExtensionMode={isExtensionMode}
+            showTitles={showTitles}
           />
         ) : (
           <DiagramViewer
             diagram={diagrams[currentIndex]}
             isDarkMode={isDarkMode}
+            showTitles={showTitles}
           />
         )}
       </div>

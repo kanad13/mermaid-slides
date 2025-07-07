@@ -7,7 +7,8 @@ export const GridView = ({
   currentIndex, 
   isDarkMode, 
   onDiagramSelect,
-  isExtensionMode = false
+  isExtensionMode = false,
+  showTitles = true
 }) => {
   const { isLoaded, renderDiagram } = useMermaid();
 
@@ -77,7 +78,10 @@ export const GridView = ({
               <span className={`text-sm font-medium ${
                 isDarkMode ? 'text-gray-300' : 'text-gray-700'
               }`}>
-                {diagram.type === 'image' ? 'Image' : 'Diagram'} {index + 1}
+                {showTitles && diagram.title 
+                  ? diagram.title 
+                  : `${diagram.type === 'image' ? 'Image' : 'Diagram'} ${index + 1}`
+                }
               </span>
               <span className={`ml-2 text-xs px-2 py-1 rounded ${
                 isDarkMode ? 'bg-gray-700 text-gray-400' : 'bg-gray-100 text-gray-600'

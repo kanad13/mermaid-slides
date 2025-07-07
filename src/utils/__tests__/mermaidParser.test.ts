@@ -57,6 +57,59 @@ Some text
       
       expect(diagrams).toHaveLength(0)
     })
+
+    it('extracts titles from preceding headers for diagrams', () => {
+      const markdown = `
+# Main Title
+
+## Database Schema
+
+\`\`\`mermaid
+erDiagram
+    USER { id int }
+\`\`\`
+
+## Process Flow
+
+\`\`\`mermaid
+graph TD
+    A --> B
+\`\`\`
+
+### Image Example
+
+![Sample image](example.png)
+      `
+      
+      const diagrams = parseMermaidDiagrams(markdown)
+      
+      expect(diagrams).toHaveLength(3)
+      expect(diagrams[0].title).toBe('Database Schema')
+      expect(diagrams[0].type).toBe('er')
+      expect(diagrams[1].title).toBe('Process Flow')
+      expect(diagrams[1].type).toBe('flowchart')
+      expect(diagrams[2].title).toBe('Image Example')
+      expect(diagrams[2].type).toBe('image')
+    })
+
+    it('handles diagrams without preceding headers', () => {
+      const markdown = `
+Some text without header
+
+\`\`\`mermaid
+graph TD
+    A --> B
+\`\`\`
+
+![No header image](test.png)
+      `
+      
+      const diagrams = parseMermaidDiagrams(markdown)
+      
+      expect(diagrams).toHaveLength(2)
+      expect(diagrams[0].title).toBeUndefined()
+      expect(diagrams[1].title).toBeUndefined()
+    })
   })
 
   describe('getDiagramType', () => {

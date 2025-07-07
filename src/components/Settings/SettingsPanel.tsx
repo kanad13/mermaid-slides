@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Settings, X, Eye, EyeOff, Info } from 'lucide-react';
+import { Settings, X, Eye, EyeOff, Info, Type } from 'lucide-react';
 
 interface SettingsPanelProps {
   isDarkMode: boolean;
   autoHideEnabled: boolean;
   onAutoHideToggle: (_enabled: boolean) => void;
+  showTitles: boolean;
+  onShowTitlesToggle: (_enabled: boolean) => void;
   isExtensionMode?: boolean;
 }
 
@@ -12,6 +14,8 @@ export const SettingsPanel = ({
   isDarkMode,
   autoHideEnabled,
   onAutoHideToggle,
+  showTitles,
+  onShowTitlesToggle,
   isExtensionMode = false
 }: SettingsPanelProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -71,6 +75,42 @@ export const SettingsPanel = ({
 
             {/* Settings Content */}
             <div className="p-4 space-y-4">
+              {/* Show Titles Configuration */}
+              <div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Type size={16} className={isDarkMode ? 'text-gray-400' : 'text-gray-500'} />
+                    <label className={`text-sm font-medium ${
+                      isDarkMode ? 'text-white' : 'text-gray-900'
+                    }`}>
+                      Show Titles
+                    </label>
+                  </div>
+                  <button
+                    onClick={() => onShowTitlesToggle(!showTitles)}
+                    data-testid="show-titles-toggle"
+                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                      showTitles 
+                        ? 'bg-blue-600' 
+                        : isDarkMode 
+                        ? 'bg-gray-600' 
+                        : 'bg-gray-200'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${
+                        showTitles ? 'translate-x-5' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
+                <p className={`text-xs mt-1 ${
+                  isDarkMode ? 'text-gray-400' : 'text-gray-500'
+                }`}>
+                  Display markdown headers as titles above diagrams and images
+                </p>
+              </div>
+              
               {/* Auto-hide Configuration - only show in non-extension mode */}
               {!isExtensionMode && (
                 <div>

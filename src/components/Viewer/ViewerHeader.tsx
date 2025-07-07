@@ -18,7 +18,9 @@ export const ViewerHeader = ({
   onLast,
   isExtensionMode = false,
   autoHideEnabled = false,
-  onAutoHideToggle
+  onAutoHideToggle,
+  showTitles = true,
+  onShowTitlesToggle
 }) => {
   const { isVisible } = useAutoHide({
     timeout: autoHideEnabled ? 3000 : 0,
@@ -58,6 +60,8 @@ export const ViewerHeader = ({
             isDarkMode={isDarkMode}
             autoHideEnabled={autoHideEnabled}
             onAutoHideToggle={onAutoHideToggle}
+            showTitles={showTitles}
+            onShowTitlesToggle={onShowTitlesToggle}
             isExtensionMode={isExtensionMode}
           />
           

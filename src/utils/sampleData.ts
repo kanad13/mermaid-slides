@@ -60,96 +60,89 @@ sequenceDiagram
     Prod->>Dev: Notify deployment status
 \`\`\`
 
-## Complex System Architecture
+## Budget Breakdown
 
-This is a large, complex diagram to test rendering of big content:
+Distribution of project costs:
+
+\`\`\`mermaid
+pie
+    "Development" : 45
+    "Design" : 20
+    "Testing" : 15
+    "Infrastructure" : 12
+    "Marketing" : 8
+\`\`\`
+
+## Git Workflow
+
+Our branching strategy and workflow:
+
+\`\`\`mermaid
+gitGraph
+   commit
+   commit
+   branch develop
+   checkout develop
+   commit
+   commit
+   checkout main
+   merge develop
+   commit
+   commit
+
+\`\`\`
+
+## System Architecture
+
+High-level application architecture:
 
 \`\`\`mermaid
 graph TB
-    subgraph "Frontend Layer"
-        A[React App] --> B[Component Library]
-        A --> C[State Management]
-        A --> D[Router]
-        B --> E[UI Components]
-        B --> F[Form Components]
-        B --> G[Chart Components]
-        C --> H[Redux Store]
-        C --> I[Context API]
-        C --> J[Local Storage]
+    subgraph "Frontend"
+        A[React App] --> B[API Client]
     end
 
-    subgraph "API Gateway Layer"
-        K[Load Balancer] --> L[API Gateway 1]
-        K --> M[API Gateway 2]
-        K --> N[API Gateway 3]
-        L --> O[Rate Limiter]
-        M --> P[Authentication]
-        N --> Q[Request Logging]
+    subgraph "Backend"
+        C[API Gateway] --> D[User Service]
+        C --> E[Data Service]
+        D --> F[User DB]
+        E --> G[Main DB]
     end
 
-    subgraph "Microservices Layer"
-        R[User Service] --> S[User Database]
-        T[Product Service] --> U[Product Database]
-        V[Order Service] --> W[Order Database]
-        X[Payment Service] --> Y[Payment Database]
-        Z[Notification Service] --> AA[Message Queue]
-        BB[Analytics Service] --> CC[Data Warehouse]
-
-        R --> DD[Redis Cache]
-        T --> DD
-        V --> DD
-        X --> DD
+    subgraph "External"
+        H[Authentication]
+        I[File Storage]
     end
 
-    subgraph "External Services"
-        EE[Payment Gateway]
-        FF[Email Service]
-        GG[SMS Service]
-        HH[CDN]
-        II[Third-party APIs]
-    end
-
-    subgraph "Infrastructure"
-        JJ[Kubernetes Cluster]
-        KK[Docker Containers]
-        LL[Monitoring]
-        MM[Logging]
-        NN[Backup System]
-        OO[Security Scanner]
-    end
-
-    A --> K
-    O --> R
-    P --> R
-    Q --> T
-    O --> V
-    P --> X
-    Q --> Z
-
-    X --> EE
-    Z --> FF
-    Z --> GG
-    A --> HH
-
-    R --> II
-    T --> II
-
-    JJ --> KK
-    LL --> MM
-    MM --> NN
-    OO --> JJ
+    B --> C
+    D --> H
+    E --> I
 
     style A fill:#e1f5fe
-    style K fill:#f3e5f5
-    style R fill:#e8f5e8
-    style EE fill:#fff3e0
-    style JJ fill:#fce4ec
+    style C fill:#e8f5e8
+    style H fill:#fff3e0
 \`\`\`
 
-## Visual Examples
+## Network Architecture
 
-Here are some example images to demonstrate the image rendering functionality:
+With icons:
 
-![Small image - should be centered](./examples/assets/673×1024-pixels.jpg)
+\`\`\`mermaid
+architecture-beta
+    group api(cloud)[API]
 
-![Large image - should be centered](./examples/assets/2560×1707-pixels.jpg)`;
+    service db(database)[Database] in api
+    service disk1(disk)[Storage] in api
+    service disk2(disk)[Storage] in api
+    service server(server)[Server] in api
+
+    db:L -- R:server
+    disk1:T -- B:server
+    disk2:T -- B:db
+\`\`\`
+
+## Display not just diagrams, but also images
+
+Image taken from https://en.wikipedia.org/wiki/File:THE_VIEW_(Virtual_Reality).jpg
+
+![Virtual Reality](./examples/assets/505×636-pixel.jpg)`;

@@ -1,6 +1,6 @@
 # Claude Code Session Guide - Mermaid Slides
 
-**Mermaid Slides** - Transform markdown mermaid diagrams into presentation slides with navigation and theming.
+**Mermaid Slides** - Transform markdown mermaid diagrams into presentation slides with navigation, theming, and automatic title extraction.
 
 ## 🚀 **Quick Start**
 
@@ -18,7 +18,14 @@ npm run validate:all   # Full validation
 - `src/App.tsx` - Main application
 - `src/components/` - Modular components (<100 lines each)
 - `src/hooks/` - 8 custom hooks
-- `src/utils/` - Utilities and parsers
+- `src/utils/` - Utilities and parsers (includes title extraction)
+
+## ✨ **Features**
+
+- **Title Extraction**: Automatically extracts markdown headers as slide titles
+- **Settings Toggle**: Show/hide titles with user preference (enabled by default)
+- **Theme Integration**: Title styling matches light/dark mode themes
+- **Grid View**: Displays meaningful titles instead of generic labels
 
 ## 🌐 **Distribution Channels**
 

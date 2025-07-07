@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useMermaid } from '../../hooks/useMermaid';
 import { useLayoutCalculations } from '../../hooks/useLayoutCalculations';
 
@@ -18,10 +18,21 @@ import { useLayoutCalculations } from '../../hooks/useLayoutCalculations';
 export const DiagramViewer = ({ 
   diagram, 
   isDarkMode, 
-  onError 
+  onError,
+  showTitles = true
 }) => {
   const { isLoaded, error, renderDiagram } = useMermaid();
   const { availableHeight, availableWidth } = useLayoutCalculations(true);
+  
+  // Calculate adjusted height when titles are shown
+  const getAdjustedHeight = useCallback(() => {
+    if (showTitles && diagram?.title) {
+      // Title takes approximately 120px (pt-8 + text + border + pb-4)
+      const titleHeight = 120;
+      return `calc(${availableHeight} - ${titleHeight}px)`;
+    }
+    return availableHeight;
+  }, [showTitles, diagram?.title, availableHeight]);
 
   useEffect(() => {
     if (error) {
@@ -52,7 +63,7 @@ export const DiagramViewer = ({
             <img 
               src="${diagram.src}" 
               alt="${diagram.alt || 'Slide image'}" 
-              style="max-width: ${availableWidth}; max-height: ${availableHeight}; object-fit: contain; display: block; margin: 0 auto;"
+              style="max-width: ${availableWidth}; max-height: ${getAdjustedHeight()}; object-fit: contain; display: block; margin: 0 auto;"
               onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=&quot;color: #dc2626; padding: 1rem; border: 1px solid #fca5a5; border-radius: 0.375rem; background-color: #fef2f2; text-align: center;&quot;><p style=&quot;font-weight: 500;&quot;>Error loading image:</p><p style=&quot;font-size: 0.875rem; margin-top: 0.25rem;&quot;>${diagram.src}</p></div>'"
             />
           `;
@@ -67,7 +78,7 @@ export const DiagramViewer = ({
             
             // Apply layout-aware sizing and centering
             svgElement.style.maxWidth = availableWidth;
-            svgElement.style.maxHeight = availableHeight;
+            svgElement.style.maxHeight = getAdjustedHeight();
             svgElement.style.width = 'auto';
             svgElement.style.height = 'auto';
             svgElement.style.display = 'block';
@@ -87,13 +98,29 @@ export const DiagramViewer = ({
     };
 
     renderContent();
-  }, [isLoaded, diagram, renderDiagram, availableHeight, availableWidth]);
+  }, [isLoaded, diagram, renderDiagram, availableHeight, availableWidth, showTitles, getAdjustedHeight]);
 
   return (
-    <div className="flex-1 flex items-center justify-center p-4" style={{ height: 'calc(100vh - 120px)' }}>
-      <div id={diagram?.id} className="flex items-center justify-center w-full h-full">
-        <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-center`}>
-          {diagram?.type === 'image' ? 'Loading image...' : (isLoaded ? 'Rendering diagram...' : 'Loading Mermaid...')}
+    <div className="flex-1 flex flex-col" style={{ height: 'calc(100vh - 120px)' }}>
+      {/* Title Display */}
+      {showTitles && diagram?.title && (
+        <div className="flex-shrink-0 pt-8 pb-4 px-6 text-center">
+          <h1 className={`text-3xl font-bold border-b-2 pb-3 inline-block ${
+            isDarkMode 
+              ? 'text-blue-300 border-blue-400' 
+              : 'text-blue-600 border-blue-300'
+          }`}>
+            {diagram.title}
+          </h1>
+        </div>
+      )}
+      
+      {/* Diagram Content */}
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div id={diagram?.id} className="flex items-center justify-center w-full h-full">
+          <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-center`}>
+            {diagram?.type === 'image' ? 'Loading image...' : (isLoaded ? 'Rendering diagram...' : 'Loading Mermaid...')}
+          </div>
         </div>
       </div>
     </div>
