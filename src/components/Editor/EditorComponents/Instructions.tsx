@@ -1,20 +1,12 @@
-export const Instructions = ({ isDarkMode }) => {
+export const Instructions = () => {
   return (
     <div className="mt-8 space-y-6">
       {/* Quick Start Guide */}
-      <div className={`p-4 border rounded-lg ${
-        isDarkMode
-          ? 'bg-blue-900 border-blue-700'
-          : 'bg-blue-50 border-blue-200'
-      }`}>
-        <h3 className={`font-medium mb-3 ${
-          isDarkMode ? 'text-blue-200' : 'text-blue-900'
-        }`}>
+      <div className="p-4 border rounded-lg bg-blue-50 border-blue-200">
+        <h3 className="font-medium mb-3 text-blue-900">
           🚀 Quick Start Guide
         </h3>
-        <ol className={`text-sm space-y-2 ${
-          isDarkMode ? 'text-blue-300' : 'text-blue-800'
-        }`}>
+        <ol className="text-sm space-y-2 text-blue-800">
           <li><strong>1. Load Content:</strong> Choose a file or load sample content</li>
           <li><strong>2. Present:</strong> Click "Start Slideshow" for full-screen mode</li>
           <li><strong>3. Navigate:</strong> Use arrow keys to browse diagrams</li>
@@ -23,19 +15,11 @@ export const Instructions = ({ isDarkMode }) => {
       </div>
 
       {/* Key Features */}
-      <div className={`p-4 border rounded-lg ${
-        isDarkMode
-          ? 'bg-purple-900 border-purple-700'
-          : 'bg-purple-50 border-purple-200'
-      }`}>
-        <h3 className={`font-medium mb-3 ${
-          isDarkMode ? 'text-purple-200' : 'text-purple-900'
-        }`}>
+      <div className="p-4 border rounded-lg bg-purple-50 border-purple-200">
+        <h3 className="font-medium mb-3 text-purple-900">
           ✨ Key Features
         </h3>
-        <div className={`grid grid-cols-1 md:grid-cols-2 gap-3 text-sm ${
-          isDarkMode ? 'text-purple-300' : 'text-purple-800'
-        }`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-purple-800">
           <div>
             <div>• <strong>Presentation Mode</strong> - Full-screen, distraction-free slides</div>
             <div>• <strong>File Handling</strong> - Drag & drop, browse, or paste content</div>
@@ -55,12 +39,12 @@ export const Instructions = ({ isDarkMode }) => {
 
       {/* Help Link */}
       <div className="text-center">
-        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+        <p className="text-sm text-gray-600">
           For more help, visit the <a
             href="https://github.com/kanad13/mermaid-slides"
             target="_blank"
             rel="noopener noreferrer"
-            className={`underline ${isDarkMode ? 'text-blue-400' : 'text-blue-600'} hover:opacity-80`}
+            className="underline text-blue-600 hover:opacity-80"
           >GitHub repository</a>
         </p>
       </div>

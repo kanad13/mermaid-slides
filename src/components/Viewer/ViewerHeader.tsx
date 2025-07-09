@@ -8,7 +8,6 @@ import { useAutoHide } from '../../hooks/useAutoHide';
 export const ViewerHeader = ({
   currentIndex,
   totalDiagrams,
-  isDarkMode,
   isGridView,
   onBackToEditor,
   onToggleGridView,
@@ -27,16 +26,13 @@ export const ViewerHeader = ({
     initiallyVisible: true
   });
   return (
-    <div className={`border-b shadow-sm transition-transform duration-300 ${
-      isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-    } ${autoHideEnabled && !isVisible ? '-translate-y-full' : 'translate-y-0'}`}>
+    <div className={`border-b shadow-sm transition-transform duration-300 bg-white border-gray-200 ${autoHideEnabled && !isVisible ? '-translate-y-full' : 'translate-y-0'}`}>
       {/* Main Header */}
       <div className={`px-6 py-4 flex items-center ${isExtensionMode ? 'justify-between' : 'justify-between'}`}>
         {/* Left: Back button - only show in non-extension mode */}
         {!isExtensionMode ? (
           <BackButton 
             onBackToEditor={onBackToEditor} 
-            isDarkMode={isDarkMode}
             isExtensionMode={isExtensionMode}
           />
         ) : (
@@ -51,13 +47,11 @@ export const ViewerHeader = ({
           onNext={onNext}
           onFirst={onFirst}
           onLast={onLast}
-          isDarkMode={isDarkMode}
         />
 
         {/* Right: Controls */}
         <div className="flex items-center space-x-3">
           <SettingsPanel 
-            isDarkMode={isDarkMode}
             autoHideEnabled={autoHideEnabled}
             onAutoHideToggle={onAutoHideToggle}
             showTitles={showTitles}
@@ -68,7 +62,6 @@ export const ViewerHeader = ({
           <GridViewToggle 
             isGridView={isGridView}
             onToggleGridView={onToggleGridView}
-            isDarkMode={isDarkMode}
           />
         </div>
       </div>
@@ -77,7 +70,6 @@ export const ViewerHeader = ({
       <ProgressBar 
         currentIndex={currentIndex}
         totalDiagrams={totalDiagrams}
-        isDarkMode={isDarkMode}
       />
     </div>
   );

@@ -6,8 +6,7 @@ export const HeaderNavigation = ({
   onPrevious,
   onNext,
   onFirst,
-  onLast,
-  isDarkMode
+  onLast
 }) => {
   const isDisabled = totalDiagrams <= 1;
 
@@ -16,11 +15,7 @@ export const HeaderNavigation = ({
       <button
         onClick={onFirst}
         disabled={isDisabled || currentIndex === 0}
-        className={`p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
-          isDarkMode
-            ? 'hover:bg-gray-700 text-gray-300 disabled:text-gray-500'
-            : 'hover:bg-gray-100 text-gray-600 disabled:text-gray-400'
-        }`}
+        className="p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 text-gray-600 disabled:text-gray-400"
         title="First diagram (Home)"
       >
         <SkipBack size={18} />
@@ -29,27 +24,17 @@ export const HeaderNavigation = ({
       <button
         onClick={onPrevious}
         disabled={isDisabled || currentIndex === 0}
-        className={`p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
-          isDarkMode
-            ? 'hover:bg-gray-700 text-gray-300 disabled:text-gray-500'
-            : 'hover:bg-gray-100 text-gray-600 disabled:text-gray-400'
-        }`}
+        className="p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 text-gray-600 disabled:text-gray-400"
         title="Previous diagram (← or ↑)"
       >
         <ChevronLeft size={20} />
       </button>
       
-      <div className={`px-4 py-2 rounded-lg ${
-        isDarkMode ? 'bg-gray-700' : 'bg-gray-100'
-      }`}>
-        <span className={`text-lg font-semibold ${
-          isDarkMode ? 'text-white' : 'text-gray-800'
-        }`}>
+      <div className="px-4 py-2 rounded-lg bg-gray-100">
+        <span className="text-lg font-semibold text-gray-800">
           {currentIndex + 1}
         </span>
-        <span className={`text-sm ${
-          isDarkMode ? 'text-gray-300' : 'text-gray-600'
-        }`}>
+        <span className="text-sm text-gray-600">
           {' '}of {totalDiagrams}
         </span>
       </div>
@@ -57,11 +42,7 @@ export const HeaderNavigation = ({
       <button
         onClick={onNext}
         disabled={isDisabled || currentIndex === totalDiagrams - 1}
-        className={`p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
-          isDarkMode
-            ? 'hover:bg-gray-700 text-gray-300 disabled:text-gray-500'
-            : 'hover:bg-gray-100 text-gray-600 disabled:text-gray-400'
-        }`}
+        className="p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 text-gray-600 disabled:text-gray-400"
         title="Next diagram (→ or ↓)"
       >
         <ChevronRight size={20} />
@@ -70,11 +51,7 @@ export const HeaderNavigation = ({
       <button
         onClick={onLast}
         disabled={isDisabled || currentIndex === totalDiagrams - 1}
-        className={`p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
-          isDarkMode
-            ? 'hover:bg-gray-700 text-gray-300 disabled:text-gray-500'
-            : 'hover:bg-gray-100 text-gray-600 disabled:text-gray-400'
-        }`}
+        className="p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 text-gray-600 disabled:text-gray-400"
         title="Last diagram (End)"
       >
         <SkipForward size={18} />

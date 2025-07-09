@@ -5,7 +5,6 @@ import { FileUpload } from '../FileUpload'
 describe('FileUpload', () => {
   const mockProps = {
     onFileLoad: vi.fn(),
-    isDarkMode: false,
     onLoadSample: vi.fn(),
     onViewDiagrams: vi.fn(),
     onClear: vi.fn(),
@@ -19,10 +18,4 @@ describe('FileUpload', () => {
     expect(screen.getByText(/load sample/i)).toBeInTheDocument()
   })
 
-  it('applies dark mode styles when isDarkMode is true', () => {
-    render(<FileUpload {...mockProps} isDarkMode={true} />)
-    
-    // Component should render with dark mode (exact assertion depends on implementation)
-    expect(screen.getByRole('button', { name: /load sample/i })).toBeInTheDocument()
-  })
 })

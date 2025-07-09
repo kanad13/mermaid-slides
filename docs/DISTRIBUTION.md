@@ -1,7 +1,7 @@
 # 🚀 Distribution Guide - Mermaid Slides
 
-**Last Updated**: 2025-07-07  
-**Version**: 1.1.0  
+**Last Updated**: 2025-07-09  
+**Version**: 1.2.0  
 **Status**: Multi-Channel Production Ready
 
 Transform your markdown mermaid diagrams into beautiful presentation slides through **3 flexible distribution channels**.
@@ -85,7 +85,7 @@ docker run -p 3000:3000 kunalpathak13/mermaid-slides:latest
 
 All distribution channels maintain **unified versioning**:
 
-- **Current Version**: 1.1.0
+- **Current Version**: 1.2.0
 - **Release Strategy**: All channels updated simultaneously
 - **Versioning**: Semantic versioning (MAJOR.MINOR.PATCH)
 - **Automation**: GitHub Actions handles all deployments

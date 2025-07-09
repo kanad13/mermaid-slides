@@ -7,7 +7,6 @@ export const NavigationControls = ({
   onNext,
   onFirst,
   onLast,
-  isDarkMode,
   isVisible = true
 }) => {
   const isDisabled = totalDiagrams <= 1;
@@ -16,19 +15,11 @@ export const NavigationControls = ({
     <div className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 transition-opacity duration-300 ${
       isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
     }`}>
-      <div className={`flex items-center space-x-2 px-4 py-3 rounded-full shadow-lg backdrop-blur-sm border ${
-        isDarkMode 
-          ? 'bg-gray-800/90 border-gray-600' 
-          : 'bg-white/90 border-gray-200'
-      }`}>
+      <div className="flex items-center space-x-2 px-4 py-3 rounded-full shadow-lg backdrop-blur-sm border bg-white/90 border-gray-200">
         <button
           onClick={onFirst}
           disabled={isDisabled || currentIndex === 0}
-          className={`p-2 rounded-full transition-all hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${
-            isDarkMode
-              ? 'hover:bg-gray-700 text-gray-300'
-              : 'hover:bg-gray-100 text-gray-600'
-          }`}
+          className="p-2 rounded-full transition-all hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 hover:bg-gray-100 text-gray-600"
           title="First diagram (Home)"
         >
           <SkipBack size={18} />
@@ -43,9 +34,7 @@ export const NavigationControls = ({
           <ChevronLeft size={20} />
         </button>
         
-        <div className={`px-4 py-2 rounded-full text-sm font-medium ${
-          isDarkMode ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800'
-        }`}>
+        <div className="px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
           {currentIndex + 1} / {totalDiagrams}
         </div>
         
@@ -61,11 +50,7 @@ export const NavigationControls = ({
         <button
           onClick={onLast}
           disabled={isDisabled || currentIndex === totalDiagrams - 1}
-          className={`p-2 rounded-full transition-all hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${
-            isDarkMode
-              ? 'hover:bg-gray-700 text-gray-300'
-              : 'hover:bg-gray-100 text-gray-600'
-          }`}
+          className="p-2 rounded-full transition-all hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 hover:bg-gray-100 text-gray-600"
           title="Last diagram (End)"
         >
           <SkipForward size={18} />

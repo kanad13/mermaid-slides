@@ -17,7 +17,6 @@ import { useLayoutCalculations } from '../../hooks/useLayoutCalculations';
  */
 export const DiagramViewer = ({ 
   diagram, 
-  isDarkMode, 
   onError,
   showTitles = true
 }) => {
@@ -105,11 +104,7 @@ export const DiagramViewer = ({
       {/* Title Display */}
       {showTitles && diagram?.title && (
         <div className="flex-shrink-0 pt-8 pb-4 px-6 text-center">
-          <h1 className={`text-3xl font-bold border-b-2 pb-3 inline-block ${
-            isDarkMode 
-              ? 'text-blue-300 border-blue-400' 
-              : 'text-blue-600 border-blue-300'
-          }`}>
+          <h1 className="text-3xl font-bold border-b-2 pb-3 inline-block text-blue-600 border-blue-300">
             {diagram.title}
           </h1>
         </div>
@@ -118,7 +113,7 @@ export const DiagramViewer = ({
       {/* Diagram Content */}
       <div className="flex-1 flex items-center justify-center p-4">
         <div id={diagram?.id} className="flex items-center justify-center w-full h-full">
-          <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-center`}>
+          <div className="text-gray-500 text-center">
             {diagram?.type === 'image' ? 'Loading image...' : (isLoaded ? 'Rendering diagram...' : 'Loading Mermaid...')}
           </div>
         </div>

@@ -6,7 +6,6 @@ import { Diagram } from './types/diagram';
 function App() {
   const [isViewMode, setIsViewMode] = useState(false);
   const [diagrams, setDiagrams] = useState<Diagram[]>([]);
-  const [isDarkMode] = useState(false);
 
   const handleViewDiagrams = (extractedDiagrams: Diagram[]) => {
     setDiagrams(extractedDiagrams);
@@ -23,7 +22,6 @@ function App() {
       <Viewer
         diagrams={diagrams}
         onBackToEditor={handleBackToEditor}
-        isDarkMode={isDarkMode}
         autoHideEnabled={false}
       />
     );
@@ -32,7 +30,6 @@ function App() {
   return (
     <Editor
       onViewDiagrams={handleViewDiagrams}
-      isDarkMode={isDarkMode}
     />
   );
 }

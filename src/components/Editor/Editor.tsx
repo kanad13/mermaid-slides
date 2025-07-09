@@ -11,12 +11,10 @@ import { Diagram } from '../../types/diagram';
 
 interface EditorProps {
   onViewDiagrams: (_diagrams: Diagram[]) => void;
-  isDarkMode: boolean;
 }
 
 export const Editor: React.FC<EditorProps> = ({ 
-  onViewDiagrams,
-  isDarkMode
+  onViewDiagrams
 }) => {
   const [markdownText, setMarkdownText] = useState<string>('');
   const { setFileName } = useFileHandler();
@@ -49,15 +47,14 @@ export const Editor: React.FC<EditorProps> = ({
   }, [markdownText, processDiagrams]);
 
   return (
-    <div className={`min-h-screen p-6 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className="min-h-screen p-6 bg-gray-50">
       <div className="max-w-4xl mx-auto">
-        <div className={`rounded-lg shadow-lg p-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-          <EditorHeader isDarkMode={isDarkMode} />
+        <div className="rounded-lg shadow-lg p-6 bg-white">
+          <EditorHeader />
 
           <div className="space-y-4">
             <FileUpload
               onFileLoad={handleFileLoad}
-              isDarkMode={isDarkMode}
               onLoadSample={loadSample}
               onViewDiagrams={handleViewDiagrams}
               onClear={handleClear}
@@ -67,23 +64,19 @@ export const Editor: React.FC<EditorProps> = ({
             <MarkdownTextarea 
               markdownText={markdownText}
               onTextChange={setMarkdownText}
-              isDarkMode={isDarkMode}
             />
 
           </div>
 
           <StatusMessages 
             error={error}
-            isDarkMode={isDarkMode}
           />
 
-          <Instructions isDarkMode={isDarkMode} />
+          <Instructions />
         </div>
         
         {/* Footer */}
-        <div className={`mt-8 pt-4 border-t text-center text-sm ${
-          isDarkMode ? 'border-gray-700 text-gray-400' : 'border-gray-200 text-gray-500'
-        }`}>
+        <div className="mt-8 pt-4 border-t text-center text-sm border-gray-200 text-gray-500">
           <div className="flex justify-center space-x-6">
             <a 
               href="#" 
@@ -93,17 +86,17 @@ export const Editor: React.FC<EditorProps> = ({
                 const modal = document.createElement('div');
                 modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50';
                 modal.innerHTML = `
-                  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-4xl max-h-[80vh] overflow-y-auto m-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}">
-                    <div class="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-600 px-6 py-4 flex justify-between items-center">
+                  <div class="bg-white rounded-lg shadow-lg max-w-4xl max-h-[80vh] overflow-y-auto m-4 text-gray-900">
+                    <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
                       <h2 class="text-lg font-semibold">Privacy Policy</h2>
-                      <button id="close-privacy" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                      <button id="close-privacy" class="text-gray-500 hover:text-gray-700">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                           <line x1="18" y1="6" x2="6" y2="18"></line>
                           <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
                       </button>
                     </div>
-                    <div class="px-6 py-4 prose dark:prose-invert max-w-none">
+                    <div class="px-6 py-4 prose max-w-none">
                       <div class="whitespace-pre-wrap text-sm leading-relaxed">
 ## Privacy Policy
 
@@ -170,7 +163,7 @@ This privacy policy may be updated from time to time. The latest version will al
                 });
                 modal.querySelector('#close-privacy')?.addEventListener('click', closeModal);
               }}
-              className={`hover:underline ${isDarkMode ? 'hover:text-gray-300' : 'hover:text-gray-700'}`}
+              className="hover:underline hover:text-gray-700"
             >
               Privacy Policy
             </a>
@@ -182,10 +175,10 @@ This privacy policy may be updated from time to time. The latest version will al
                 const modal = document.createElement('div');
                 modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50';
                 modal.innerHTML = `
-                  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-2xl max-h-[80vh] overflow-y-auto m-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}">
-                    <div class="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-600 px-6 py-4 flex justify-between items-center">
+                  <div class="bg-white rounded-lg shadow-lg max-w-2xl max-h-[80vh] overflow-y-auto m-4 text-gray-900">
+                    <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
                       <h2 class="text-lg font-semibold">Legal Notice</h2>
-                      <button id="close-legal" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                      <button id="close-legal" class="text-gray-500 hover:text-gray-700">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                           <line x1="18" y1="6" x2="6" y2="18"></line>
                           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -201,7 +194,7 @@ This privacy policy may be updated from time to time. The latest version will al
                             <a href="https://github.com/kanad13/mermaid-slides/issues" 
                                target="_blank" 
                                rel="noopener noreferrer"
-                               class="text-blue-600 dark:text-blue-400 hover:underline">
+                               class="text-blue-600 hover:underline">
                               GitHub Issues
                             </a>
                           </p>
@@ -216,7 +209,7 @@ This privacy policy may be updated from time to time. The latest version will al
                             <a href="https://github.com/kanad13/mermaid-slides" 
                                target="_blank" 
                                rel="noopener noreferrer"
-                               class="text-blue-600 dark:text-blue-400 hover:underline">
+                               class="text-blue-600 hover:underline">
                               https://github.com/kanad13/mermaid-slides
                             </a>
                           </p>
@@ -237,7 +230,7 @@ This privacy policy may be updated from time to time. The latest version will al
                 });
                 modal.querySelector('#close-legal')?.addEventListener('click', closeModal);
               }}
-              className={`hover:underline ${isDarkMode ? 'hover:text-gray-300' : 'hover:text-gray-700'}`}
+              className="hover:underline hover:text-gray-700"
             >
               Legal Notice
             </a>

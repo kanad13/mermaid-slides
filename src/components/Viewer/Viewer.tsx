@@ -10,7 +10,6 @@ import { ViewerProps } from '../../types/components';
 export const Viewer: React.FC<ViewerProps> = ({ 
   diagrams, 
   onBackToEditor,
-  isDarkMode,
   isExtensionMode = false,
   autoHideEnabled = false
 }) => {
@@ -37,11 +36,10 @@ export const Viewer: React.FC<ViewerProps> = ({
   });
 
   return (
-    <div className={`${isExtensionMode ? 'h-screen' : 'min-h-screen'} flex flex-col relative ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
+    <div className={`${isExtensionMode ? 'h-screen' : 'min-h-screen'} flex flex-col relative bg-white`}>
       <ViewerHeader
         currentIndex={currentIndex}
         totalDiagrams={diagrams.length}
-        isDarkMode={isDarkMode}
         isGridView={isGridView}
         onBackToEditor={onBackToEditor}
         onToggleGridView={toggleGridView}
@@ -56,12 +54,11 @@ export const Viewer: React.FC<ViewerProps> = ({
         onShowTitlesToggle={setShowTitles}
       />
 
-      <div className={`flex-1 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
+      <div className="flex-1 bg-white">
         {isGridView ? (
           <GridView
             diagrams={diagrams}
             currentIndex={currentIndex}
-            isDarkMode={isDarkMode}
             onDiagramSelect={handleDiagramSelect}
             isExtensionMode={isExtensionMode}
             showTitles={showTitles}
@@ -69,14 +66,13 @@ export const Viewer: React.FC<ViewerProps> = ({
         ) : (
           <DiagramViewer
             diagram={diagrams[currentIndex]}
-            isDarkMode={isDarkMode}
             showTitles={showTitles}
           />
         )}
       </div>
 
       {/* Keyboard shortcuts help - only show in single view */}
-      {!isGridView && <KeyboardShortcutsHelp isDarkMode={isDarkMode} currentIndex={currentIndex} />}
+      {!isGridView && <KeyboardShortcutsHelp currentIndex={currentIndex} />}
     </div>
   );
 };

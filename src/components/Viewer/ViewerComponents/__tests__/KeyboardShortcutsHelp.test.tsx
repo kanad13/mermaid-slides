@@ -17,27 +17,21 @@ describe('KeyboardShortcutsHelp', () => {
   })
 
   it('renders navigation hints initially', () => {
-    render(<KeyboardShortcutsHelp isDarkMode={false} />)
+    render(<KeyboardShortcutsHelp />)
     
     expect(screen.getByText('← → ↑ ↓ Navigate • ESC Exit')).toBeInTheDocument()
   })
 
-  it('applies dark mode styles correctly', () => {
-    render(<KeyboardShortcutsHelp isDarkMode={true} />)
-    
-    const hint = screen.getByText('← → ↑ ↓ Navigate • ESC Exit')
-    expect(hint).toHaveClass('bg-gray-800/80', 'border-gray-600', 'text-gray-300')
-  })
 
   it('applies light mode styles correctly', () => {
-    render(<KeyboardShortcutsHelp isDarkMode={false} />)
+    render(<KeyboardShortcutsHelp />)
     
     const hint = screen.getByText('← → ↑ ↓ Navigate • ESC Exit')
     expect(hint).toHaveClass('bg-white/80', 'border-gray-200', 'text-gray-600')
   })
 
   it('auto-hides after 3 seconds', async () => {
-    render(<KeyboardShortcutsHelp isDarkMode={false} />)
+    render(<KeyboardShortcutsHelp />)
     
     // Initially visible
     expect(screen.getByText('← → ↑ ↓ Navigate • ESC Exit')).toBeInTheDocument()
@@ -53,7 +47,7 @@ describe('KeyboardShortcutsHelp', () => {
   })
 
   it('has smooth transition classes', () => {
-    render(<KeyboardShortcutsHelp isDarkMode={false} />)
+    render(<KeyboardShortcutsHelp />)
     
     const hint = screen.getByText('← → ↑ ↓ Navigate • ESC Exit')
     expect(hint).toHaveClass('transition-all', 'duration-500')

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Settings, X, Eye, EyeOff, Info, Type } from 'lucide-react';
 
 interface SettingsPanelProps {
-  isDarkMode: boolean;
   autoHideEnabled: boolean;
   onAutoHideToggle: (_enabled: boolean) => void;
   showTitles: boolean;
@@ -11,7 +10,6 @@ interface SettingsPanelProps {
 }
 
 export const SettingsPanel = ({
-  isDarkMode,
   autoHideEnabled,
   onAutoHideToggle,
   showTitles,
@@ -29,14 +27,10 @@ export const SettingsPanel = ({
       {/* Settings Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-center w-10 h-10 rounded-lg border transition-colors ${
-          isDarkMode 
-            ? 'border-gray-600 bg-gray-700 hover:bg-gray-600 text-white' 
-            : 'border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700'
-        }`}
+        className="flex items-center justify-center w-10 h-10 rounded-lg border transition-colors border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700"
         title="Settings"
       >
-        <Settings size={16} className={isDarkMode ? 'text-gray-400' : 'text-gray-500'} />
+        <Settings size={16} className="text-gray-500" />
       </button>
 
       {/* Settings Panel */}
@@ -49,25 +43,15 @@ export const SettingsPanel = ({
           />
           
           {/* Panel */}
-          <div className={`absolute right-0 top-full mt-2 w-80 rounded-lg border shadow-lg z-20 ${
-            isDarkMode 
-              ? 'border-gray-600 bg-gray-700' 
-              : 'border-gray-200 bg-white'
-          }`}>
+          <div className="absolute right-0 top-full mt-2 w-80 rounded-lg border shadow-lg z-20 border-gray-200 bg-white">
             {/* Header */}
-            <div className={`flex items-center justify-between px-4 py-3 border-b ${
-              isDarkMode ? 'border-gray-600' : 'border-gray-200'
-            }`}>
-              <h3 className={`text-sm font-medium ${
-                isDarkMode ? 'text-white' : 'text-gray-900'
-              }`}>
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+              <h3 className="text-sm font-medium text-gray-900">
                 Settings
               </h3>
               <button
                 onClick={() => setIsOpen(false)}
-                className={`p-1 rounded hover:bg-gray-100 ${
-                  isDarkMode ? 'hover:bg-gray-600 text-gray-400' : 'text-gray-500'
-                }`}
+                className="p-1 rounded hover:bg-gray-100 text-gray-500"
               >
                 <X size={14} />
               </button>
@@ -79,10 +63,8 @@ export const SettingsPanel = ({
               <div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <Type size={16} className={isDarkMode ? 'text-gray-400' : 'text-gray-500'} />
-                    <label className={`text-sm font-medium ${
-                      isDarkMode ? 'text-white' : 'text-gray-900'
-                    }`}>
+                    <Type size={16} className="text-gray-500" />
+                    <label className="text-sm font-medium text-gray-900">
                       Show Titles
                     </label>
                   </div>
@@ -92,8 +74,6 @@ export const SettingsPanel = ({
                     className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
                       showTitles 
                         ? 'bg-blue-600' 
-                        : isDarkMode 
-                        ? 'bg-gray-600' 
                         : 'bg-gray-200'
                     }`}
                   >
@@ -104,9 +84,7 @@ export const SettingsPanel = ({
                     />
                   </button>
                 </div>
-                <p className={`text-xs mt-1 ${
-                  isDarkMode ? 'text-gray-400' : 'text-gray-500'
-                }`}>
+                <p className="text-xs mt-1 text-gray-500">
                   Display markdown headers as titles above diagrams and images
                 </p>
               </div>
@@ -117,13 +95,11 @@ export const SettingsPanel = ({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                       {autoHideEnabled ? (
-                        <EyeOff size={16} className={isDarkMode ? 'text-gray-400' : 'text-gray-500'} />
+                        <EyeOff size={16} className="text-gray-500" />
                       ) : (
-                        <Eye size={16} className={isDarkMode ? 'text-gray-400' : 'text-gray-500'} />
+                        <Eye size={16} className="text-gray-500" />
                       )}
-                      <label className={`text-sm font-medium ${
-                        isDarkMode ? 'text-white' : 'text-gray-900'
-                      }`}>
+                      <label className="text-sm font-medium text-gray-900">
                         Auto-hide Header
                       </label>
                     </div>
@@ -133,8 +109,6 @@ export const SettingsPanel = ({
                       className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
                         autoHideEnabled 
                           ? 'bg-blue-600' 
-                          : isDarkMode 
-                          ? 'bg-gray-600' 
                           : 'bg-gray-200'
                       }`}
                     >
@@ -145,23 +119,17 @@ export const SettingsPanel = ({
                       />
                     </button>
                   </div>
-                  <p className={`text-xs mt-1 ${
-                    isDarkMode ? 'text-gray-400' : 'text-gray-500'
-                  }`}>
+                  <p className="text-xs mt-1 text-gray-500">
                     Header will hide after 2 seconds of inactivity
                   </p>
                 </div>
               )}
 
               {/* About Button */}
-              <div className="pt-2 border-t border-gray-200 dark:border-gray-600">
+              <div className="pt-2 border-t border-gray-200">
                 <button
                   onClick={handleAbout}
-                  className={`flex items-center space-x-2 w-full px-3 py-2 text-sm rounded-md transition-colors ${
-                    isDarkMode
-                      ? 'text-gray-200 hover:bg-gray-600'
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
+                  className="flex items-center space-x-2 w-full px-3 py-2 text-sm rounded-md transition-colors text-gray-700 hover:bg-gray-100"
                 >
                   <Info size={16} />
                   <span>About Mermaid Slides</span>

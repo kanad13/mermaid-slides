@@ -4,9 +4,10 @@ import { SettingsPanel } from '../SettingsPanel';
 
 describe('SettingsPanel', () => {
   const defaultProps = {
-    isDarkMode: false,
     autoHideEnabled: false,
     onAutoHideToggle: vi.fn(),
+    showTitles: true,
+    onShowTitlesToggle: vi.fn(),
     isExtensionMode: false
   };
 

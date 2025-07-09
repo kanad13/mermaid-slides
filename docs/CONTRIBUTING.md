@@ -74,11 +74,11 @@ mermaid-slides/
 │   └── types/               # TypeScript type definitions
 ├──
 ├── docs/                    # Comprehensive documentation
-│   ├── README.md            # Complete documentation
-│   ├── ACTION_PLAN.md       # Distribution roadmap
+│   ├── ARCHITECTURE_STRATEGY.md  # Multi-channel architecture
 │   ├── FEATURES.md          # Feature overview
 │   ├── CONTRIBUTING.md      # This file
-│   └── DEPLOYMENT.md        # Deployment guide
+│   ├── DISTRIBUTION.md      # Distribution guide
+│   └── TESTING_AND_DEPLOYMENT.md # Testing and deployment
 ├──
 ├── config/                  # Configuration files
 │   ├── vite.config.js       # Build configuration
@@ -290,9 +290,10 @@ Add any other context or screenshots about the feature request.
 
 ### Project-Specific Resources
 
-- [Action Plan](MERMAID_SLIDES_ACTION_PLAN.md)
-- [Feature Documentation](docs/FEATURES.md)
-- [Deployment Guide](docs/DEPLOYMENT.md)
+- [Architecture Strategy](ARCHITECTURE_STRATEGY.md)
+- [Feature Documentation](FEATURES.md)
+- [Distribution Guide](DISTRIBUTION.md)
+- [Testing and Deployment](TESTING_AND_DEPLOYMENT.md)
 
 ## ❓ Questions and Support
 
@@ -300,7 +301,7 @@ Add any other context or screenshots about the feature request.
 
 - **GitHub Discussions** - For questions and community support
 - **GitHub Issues** - For bug reports and feature requests
-- **Email** - [your-email@example.com] for private concerns
+- **GitHub Repository** - [mermaid-slides](https://github.com/kanad13/mermaid-slides) for code and documentation
 
 ### Response Times
 

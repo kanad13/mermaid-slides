@@ -1,18 +1,13 @@
 import React from 'react';
 import { Diagram } from './diagram';
 
-// Common Props
-export interface CommonProps {
-  isDarkMode: boolean;
-}
-
 // Editor Component Props
-export interface EditorProps extends CommonProps {
+export interface EditorProps {
   onViewDiagrams: (diagrams: Diagram[]) => void;
 }
 
 // Viewer Component Props
-export interface ViewerProps extends CommonProps {
+export interface ViewerProps {
   diagrams: Diagram[];
   onBackToEditor: () => void;
   isExtensionMode?: boolean;
@@ -20,7 +15,7 @@ export interface ViewerProps extends CommonProps {
 }
 
 // File Upload Props
-export interface FileUploadProps extends CommonProps {
+export interface FileUploadProps {
   onFileLoad: (content: string, name: string) => void;
   onLoadSample: () => void;
   onViewDiagrams: () => void;
@@ -29,7 +24,7 @@ export interface FileUploadProps extends CommonProps {
 }
 
 // Navigation Props
-export interface NavigationControlsProps extends CommonProps {
+export interface NavigationControlsProps {
   currentIndex: number;
   totalDiagrams: number;
   onPrevious: () => void;
@@ -39,7 +34,7 @@ export interface NavigationControlsProps extends CommonProps {
 }
 
 // Viewer Header Props
-export interface ViewerHeaderProps extends CommonProps {
+export interface ViewerHeaderProps {
   currentIndex: number;
   totalDiagrams: number;
   isGridView: boolean;
@@ -48,21 +43,21 @@ export interface ViewerHeaderProps extends CommonProps {
 }
 
 // Diagram Viewer Props
-export interface DiagramViewerProps extends CommonProps {
+export interface DiagramViewerProps {
   diagram: Diagram;
 }
 
 // Grid View Props
-export interface GridViewProps extends CommonProps {
+export interface GridViewProps {
   diagrams: Diagram[];
   currentIndex: number;
   onDiagramSelect: (index: number) => void;
 }
 
 // Editor Component Props
-export interface EditorHeaderProps extends CommonProps {}
+export interface EditorHeaderProps {}
 
-export interface MarkdownTextareaProps extends CommonProps {
+export interface MarkdownTextareaProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -73,14 +68,14 @@ export interface ActionButtonsProps {
   onViewDiagrams: () => void;
 }
 
-export interface StatusMessagesProps extends CommonProps {
+export interface StatusMessagesProps {
   error: string;
 }
 
-export interface InstructionsProps extends CommonProps {}
+export interface InstructionsProps {}
 
 // File Upload Component Props
-export interface DropZoneProps extends CommonProps {
+export interface DropZoneProps {
   isDragging: boolean;
   onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   onDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
@@ -89,7 +84,7 @@ export interface DropZoneProps extends CommonProps {
   onLoadSample: () => void;
 }
 
-export interface CurrentFileDisplayProps extends CommonProps {
+export interface CurrentFileDisplayProps {
   fileName: string;
 }
 
@@ -109,4 +104,4 @@ export interface ProgressBarProps {
 }
 
 // Keyboard Shortcuts
-export interface KeyboardShortcutsHelpProps extends CommonProps {}
+export interface KeyboardShortcutsHelpProps {}

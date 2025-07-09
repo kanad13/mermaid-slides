@@ -5,7 +5,6 @@ import { getDiagramType } from '../../utils/mermaidParser';
 export const GridView = ({ 
   diagrams, 
   currentIndex, 
-  isDarkMode, 
   onDiagramSelect,
   isExtensionMode = false,
   showTitles = true
@@ -68,24 +67,18 @@ export const GridView = ({
             className={`border rounded-lg p-4 cursor-pointer transition-all hover:shadow-lg ${
               currentIndex === index
                 ? 'border-blue-500 shadow-lg'
-                : isDarkMode
-                ? 'border-gray-600 hover:border-gray-500 bg-gray-800'
                 : 'border-gray-300 hover:border-gray-400 bg-white'
             }`}
             onClick={() => onDiagramSelect(index)}
           >
             <div className="mb-3">
-              <span className={`text-sm font-medium ${
-                isDarkMode ? 'text-gray-300' : 'text-gray-700'
-              }`}>
+              <span className="text-sm font-medium text-gray-700">
                 {showTitles && diagram.title 
                   ? diagram.title 
                   : `${diagram.type === 'image' ? 'Image' : 'Diagram'} ${index + 1}`
                 }
               </span>
-              <span className={`ml-2 text-xs px-2 py-1 rounded ${
-                isDarkMode ? 'bg-gray-700 text-gray-400' : 'bg-gray-100 text-gray-600'
-              }`}>
+              <span className="ml-2 text-xs px-2 py-1 rounded bg-gray-100 text-gray-600">
                 {diagram.type === 'image' ? 'image' : getDiagramType(diagram.code)}
               </span>
             </div>

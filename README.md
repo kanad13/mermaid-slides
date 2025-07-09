@@ -72,7 +72,9 @@ npm run dev
 
 - **File Handling** - Drag & drop, file browser, or paste markdown content
 - **Mixed Content** - Mermaid diagrams + images in unified presentations
+- **Title Extraction** - Automatically extracts markdown headers as slide titles with user toggle
 - **Navigation** - Keyboard controls, progress bar, grid view, thumbnails
+- **Settings Panel** - Customize title display, auto-hide behavior, and user preferences
 - **Presentation Mode** - Full-screen, distraction-free experience
 - **Responsive** - Works on desktop, tablet, and mobile devices
 
@@ -82,6 +84,7 @@ npm run dev
 - **Offline First** - Complete functionality without internet dependency
 - **Local Processing** - All diagram rendering happens on your device
 - **Self-Contained** - All distributions bundle dependencies locally
+- **Privacy Modals** - Built-in privacy policy and legal notice information
 
 ### **Multi-Platform Availability**
 
