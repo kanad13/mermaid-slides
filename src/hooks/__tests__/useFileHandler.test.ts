@@ -23,10 +23,11 @@ describe('useFileHandler', () => {
   it('handles file selection correctly', async () => {
     const { result } = renderHook(() => useFileHandler())
     const mockOnFileLoad = vi.fn()
-    
+
     const mockFile = new File(['test content'], 'test.md', { type: 'text/markdown' })
     const mockEvent = {
       target: { files: [mockFile] }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any
 
     await act(async () => {
@@ -39,7 +40,8 @@ describe('useFileHandler', () => {
 
   it('handles drag events correctly', () => {
     const { result } = renderHook(() => useFileHandler())
-    
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mockEvent = { preventDefault: vi.fn() } as any
 
     act(() => {
@@ -59,11 +61,12 @@ describe('useFileHandler', () => {
   it('handles file drop correctly', async () => {
     const { result } = renderHook(() => useFileHandler())
     const mockOnFileLoad = vi.fn()
-    
+
     const mockFile = new File(['test content'], 'dropped.md', { type: 'text/markdown' })
     const mockEvent = {
       preventDefault: vi.fn(),
       dataTransfer: { files: [mockFile] }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any
 
     await act(async () => {

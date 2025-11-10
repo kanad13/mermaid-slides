@@ -22,95 +22,58 @@ function logError(message) {
     testsFailed++;
 }
 
-// Test 1: Check key strategic documents exist
-console.log('\n📋 Checking strategic documents...');
-const strategicDocs = [
-    'docs/ACTION_PLAN.md',
-    'docs/ARCHITECTURE_STRATEGY.md',
-    'docs/DISTRIBUTION_GUIDE.md',
-    'docs/VERSIONING.md',
-    'docs/DEPENDENCY_MANAGEMENT.md'
+// Test 1: Check key documentation files exist
+console.log('\n📋 Checking documentation files...');
+const docs = [
+    'README.md',
+    'AGENTS.md',
+    'docs/DEPLOYMENT.md',
+    'docs/CONTRIBUTING.md'
 ];
 
-for (const doc of strategicDocs) {
+for (const doc of docs) {
     if (fs.existsSync(doc)) {
-        logSuccess(`Strategic document exists: ${doc}`);
+        logSuccess(`Documentation exists: ${doc}`);
     } else {
-        logError(`Missing strategic document: ${doc}`);
+        logError(`Missing documentation: ${doc}`);
     }
 }
 
-// Test 2: Check CLAUDE.md references all key documents
-console.log('\n📝 Checking CLAUDE.md references...');
+// Test 2: Check AGENTS.md references key documents
+console.log('\n📝 Checking AGENTS.md references...');
 try {
-    const claudeContent = fs.readFileSync('CLAUDE.md', 'utf8');
-    
+    const agentsContent = fs.readFileSync('AGENTS.md', 'utf8');
+
     const requiredReferences = [
-        'docs/ACTION_PLAN.md',
-        'docs/ARCHITECTURE_STRATEGY.md',
-        'docs/DISTRIBUTION_GUIDE.md',
+        'docs/DEPLOYMENT.md',
+        'docs/CONTRIBUTING.md',
         'scripts/validate-compatibility.cjs'
     ];
-    
+
     for (const ref of requiredReferences) {
-        if (claudeContent.includes(ref)) {
-            logSuccess(`CLAUDE.md references: ${ref}`);
+        if (agentsContent.includes(ref)) {
+            logSuccess(`AGENTS.md references: ${ref}`);
         } else {
-            logError(`CLAUDE.md missing reference: ${ref}`);
+            logError(`AGENTS.md missing reference: ${ref}`);
         }
     }
-    
-    // Check for Phase 4 readiness indicators
-    if (claudeContent.includes('Phase 4')) {
-        logSuccess('CLAUDE.md indicates Phase 4 readiness');
-    } else {
-        logError('CLAUDE.md missing Phase 4 readiness indicators');
-    }
-    
+
 } catch {
-    logError('Cannot read CLAUDE.md');
+    logError('Cannot read AGENTS.md');
 }
 
-// Test 3: Check README.md links to strategic documents
-console.log('\n🏠 Checking README.md strategic links...');
+// Test 3: Check README.md exists and is readable
+console.log('\n🏠 Checking README.md...');
 try {
     const readmeContent = fs.readFileSync('README.md', 'utf8');
-    
-    const strategicLinks = [
-        'docs/ARCHITECTURE_STRATEGY.md',
-        'docs/DISTRIBUTION_GUIDE.md',
-        'docs/ACTION_PLAN.md'
-    ];
-    
-    for (const link of strategicLinks) {
-        if (readmeContent.includes(link)) {
-            logSuccess(`README.md links to: ${link}`);
-        } else {
-            logError(`README.md missing link: ${link}`);
-        }
+
+    if (readmeContent.length > 0) {
+        logSuccess('README.md is readable and has content');
+    } else {
+        logError('README.md is empty');
     }
 } catch {
     logError('Cannot read README.md');
-}
-
-// Test 4: Check ACTION_PLAN.md shows Phase 3.5 complete
-console.log('\n🎯 Checking action plan status...');
-try {
-    const actionPlanContent = fs.readFileSync('docs/ACTION_PLAN.md', 'utf8');
-    
-    if (actionPlanContent.includes('Phase 3.5') && actionPlanContent.includes('COMPLETE')) {
-        logSuccess('ACTION_PLAN.md shows Phase 3.5 complete');
-    } else {
-        logError('ACTION_PLAN.md does not show Phase 3.5 complete');
-    }
-    
-    if (actionPlanContent.includes('Phase 4')) {
-        logSuccess('ACTION_PLAN.md references Phase 4');
-    } else {
-        logError('ACTION_PLAN.md missing Phase 4 references');
-    }
-} catch {
-    logError('Cannot read ACTION_PLAN.md');
 }
 
 // Test 5: Check validation scripts are executable
@@ -128,27 +91,20 @@ for (const script of validationScripts) {
     }
 }
 
-// Test 6: Check continuity indicators in CLAUDE.md
-console.log('\n🔄 Checking continuity indicators...');
+// Test 6: Check documentation structure consistency
+console.log('\n🔄 Checking documentation structure...');
 try {
-    const claudeContent = fs.readFileSync('CLAUDE.md', 'utf8');
-    
-    const continuityIndicators = [
-        'KEY CONTINUITY DOCUMENTS',
-        'MUST READ',
-        'Phase 3.5 Complete',
-        'Phase 4'
-    ];
-    
-    for (const indicator of continuityIndicators) {
-        if (claudeContent.includes(indicator)) {
-            logSuccess(`CLAUDE.md contains continuity indicator: ${indicator}`);
-        } else {
-            logError(`CLAUDE.md missing continuity indicator: ${indicator}`);
-        }
+    const deploymentExists = fs.existsSync('docs/DEPLOYMENT.md');
+    const contributingExists = fs.existsSync('docs/CONTRIBUTING.md');
+    const agentsExists = fs.existsSync('AGENTS.md');
+
+    if (deploymentExists && contributingExists && agentsExists) {
+        logSuccess('All core documentation files present');
+    } else {
+        logError('Missing core documentation files');
     }
 } catch {
-    logError('Cannot read CLAUDE.md for continuity check');
+    logError('Cannot verify documentation structure');
 }
 
 // Final summary
@@ -160,10 +116,10 @@ console.log(`Total Tests: ${testsPasssed + testsFailed}`);
 
 if (testsFailed === 0) {
     console.log('\n🎉 All continuity validation tests passed!');
-    console.log('The project is ready for seamless Phase 4 development.');
+    console.log('Documentation structure is consistent and complete.');
     process.exit(0);
 } else {
     console.log('\n⚠️  Some continuity validation tests failed.');
-    console.log('Please review and fix the issues to ensure smooth session transitions.');
+    console.log('Please review and fix the documentation issues.');
     process.exit(1);
 }

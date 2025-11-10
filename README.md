@@ -143,11 +143,9 @@ Mermaid Slides is designed with privacy as a core principle:
 ### **User Guides & Documentation**
 
 - **[Complete Documentation](docs/)** - Full guides and feature details
-- **[Features Overview](docs/FEATURES.md)** - Comprehensive feature list
-- **[Testing & Deployment](docs/TESTING_AND_DEPLOYMENT.md)** - Testing and deployment guides
-- **[VS Code Testing Guide](docs/VSCODE_TESTING_GUIDE.md)** - VS Code extension testing
-- **[Development Setup](CLAUDE.md)** - Developer workflow and instructions
-- **[Contributing](docs/CONTRIBUTING.md)** - How to contribute to the project
+- **[Deployment Guide](docs/DEPLOYMENT.md)** - Multi-channel deployment and distribution
+- **[Contributing Guide](docs/CONTRIBUTING.md)** - Development workflow and contribution guidelines
+- **[AI Agent Context](AGENTS.md)** - Context file for AI coding assistants
 
 ## Technology
 

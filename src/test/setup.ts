@@ -14,7 +14,16 @@ vi.mock('mermaid', () => ({
 // Mock file operations for testing
 Object.defineProperty(window, 'File', {
   value: class MockFile {
-    constructor(public parts: BlobPart[], public name: string, public options?: FilePropertyBag) {}
+    parts: BlobPart[]
+    name: string
+    options?: FilePropertyBag
+
+    constructor(parts: BlobPart[], name: string, options?: FilePropertyBag) {
+      this.parts = parts
+      this.name = name
+      this.options = options
+    }
+
     text() {
       return Promise.resolve(this.parts.join(''))
     }
@@ -24,12 +33,13 @@ Object.defineProperty(window, 'File', {
 Object.defineProperty(window, 'FileReader', {
   value: class MockFileReader {
     result: string | null = null
-    readAsText(file: File) {
+    readAsText(_file: File) {
       setTimeout(() => {
         this.result = 'mock file content'
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.onload?.({ target: this } as any)
       }, 0)
     }
-    onload: ((event: ProgressEvent<FileReader>) => void) | null = null
+    onload: ((_event: ProgressEvent<FileReader>) => void) | null = null
   }
 })

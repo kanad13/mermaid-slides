@@ -3,12 +3,13 @@ import { useState, useEffect, useCallback } from 'react';
 interface UseMermaidReturn {
   isLoaded: boolean;
   error: string | null;
-  renderDiagram: (elementId: string, code: string) => Promise<SVGElement | null>;
+  renderDiagram: (_elementId: string, _code: string) => Promise<SVGElement | null>;
 }
 
 export const useMermaid = (): UseMermaidReturn => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [mermaidInstance, setMermaidInstance] = useState<any>(null);
 
   useEffect(() => {

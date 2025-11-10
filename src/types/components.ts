@@ -3,7 +3,7 @@ import { Diagram } from './diagram';
 
 // Editor Component Props
 export interface EditorProps {
-  onViewDiagrams: (diagrams: Diagram[]) => void;
+  onViewDiagrams: (_diagrams: Diagram[]) => void;
 }
 
 // Viewer Component Props
@@ -16,7 +16,7 @@ export interface ViewerProps {
 
 // File Upload Props
 export interface FileUploadProps {
-  onFileLoad: (content: string, name: string) => void;
+  onFileLoad: (_content: string, _name: string) => void;
   onLoadSample: () => void;
   onViewDiagrams: () => void;
   onClear: () => void;
@@ -51,15 +51,18 @@ export interface DiagramViewerProps {
 export interface GridViewProps {
   diagrams: Diagram[];
   currentIndex: number;
-  onDiagramSelect: (index: number) => void;
+  onDiagramSelect: (_index: number) => void;
 }
 
 // Editor Component Props
-export interface EditorHeaderProps {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface EditorHeaderProps {
+  // No props currently defined
+}
 
 export interface MarkdownTextareaProps {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (_value: string) => void;
   placeholder?: string;
 }
 
@@ -72,15 +75,18 @@ export interface StatusMessagesProps {
   error: string;
 }
 
-export interface InstructionsProps {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface InstructionsProps {
+  // No props currently defined
+}
 
 // File Upload Component Props
 export interface DropZoneProps {
   isDragging: boolean;
-  onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDrop: (e: React.DragEvent<HTMLDivElement>) => void;
-  onFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onDragOver: (_e: React.DragEvent<HTMLDivElement>) => void;
+  onDragLeave: (_e: React.DragEvent<HTMLDivElement>) => void;
+  onDrop: (_e: React.DragEvent<HTMLDivElement>) => void;
+  onFileSelect: (_e: React.ChangeEvent<HTMLInputElement>) => void;
   onLoadSample: () => void;
 }
 
@@ -89,7 +95,7 @@ export interface CurrentFileDisplayProps {
 }
 
 export interface FileInputProps {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 // Progress and Navigation
@@ -104,4 +110,7 @@ export interface ProgressBarProps {
 }
 
 // Keyboard Shortcuts
-export interface KeyboardShortcutsHelpProps {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface KeyboardShortcutsHelpProps {
+  // No props currently defined
+}
