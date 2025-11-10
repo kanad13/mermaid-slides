@@ -8,6 +8,16 @@ vi.mock('../../utils/fileHandler', () => ({
   readFileAsText: vi.fn().mockResolvedValue('mock file content')
 }))
 
+// Type-safe mock event helpers
+type MockFileInputEvent = {
+  target: { files: File[] }
+}
+
+type MockDragEvent = {
+  preventDefault: () => void
+  dataTransfer?: { files: File[] }
+}
+
 describe('useFileHandler', () => {
   beforeEach(() => {
     vi.clearAllMocks()
@@ -25,10 +35,9 @@ describe('useFileHandler', () => {
     const mockOnFileLoad = vi.fn()
 
     const mockFile = new File(['test content'], 'test.md', { type: 'text/markdown' })
-    const mockEvent = {
+    const mockEvent: MockFileInputEvent = {
       target: { files: [mockFile] }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } as any
+    }
 
     await act(async () => {
       await result.current.handleFileSelect(mockEvent, mockOnFileLoad)
@@ -41,20 +50,21 @@ describe('useFileHandler', () => {
   it('handles drag events correctly', () => {
     const { result } = renderHook(() => useFileHandler())
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const mockEvent = { preventDefault: vi.fn() } as any
+    const mockEvent: MockDragEvent = {
+      preventDefault: vi.fn()
+    }
 
     act(() => {
       result.current.handleDragEvents.onDragOver(mockEvent)
     })
-    
+
     expect(result.current.isDragging).toBe(true)
     expect(mockEvent.preventDefault).toHaveBeenCalled()
 
     act(() => {
       result.current.handleDragEvents.onDragLeave(mockEvent)
     })
-    
+
     expect(result.current.isDragging).toBe(false)
   })
 
@@ -63,11 +73,10 @@ describe('useFileHandler', () => {
     const mockOnFileLoad = vi.fn()
 
     const mockFile = new File(['test content'], 'dropped.md', { type: 'text/markdown' })
-    const mockEvent = {
+    const mockEvent: MockDragEvent = {
       preventDefault: vi.fn(),
       dataTransfer: { files: [mockFile] }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } as any
+    }
 
     await act(async () => {
       await result.current.handleDragEvents.onDrop(mockEvent, mockOnFileLoad)

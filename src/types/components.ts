@@ -55,11 +55,6 @@ export interface GridViewProps {
 }
 
 // Editor Component Props
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface EditorHeaderProps {
-  // No props currently defined
-}
-
 export interface MarkdownTextareaProps {
   value: string;
   onChange: (_value: string) => void;
@@ -73,11 +68,6 @@ export interface ActionButtonsProps {
 
 export interface StatusMessagesProps {
   error: string;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface InstructionsProps {
-  // No props currently defined
 }
 
 // File Upload Component Props
@@ -107,10 +97,4 @@ export interface ProgressIndicatorProps {
 export interface ProgressBarProps {
   currentIndex: number;
   totalDiagrams: number;
-}
-
-// Keyboard Shortcuts
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface KeyboardShortcutsHelpProps {
-  // No props currently defined
 }

@@ -33,13 +33,17 @@ Object.defineProperty(window, 'File', {
 Object.defineProperty(window, 'FileReader', {
   value: class MockFileReader {
     result: string | null = null
+    onload: ((_event: ProgressEvent<FileReader>) => void) | null = null
+
     readAsText(_file: File) {
       setTimeout(() => {
         this.result = 'mock file content'
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        this.onload?.({ target: this } as any)
+        if (this.onload) {
+          // Create a minimal ProgressEvent-like object for the mock
+          const mockEvent = { target: this } as ProgressEvent<FileReader>
+          this.onload(mockEvent)
+        }
       }, 0)
     }
-    onload: ((_event: ProgressEvent<FileReader>) => void) | null = null
   }
 })

@@ -6,6 +6,22 @@ Mermaid Slides deploys through three automated channels: Web App, Offline Packag
 
 ## Distribution Channels
 
+```mermaid
+graph LR
+    A[Mermaid Slides<br/>Single Codebase] --> B[Web App]
+    A --> C[Offline Package]
+    A --> D[Docker Image]
+
+    B --> B1[GitHub Pages<br/>mermaid-slides.com]
+    C --> C1[GitHub Release<br/>Download .zip]
+    D --> D1[Docker Hub<br/>kunalpathak13/mermaid-slides]
+
+    style A fill:#e1f5fe
+    style B fill:#c8e6c9
+    style C fill:#fff9c4
+    style D fill:#e1bee7
+```
+
 ### 🌐 Web Application
 **Live at**: https://mermaid-slides.com/
 
@@ -101,6 +117,42 @@ mermaid-slides/
 ### GitHub Actions Workflow
 **File**: `.github/workflows/deploy.yml`
 
+```mermaid
+graph TB
+    A[Push to main/master] --> B[Build & Test Job]
+
+    B --> B1[npm test]
+    B --> B2[npm run lint]
+    B --> B3[npm run build]
+    B --> B4[npm run build:offline]
+    B --> B5[Validation Scripts]
+
+    B --> C{All Checks Pass?}
+    C -->|No| Z[Fail Pipeline]
+    C -->|Yes| D[Deploy Pages Job]
+    C -->|Yes| E[Create Release Job]
+    C -->|Yes| F[Docker Build Job]
+
+    D --> D1[Deploy to GitHub Pages]
+    E --> E1[Create GitHub Release]
+    E --> E2[Upload offline-package.zip]
+    F --> F1[Build linux/amd64]
+    F --> F2[Build linux/arm64]
+    F --> F3[Push to Docker Hub]
+
+    D1 --> G[Deployment Summary]
+    E2 --> G
+    F3 --> G
+
+    style A fill:#e3f2fd
+    style B fill:#fff3e0
+    style C fill:#ffebee
+    style D fill:#c8e6c9
+    style E fill:#fff9c4
+    style F fill:#e1bee7
+    style G fill:#b2dfdb
+```
+
 **Jobs:**
 1. **Build & Test** - Tests, linting, builds, validation
 2. **Deploy Pages** - GitHub Pages deployment
@@ -128,6 +180,46 @@ mermaid-slides/
 ---
 
 ## Build Commands
+
+### Build Process Flow
+
+```mermaid
+graph TB
+    subgraph "Web Build"
+        A1[npm run build] --> A2[Vite Build]
+        A2 --> A3[GitHub Pages Base Path]
+        A3 --> A4[dist/ directory]
+    end
+
+    subgraph "Offline Build"
+        B1[npm run build:offline] --> B2[Vite Build]
+        B2 --> B3[Relative Paths Mode]
+        B3 --> B4[offline-package/ directory]
+        B4 --> B5[Copy Server Scripts]
+        B5 --> B6[Copy README & Examples]
+    end
+
+    subgraph "Docker Build"
+        C1[Dockerfile] --> C2[Node.js Alpine Base]
+        C2 --> C3[Install Dependencies]
+        C3 --> C4[Run Web Build]
+        C4 --> C5[Configure Nginx]
+        C5 --> C6[Multi-platform Images]
+    end
+
+    A4 --> D[GitHub Pages]
+    B6 --> E[GitHub Release]
+    C6 --> F[Docker Hub]
+
+    style A1 fill:#c8e6c9
+    style B1 fill:#fff9c4
+    style C1 fill:#e1bee7
+    style D fill:#90caf9
+    style E fill:#ffcc80
+    style F fill:#ce93d8
+```
+
+### Command Reference
 
 ```bash
 # Development
