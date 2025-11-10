@@ -15,7 +15,7 @@ interface DragEvents {
 interface UseFileHandlerReturn {
   fileName: string;
   isDragging: boolean;
-  handleFileSelect: (_event: React.ChangeEvent<HTMLInputElement>, _onFileLoad: (_content: string, _name: string) => void) => Promise<void>;
+  handleFileSelect: (_event: React.ChangeEvent<HTMLInputElement>, _onFileLoad: (_c: string, _n: string) => void) => Promise<void>;
   handleDragEvents: DragEvents;
   resetFile: () => void;
   setFileName: (_name: string) => void;
@@ -34,7 +34,7 @@ export const useFileHandler = (): UseFileHandlerReturn => {
     return { content, name: file.name };
   };
 
-  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>, onFileLoad: (content: string, name: string) => void): Promise<void> => {
+  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>, onFileLoad: (_content: string, _name: string) => void): Promise<void> => {
     const file = event.target.files?.[0];
     if (file) {
       try {
@@ -57,7 +57,7 @@ export const useFileHandler = (): UseFileHandlerReturn => {
       e.preventDefault();
       setIsDragging(false);
     },
-    onDrop: async (e: React.DragEvent<HTMLDivElement>, onFileLoad: (content: string, name: string) => void) => {
+    onDrop: async (e: React.DragEvent<HTMLDivElement>, onFileLoad: (_content: string, _name: string) => void) => {
       e.preventDefault();
       setIsDragging(false);
 

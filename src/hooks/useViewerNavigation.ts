@@ -7,12 +7,12 @@ interface UseViewerNavigationReturn {
   goToNext: () => void;
   goToFirst: () => void;
   goToLast: () => void;
-  goToIndex: (index: number) => void;
+  goToIndex: (_index: number) => void;
   toggleGridView: () => void;
-  handleDiagramSelect: (index: number) => void;
+  handleDiagramSelect: (_index: number) => void;
   resetNavigation: () => void;
-  setCurrentIndex: (index: number) => void;
-  setIsGridView: (isGrid: boolean) => void;
+  setCurrentIndex: (_index: number) => void;
+  setIsGridView: (_isGrid: boolean) => void;
 }
 
 export const useViewerNavigation = (totalItems: number = 0): UseViewerNavigationReturn => {
