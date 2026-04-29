@@ -1,4 +1,15 @@
 export const EditorHeader = () => {
+  const vscodeTools = [
+    {
+      href: 'https://marketplace.visualstudio.com/items?itemName=KunalPathak.mermaid-slideshow',
+      label: 'Mermaid Slideshow'
+    },
+    {
+      href: 'https://marketplace.visualstudio.com/items?itemName=KunalPathak.markdown-presentation-tool',
+      label: 'Markdown Presentation Tool'
+    }
+  ];
+
   return (
     <div className="mb-6">
       <div className="flex justify-between items-start mb-4">
@@ -24,7 +35,7 @@ export const EditorHeader = () => {
           <div className="text-sm text-gray-600">
             Start creating slides instantly
           </div>
-          <a 
+          <a
             href="https://mermaid-slides.com/"
             target="_blank"
             rel="noopener noreferrer"
@@ -43,7 +54,7 @@ export const EditorHeader = () => {
           <div className="text-sm text-gray-600">
             Docker or Offline Package
           </div>
-          <a 
+          <a
             href="https://github.com/kanad13/mermaid-slides/releases/latest"
             target="_blank"
             rel="noopener noreferrer"
@@ -57,10 +68,23 @@ export const EditorHeader = () => {
 
         <div className="text-center flex-1">
           <div className="font-semibold text-gray-900">
-            🔧 VS Code Extension
+            🔧 VS Code Tools
           </div>
           <div className="text-sm text-gray-600">
-            Coming Soon
+            Present Mermaid-only or full Markdown decks inside VS Code
+          </div>
+          <div className="mt-1 flex flex-col gap-1">
+            {vscodeTools.map((tool) => (
+              <a
+                key={tool.href}
+                href={tool.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs underline inline-block text-blue-600 hover:text-blue-800"
+              >
+                {tool.label}
+              </a>
+            ))}
           </div>
         </div>
       </div>

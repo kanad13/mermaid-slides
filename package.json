@@ -1,6 +1,6 @@
 {
 	"name": "mermaid-slides",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"description": "Transform your markdown mermaid diagrams into beautiful presentation slides",
 	"type": "module",
 	"scripts": {
@@ -14,7 +14,7 @@
 		"test:run": "vitest run --config config/vite.config.js",
 		"validate:compatibility": "node scripts/validate-compatibility.cjs",
 		"validate:continuity": "node scripts/validate-continuity.cjs",
-		"validate:all": "npm test && npm run validate:compatibility && npm run validate:continuity"
+		"validate:all": "npm run test:run && npm run validate:compatibility && npm run validate:continuity"
 	},
 	"keywords": [
 		"mermaid",
@@ -66,7 +66,7 @@
 		"vitest": "^3.2.4"
 	},
 	"engines": {
-		"node": ">=14.0.0"
+		"node": "^20.19.0 || >=22.12.0"
 	},
 	"browserslist": [
 		"> 1%",

@@ -12,7 +12,8 @@ Transform markdown mermaid diagrams into presentation slides with navigation, th
 npm run dev              # Development server (http://localhost:5173)
 npm run build           # Production build
 npm run build:offline   # Offline package with local server scripts
-npm test               # Run test suite with Vitest
+npm test               # Run Vitest in watch mode during development
+npm run test:run       # Run the test suite once (CI/validation)
 npm run lint           # ESLint code quality check
 npm run validate:all   # Full cross-platform validation
 ```
@@ -22,16 +23,18 @@ npm run validate:all   # Full cross-platform validation
 ## Architecture
 
 **Core Structure:**
+
 - `src/App.tsx` - Main application entry point
 - `src/components/` - React components (<100 lines each, modular design)
 - `src/hooks/` - 8 custom React hooks for state and logic
 - `src/utils/` - Utilities and parsers (includes title extraction)
 
 **Key Features:**
+
 - Automatic title extraction from markdown headers
-- Theme integration (light/dark mode)
+- Mixed content support (Mermaid diagrams + images)
 - Grid view with meaningful slide titles
-- Settings persistence
+- Settings panel for title display and auto-hide behavior
 - Cross-platform compatibility (web, offline, Docker)
 
 ---
@@ -41,7 +44,11 @@ npm run validate:all   # Full cross-platform validation
 1. **Web App**: https://mermaid-slides.com/ (GitHub Pages, automated deployment)
 2. **Offline Package**: Standalone with Node.js/Python/shell server scripts
 3. **Docker**: `kunalpathak13/mermaid-slides` (Docker Hub, automated)
-4. **VS Code Extension**: Planned for future development
+
+**Related VS Code Tools (separate repositories):**
+
+- **Mermaid Slideshow**: https://marketplace.visualstudio.com/items?itemName=KunalPathak.mermaid-slideshow
+- **Markdown Presentation Tool**: https://marketplace.visualstudio.com/items?itemName=KunalPathak.markdown-presentation-tool
 
 ---
 
@@ -59,18 +66,21 @@ npm run validate:all   # Full cross-platform validation
 ## Workflow Guidelines
 
 **Before Coding:**
+
 - Review [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for distribution requirements
 - Run `npm run validate:all` to check current state
 - Ensure cross-platform compatibility considerations
 
 **After Coding:**
-- Run `npm test` to verify functionality
+
+- Run `npm run test:run` to verify functionality
 - Run `npm run lint` to check code quality
 - Run `npm run build` and `npm run build:offline` to verify builds
 - Update documentation if adding features or changing APIs
 - Test offline package functionality if distribution logic changed
 
 **Key Principles:**
+
 - Preserve cross-platform compatibility (web, offline, Docker)
 - Maintain modular component architecture
 - Keep dependencies minimal and purposeful
@@ -81,16 +91,19 @@ npm run validate:all   # Full cross-platform validation
 ## Project-Specific Notes
 
 **Title Extraction:**
+
 - Implemented in `src/utils/mermaidParser.ts`
 - Extracts markdown headers (`#`, `##`, etc.) from diagram code
 - Settings toggle in `src/components/Settings/SettingsPanel.tsx`
 
 **Build Artifacts:**
+
 - `dist/` - Web production build (git-ignored)
 - `offline-package/` - Offline distribution (git-ignored, generated)
 - Both are generated during build process
 
 **Validation Scripts:**
+
 - `scripts/validate-compatibility.cjs` - Cross-platform checks
 - `scripts/validate-continuity.cjs` - Documentation consistency
 

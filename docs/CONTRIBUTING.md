@@ -6,6 +6,8 @@ Guidelines for contributing to Mermaid Slides.
 
 ## Development Setup
 
+**Build / maintainer requirement:** Node **20.19+** or **22.12+** (matches Vite 7).
+
 ```bash
 # Clone repository
 git clone https://github.com/kanad13/mermaid-slides.git
@@ -17,8 +19,8 @@ npm install
 # Start development server
 npm run dev
 
-# Run tests
-npm test
+# Run tests once
+npm run test:run
 ```
 
 ---
@@ -26,11 +28,13 @@ npm test
 ## Development Workflow
 
 ### Before Coding
+
 - Review [DEPLOYMENT.md](DEPLOYMENT.md) for distribution requirements
 - Run `npm run validate:all` to check current state
 - Consider cross-platform compatibility (web, offline, Docker)
 
 ### During Development
+
 - Follow TypeScript strict mode
 - Keep components under 100 lines
 - Use ES modules syntax (no CommonJS)
@@ -38,7 +42,8 @@ npm test
 - Follow existing code patterns
 
 ### After Coding
-- Run `npm test` to verify functionality
+
+- Run `npm run test:run` to verify functionality
 - Run `npm run lint` to check code quality
 - Run `npm run build` and `npm run build:offline` to verify builds
 - Update documentation if adding features or changing APIs
@@ -49,21 +54,25 @@ npm test
 ## Code Style
 
 **TypeScript:**
+
 - Strict mode enabled
 - Explicit types preferred
 - Avoid `any` types
 
 **React:**
+
 - Functional components with hooks
 - Component size: <100 lines
 - Props interface for each component
 
 **Styling:**
+
 - Tailwind CSS utility classes
 - Avoid inline styles
 - Follow existing theme patterns
 
 **Testing:**
+
 - Vitest + React Testing Library
 - Test user interactions, not implementation
 - Maintain >90% coverage
@@ -75,11 +84,13 @@ npm test
 **Format**: Semantic Versioning (MAJOR.MINOR.PATCH)
 
 **Increment Rules:**
+
 - **MAJOR (X.0.0)**: Breaking changes, removed features, fundamental architecture changes
 - **MINOR (0.X.0)**: New features (backward compatible), new diagram types, new themes
 - **PATCH (0.0.X)**: Bug fixes, security updates, documentation updates, dependency updates
 
 **Examples:**
+
 - Major: Removing markdown format support, changing navigation behavior
 - Minor: Adding new Mermaid diagram support, grid view enhancements
 - Patch: Fixing rendering issues, correcting navigation bugs, security patches
@@ -95,11 +106,13 @@ npm test
 ### Update Strategy
 
 **Security Updates:**
+
 - Critical: Immediate patch
 - High-severity: Within 1 week
 - Medium/Low: Next scheduled release
 
 **Regular Updates:**
+
 - Major dependencies: Quarterly review
 - Minor/Patch: Monthly maintenance window
 - Test before deploying
@@ -118,26 +131,30 @@ npm audit fix --force  # Use with caution
 ```
 
 **Automated Scanning:**
+
 - GitHub Dependabot enabled
 - Automatic security alerts
 - Weekly dependency update PRs
 
-### Current Dependencies (Core)
-- React 19.1.0
-- Mermaid 11.7.0
-- Vite 7.0.0
-- TypeScript 5.8.3
-- Tailwind CSS 3.4.17
+### Current Dependency Lines (Core)
+
+- React 19.x
+- Mermaid 11.x
+- Vite 7.x
+- TypeScript 5.x
+- Tailwind CSS 3.4.x
 
 ---
 
 ## Testing Procedures
 
 ### Test Suite
+
 **Framework**: Vitest (44+ tests)
 **Libraries**: React Testing Library, jsdom
 
 **Structure:**
+
 ```
 src/
 ├── App.test.tsx
@@ -149,14 +166,14 @@ src/
 ### Test Commands
 
 ```bash
-# Run all tests
+# Run tests in watch mode
 npm test
+
+# Run tests once (for CI / validation)
+npm run test:run
 
 # Run with UI interface
 npm run test:ui
-
-# Run once (for CI)
-npm run test:run
 
 # Full validation suite
 npm run validate:all
@@ -165,7 +182,8 @@ npm run validate:all
 ### Pre-Deployment Testing Checklist
 
 **Automated:**
-- [ ] All tests passing: `npm test`
+
+- [ ] All tests passing: `npm run test:run`
 - [ ] Linting clean: `npm run lint`
 - [ ] Build successful: `npm run build`
 - [ ] Offline build successful: `npm run build:offline`
@@ -173,6 +191,7 @@ npm run validate:all
 - [ ] Continuity validated: `npm run validate:continuity`
 
 **Manual:**
+
 - [ ] Test on multiple browsers (Chrome, Firefox, Safari)
 - [ ] Test offline package on Windows, macOS, Linux
 - [ ] Verify all server scripts work (Python, Node.js, Shell, Batch)
@@ -221,23 +240,27 @@ chore: Update dependencies
 ### Creating a Release
 
 1. **Update Version**:
+
    ```bash
    # Update package.json version
    npm version patch  # or minor, or major
    ```
 
 2. **Build All Channels**:
+
    ```bash
    npm run build
    npm run build:offline
    ```
 
 3. **Run Full Validation**:
+
    ```bash
    npm run validate:all
    ```
 
 4. **Commit and Tag**:
+
    ```bash
    git add .
    git commit -m "Release v1.2.3"
@@ -245,6 +268,7 @@ chore: Update dependencies
    ```
 
 5. **Push to Main**:
+
    ```bash
    git push origin main --tags
    ```
@@ -263,16 +287,19 @@ chore: Update dependencies
 ## Project-Specific Notes
 
 ### Title Extraction
+
 - Implementation: `src/utils/mermaidParser.ts`
 - Extracts markdown headers from diagram code
 - Settings: `src/components/Settings/SettingsPanel.tsx`
 
 ### Build Artifacts
+
 - `dist/` - Web production build (git-ignored)
 - `offline-package/` - Offline distribution (git-ignored)
 - Both generated during build process
 
 ### Validation Scripts
+
 - `scripts/validate-compatibility.cjs` - Cross-platform checks
 - `scripts/validate-continuity.cjs` - Documentation consistency
 
@@ -281,11 +308,13 @@ chore: Update dependencies
 ## Documentation Standards
 
 **Keep It Concise:**
+
 - Avoid duplication across files
 - Focus on actionable information
 - Update when making changes
 
 **Documentation Files:**
+
 - [README.md](../README.md) - User-facing documentation, features
 - [AGENTS.md](../AGENTS.md) - AI agent context and commands
 - [DEPLOYMENT.md](DEPLOYMENT.md) - Multi-channel deployment strategy

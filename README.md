@@ -1,10 +1,11 @@
 # Mermaid Slides
 
-Transform your markdown content with mermaid diagrams and images into beautiful presentation slides with advanced navigation and theming.
+Turn Markdown files with Mermaid diagrams and images into a presentation-ready deck in seconds. Mermaid Slides keeps the source plain-text, renders everything locally, and lets you present the result in the browser, offline, or from Docker — ideal for architecture reviews, demos, and docs walkthroughs.
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-blue?style=for-the-badge)](https://mermaid-slides.com/)
 [![Docker Image](https://img.shields.io/badge/Docker_Image-blue?style=for-the-badge)](https://hub.docker.com/r/kunalpathak13/mermaid-slides)
-[![VS Code Extension](https://img.shields.io/badge/VS_Code_Extension-purple?style=for-the-badge)](#-vs-code-extension-planned)
+[![Mermaid Slideshow VS Code](https://img.shields.io/badge/VS_Code-Mermaid_Slideshow-purple?style=for-the-badge)](https://marketplace.visualstudio.com/items?itemName=KunalPathak.mermaid-slideshow)
+[![Markdown Presentation Tool](https://img.shields.io/badge/VS_Code-Markdown_Presentation_Tool-7c3aed?style=for-the-badge)](https://marketplace.visualstudio.com/items?itemName=KunalPathak.markdown-presentation-tool)
 [![Documentation](https://img.shields.io/badge/Documentation-green?style=for-the-badge)](docs/)
 [![Privacy First](https://img.shields.io/badge/Privacy_First-orange?style=for-the-badge)](#-privacy--security)
 
@@ -55,6 +56,8 @@ start-server.bat         # Auto-detect (Windows)
 
 ### **Local Development**
 
+Requires **Node 20.19+** or **22.12+** for local development and production builds (matches Vite 7 requirements).
+
 ```bash
 git clone https://github.com/kanad13/mermaid-slides.git
 cd mermaid-slides
@@ -74,7 +77,7 @@ npm run dev
 - **Mixed Content** - Mermaid diagrams + images in unified presentations
 - **Title Extraction** - Automatically extracts markdown headers as slide titles with user toggle
 - **Navigation** - Keyboard controls, progress bar, grid view, thumbnails
-- **Settings Panel** - Customize title display, auto-hide behavior, and user preferences
+- **Settings Panel** - Toggle title display and auto-hide behavior during a session
 - **Presentation Mode** - Full-screen, distraction-free experience
 - **Responsive** - Works on desktop, tablet, and mobile devices
 
@@ -91,35 +94,24 @@ npm run dev
 - **Web App** - Instant access via GitHub Pages
 - **Offline Package** - Download and run locally on any OS
 - **Docker Container** - Containerized deployment for any environment
-- **VS Code Extension** - Planned for integrated markdown workflow
 
-## VS Code Extension (Planned)
+## Related VS Code Tools
 
-### **Planned Features**
+If you prefer editor-native presentations, these companion tools are already live in the VS Code Marketplace:
 
-- **Tab Integration** - Preview button will appear automatically on markdown file tabs
-- **One-Click Preview** - Transform any markdown file with mermaid diagrams into presentations
-- **Auto-Detection** - Automatically identify mermaid diagrams in your files
-- **Privacy-First** - Zero internet communication, all processing happens locally
+### **Mermaid Slideshow**
 
-### **Planned Usage**
+- **Marketplace**: [KunalPathak.mermaid-slideshow](https://marketplace.visualstudio.com/items?itemName=KunalPathak.mermaid-slideshow)
+- **Best for**: Mermaid-only files where each diagram becomes its own focused slide
+- **Highlights**: Keyboard navigation, live preview updates, Mermaid theme selection
 
-1. Open any markdown file containing mermaid diagrams
-2. Click the "Preview Mermaid Slides" button in the tab bar
-3. Side preview opens with all diagrams ready for presentation
-4. Use arrow keys or controls to navigate through slides
+### **Markdown Presentation Tool**
 
-### **Future Installation**
+- **Marketplace**: [KunalPathak.markdown-presentation-tool](https://marketplace.visualstudio.com/items?itemName=KunalPathak.markdown-presentation-tool)
+- **Best for**: Full Markdown decks with headings, text, Mermaid diagrams, code blocks, and images
+- **Highlights**: `<!-- slide -->` delimiters, theme awareness, style controls, rich mixed-content slides
 
-```bash
-# Will be available on VS Code Marketplace
-# Search for "Mermaid Slides" in VS Code Extensions
-
-# Also available as VSIX download from GitHub Releases
-# Install via: Extensions ... Install from VSIX
-```
-
-**Status**: Currently planned for future development. Follow the repository for updates!
+Both tools are published separately from this repository and complement the web/offline/Docker versions of Mermaid Slides.
 
 ## Privacy & Security
 
@@ -129,28 +121,20 @@ Mermaid Slides is designed with privacy as a core principle:
 - **Offline Operation** - Full functionality without internet connection
 - **Local Processing** - All diagram rendering happens on your device
 - **Self-Contained** - No external CDN dependencies in any distribution
-- **Minimal Permissions** - Planned VS Code extension will only read active editor content
+- **Simple Local Servers** - The offline package uses lightweight local Python or Node.js servers only
 - **No External Requests** - All distributions make zero network calls during operation
 
 ## Documentation
 
-### **Architecture & Development**
-
-- **[Architecture Strategy](docs/ARCHITECTURE_STRATEGY.md)** - Multi-channel architecture and development strategy
-- **[Distribution Guide](docs/DISTRIBUTION.md)** - Complete distribution process for all channels
-- **[Contributing Guide](docs/CONTRIBUTING.md)** - Development setup and contribution guidelines
-
-### **User Guides & Documentation**
-
-- **[Complete Documentation](docs/)** - Full guides and feature details
-- **[Deployment Guide](docs/DEPLOYMENT.md)** - Multi-channel deployment and distribution
-- **[Contributing Guide](docs/CONTRIBUTING.md)** - Development workflow and contribution guidelines
-- **[AI Agent Context](AGENTS.md)** - Context file for AI coding assistants
+- **[Deployment Guide](docs/DEPLOYMENT.md)** - Multi-channel deployment, release flow, and channel-specific notes
+- **[Contributing Guide](docs/CONTRIBUTING.md)** - Development workflow, testing, and release checklist
+- **[Future Work](docs/LATER.md)** - Planned follow-up improvements and rationale
+- **[AI Agent Context](AGENTS.md)** - Workspace context and verified commands for coding agents
 
 ## Technology
 
-**Frontend**: React 19 + TypeScript | **Build**: Vite 7.0 | **Styling**: Tailwind CSS 3.4
-**Diagrams**: Mermaid.js 11.7 | **Testing**: Vitest + React Testing Library | **Deployment**: GitHub Pages
+**Frontend**: React 19 + TypeScript | **Build**: Vite 7 | **Styling**: Tailwind CSS 3.4
+**Diagrams**: Mermaid.js 11 | **Testing**: Vitest + React Testing Library | **Deployment**: GitHub Pages, offline package, Docker
 
 ## Supported Content
 
