@@ -47,6 +47,41 @@ describe('LegalFooter', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Privacy Policy' }));
 
     expect(screen.getByRole('heading', { name: 'Remote images' })).toBeInTheDocument();
-    expect(screen.getByText(/IP address and\s+browser details/)).toBeInTheDocument();
+    expect(screen.getByText(/IP address and browser details/)).toBeInTheDocument();
+  });
+
+  // The GDPR disclosures were removed from the policy once by hand. These keep
+  // that from happening silently: each is required by Article 13.
+  it('names a controller and gives a way to contact them', () => {
+    render(<LegalFooter />);
+    fireEvent.click(screen.getByRole('button', { name: 'Privacy Policy' }));
+
+    expect(screen.getByRole('heading', { name: 'Who is responsible' })).toBeInTheDocument();
+    expect(
+      screen.getAllByRole('link', { name: 'kunal-pathak.com' }).length
+    ).toBeGreaterThan(0);
+  });
+
+  it('sets out data subject rights and the right to complain', () => {
+    render(<LegalFooter />);
+    fireEvent.click(screen.getByRole('button', { name: 'Privacy Policy' }));
+
+    expect(screen.getByRole('heading', { name: 'Your rights' })).toBeInTheDocument();
+    expect(screen.getByText(/data protection authority/)).toBeInTheDocument();
+  });
+
+  it('discloses the hosting providers and transfers outside the EU', () => {
+    render(<LegalFooter />);
+    fireEvent.click(screen.getByRole('button', { name: 'Privacy Policy' }));
+
+    expect(screen.getByText(/standard contractual clauses/)).toBeInTheDocument();
+  });
+
+  it('credits the maintainer in the footer itself', () => {
+    render(<LegalFooter />);
+
+    const link = screen.getByRole('link', { name: 'Kunal Pathak' });
+    expect(link).toHaveAttribute('href', 'https://www.kunal-pathak.com');
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   });
 });

@@ -2,6 +2,8 @@
 
 Turn Markdown files with Mermaid diagrams and images into a presentation-ready deck in seconds. Mermaid Slides keeps the source plain-text, renders everything locally, and lets you present the result in the browser, offline, or from Docker — ideal for architecture reviews, demos, and docs walkthroughs.
 
+Built and maintained by [Kunal Pathak](https://www.kunal-pathak.com).
+
 [![Live Demo](https://img.shields.io/badge/Live_Demo-blue?style=for-the-badge)](https://mermaid-slides.com/)
 [![Docker Image](https://img.shields.io/badge/Docker_Image-blue?style=for-the-badge)](https://hub.docker.com/r/kunalpathak13/mermaid-slides)
 [![Mermaid Slideshow VS Code](https://img.shields.io/badge/VS_Code-Mermaid_Slideshow-purple?style=for-the-badge)](https://marketplace.visualstudio.com/items?itemName=KunalPathak.mermaid-slideshow)
@@ -163,6 +165,11 @@ requests, use local image paths or diagrams only.
 ## Contributing
 
 We welcome contributions! See our [Contributing Guidelines](docs/CONTRIBUTING.md) for development setup and guidelines.
+
+## Maintainer
+
+Mermaid Slides is built and maintained by **[Kunal Pathak](https://www.kunal-pathak.com)** as a
+non-commercial open-source project. No advertising, no tracking, no accounts.
 
 ## License
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { PrivacyPolicy } from './PrivacyPolicy';
 import { LegalNotice } from './LegalNotice';
+import { MAINTAINER } from './maintainer';
 
 type OpenDocument = 'privacy' | 'legal' | null;
 
@@ -9,7 +10,19 @@ export const LegalFooter: React.FC = () => {
 
   return (
     <>
-      <div className="mt-8 pt-4 border-t text-center text-sm border-gray-200 text-gray-500">
+      <div className="mt-8 pt-4 border-t text-center text-sm border-gray-200 text-gray-500 space-y-2">
+        <p>
+          Built and maintained by{' '}
+          <a
+            href={MAINTAINER.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline hover:text-blue-800"
+          >
+            {MAINTAINER.name}
+          </a>
+        </p>
+
         <div className="flex justify-center space-x-6">
           <button
             type="button"

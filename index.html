@@ -44,21 +44,27 @@
 	<meta name="description"
 		content="Transform markdown mermaid diagrams into beautiful presentation slides. Available as web app, offline package, and Docker container with 3-channel distribution strategy.">
 
-	<!-- Open Graph / Facebook -->
+	<!-- Name only, no href. Keeping the shipped HTML free of absolute URLs is
+	     what lets the offline package guarantee it needs nothing from the
+	     network; validate-compatibility.cjs enforces that. The maintainer's site
+	     is linked from the app's footer and legal pages instead. -->
+	<meta name="author" content="Kunal Pathak">
+
+	<!--
+		Link preview text, read by chat and messaging clients when someone pastes
+		the URL. These are inert strings in the page: nothing is requested from
+		anyone, and no data reaches any platform.
+
+		The Twitter-specific block that used to sit here is gone — the project has
+		no account there, and clients fall back to these values anyway. The
+		og:image is gone too: it pointed at /docs/assets/, which is not part of the
+		published build, so it had always resolved to a 404.
+	-->
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://mermaid-slides.com/">
 	<meta property="og:title" content="🧜‍♀️ Mermaid Slides">
 	<meta property="og:description"
 		content="Transform markdown mermaid diagrams into beautiful presentation slides. Available as web app, offline package, and Docker container.">
-	<meta property="og:image" content="https://mermaid-slides.com/docs/assets/mermai-slides-demo.gif">
-
-	<!-- Twitter -->
-	<meta property="twitter:card" content="summary_large_image">
-	<meta property="twitter:url" content="https://mermaid-slides.com/">
-	<meta property="twitter:title" content="🧜‍♀️ Mermaid Slides">
-	<meta property="twitter:description"
-		content="Transform markdown mermaid diagrams into beautiful presentation slides. Available as web app, offline package, and Docker container.">
-	<meta property="twitter:image" content="https://mermaid-slides.com/docs/assets/mermai-slides-demo.gif">
 
 	<!-- Favicon -->
 	<link rel="icon"
