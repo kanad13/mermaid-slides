@@ -18,7 +18,7 @@ rewrites props across fourteen component files and conflicts with every UI chang
 | ----- | --------------------- | --------------------------------- | ------- | ----------- |
 | 1     | `security/hardening`  | C0, S1, S7, S8, S5, S9, S10, S11   | v1.3.0  | merged |
 | 2     | `ux/foundations`      | B1, U13, U8, U3, U7, U9, U1        | v1.4.0  | merged |
-| 3     | `ux/features`         | U6, U10, U12                       | v1.5.0  | not started |
+| 3     | `ux/features`         | U6, U10, U12, U15                  | v1.5.0  | not started |
 | 4     | `feat/print-to-pdf`   | Print stylesheet export            | v1.6.0  | not started |
 | —     | `deps/majors`         | Not scheduled — see Decisions      | —       | policy      |
 
