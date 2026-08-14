@@ -64,10 +64,9 @@ cypress/videos/
 *.swn
 *.swm
 
-# Lock files (exclude from git in this project)
-package-lock.json
-**/package-lock.json
-!docs/package-lock.json
+# package-lock.json is deliberately tracked. Builds for all three
+# distribution channels install with `npm ci`, which needs it, and pinning the
+# exact dependency tree is what makes a release reproducible.
 
 # VS Code
 .vscode-test/

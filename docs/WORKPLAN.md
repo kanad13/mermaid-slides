@@ -35,7 +35,7 @@ Rollback floor for the whole programme: tag `checkpoint/pre-hardening-v1.2.1`.
 | S8   | Make TypeScript checking actually run, fix resulting errors    | done   |
 | S5   | Content-Security-Policy                                        | done   |
 | S9   | Docker image hardening                                         | done   |
-| S10  | Reproducible releases and pinned CI actions                    | todo   |
+| S10  | Reproducible releases and pinned CI actions                    | done   |
 | S11  | Replace the `innerHTML` modals with React components           | todo   |
 
 ## Branch 2 — `ux/foundations`
@@ -148,7 +148,9 @@ name the current task ID from memory; or leaving the tree red through more than 
 
 ## Next action
 
-Reproducible releases and pinned CI actions (S10).
+Replace the `innerHTML` privacy and legal modals with React components (S11). That is the
+last task on this branch; after it, run the full channel matrix in docs/TESTING.md, bump the
+version to 1.3.0 in the merge commit, and merge.
 
 ## Backlog
 
