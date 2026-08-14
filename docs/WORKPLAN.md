@@ -17,7 +17,7 @@ rewrites props across fourteen component files and conflicts with every UI chang
 | Order | Branch                | Contents                          | Target  | Status      |
 | ----- | --------------------- | --------------------------------- | ------- | ----------- |
 | 1     | `security/hardening`  | C0, S1, S7, S8, S5, S9, S10, S11   | v1.3.0  | merged |
-| 2     | `ux/foundations`      | B1, U13, U8, U3, U7, U9, U1        | v1.4.0  | in progress |
+| 2     | `ux/foundations`      | B1, U13, U8, U3, U7, U9, U1        | v1.4.0  | ready to merge |
 | 3     | `ux/features`         | U6, U10, U12                       | v1.5.0  | not started |
 | 4     | `feat/print-to-pdf`   | Print stylesheet export            | v1.6.0  | not started |
 | —     | `deps/majors`         | Major version migrations           | —       | parked      |
@@ -52,8 +52,8 @@ and the silent no-op is gone.** Any visible difference is a regression.
 | U8   | Clean up the uncancelled timer in `GridView`                   | done   |
 | U3   | Remove the hardcoded layout arithmetic                         | done   |
 | U7   | One Mermaid instance, cache rendered diagrams                  | done   |
-| U9   | Debounce parsing                                               | todo   |
-| U1   | Fix the silent no-op on paste-then-present                     | todo   |
+| U9   | Debounce parsing                                               | done   |
+| U1   | Fix the silent no-op on paste-then-present                     | done   |
 
 **Grid rendering — fixed by U8.** Grid view used to leave previews stuck on "Loading preview…": 5 of 8
 blank before the S7 dependency update, 2 of 8 after it. The cause was the uncancelled timer, not the
