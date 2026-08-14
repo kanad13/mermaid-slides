@@ -26,8 +26,23 @@ export const ViewerHeader = ({
     timeout: autoHideEnabled ? 2000 : 0,
     initiallyVisible: true
   });
+  const hidden = autoHideEnabled && !isVisible;
+
   return (
-    <div className={`border-b shadow-sm transition-transform duration-300 bg-white border-gray-200 ${autoHideEnabled && !isVisible ? '-translate-y-full' : 'translate-y-0'}`}>
+    // Auto-hide has to give the space back, not just move the header out of
+    // sight. Translating alone left the header's full height allocated in the
+    // flex column, so the slide area never grew and the feature reclaimed
+    // nothing. Collapsing max-height as well hands those pixels to the slide,
+    // which the layout then uses without any measurement.
+    <div
+      // min-h-0 matters: a flex item's default `min-height: auto` resolves to
+      // its content height and beats `max-height: 0`, so without it the header
+      // keeps its full 109px however small the max-height is set.
+      className={`border-b shadow-sm bg-white border-gray-200 overflow-hidden min-h-0 transition-all duration-300 ${
+        hidden ? 'max-h-0 -translate-y-full opacity-0' : 'max-h-96 translate-y-0 opacity-100'
+      }`}
+      aria-hidden={hidden}
+    >
       {/* Main Header */}
       <div className={`px-6 py-4 flex items-center ${isExtensionMode ? 'justify-between' : 'justify-between'}`}>
         {/* Left: Back button - only show in non-extension mode */}
