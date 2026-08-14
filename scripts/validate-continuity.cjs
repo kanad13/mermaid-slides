@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
-// Continuity Validation Script
-// Ensures all strategic documents are properly linked and accessible
+// Documentation structure validation.
+// Content-level link, anchor, command, and orphan checks are added in the
+// engineering-foundation milestone defined in docs/WORKPLAN.md.
 
 const fs = require('fs');
-const path = require('path');
 
 console.log('🔗 Continuity Validation for Mermaid Slides');
 console.log('===========================================');
 
-let testsPasssed = 0;
+let testsPassed = 0;
 let testsFailed = 0;
 
 function logSuccess(message) {
     console.log(`✅ ${message}`);
-    testsPasssed++;
+    testsPassed++;
 }
 
 function logError(message) {
@@ -22,13 +22,19 @@ function logError(message) {
     testsFailed++;
 }
 
-// Test 1: Check key documentation files exist
+// Check the maintained documentation set.
 console.log('\n📋 Checking documentation files...');
 const docs = [
     'README.md',
     'AGENTS.md',
     'docs/DEPLOYMENT.md',
-    'docs/CONTRIBUTING.md'
+    'docs/CONTRIBUTING.md',
+    'docs/WORKPLAN.md',
+    'docs/TESTING.md',
+    'docs/IMPLEMENTATION_REFERENCE.md',
+    'public/offline-template/README.md',
+    '.github/ISSUE_TEMPLATE/bug_report.md',
+    '.github/ISSUE_TEMPLATE/feature_request.md'
 ];
 
 for (const doc of docs) {
@@ -39,15 +45,23 @@ for (const doc of docs) {
     }
 }
 
-// Test 2: Check AGENTS.md references key documents
+if (!fs.existsSync('docs/ENGINEERING.md')) {
+    logSuccess('Retired documentation is absent: docs/ENGINEERING.md');
+} else {
+    logError('Retired documentation still exists: docs/ENGINEERING.md');
+}
+
+// Check that the agent entry point reaches its authoritative documents.
 console.log('\n📝 Checking AGENTS.md references...');
 try {
     const agentsContent = fs.readFileSync('AGENTS.md', 'utf8');
 
     const requiredReferences = [
-        'docs/DEPLOYMENT.md',
+        'docs/WORKPLAN.md',
         'docs/CONTRIBUTING.md',
-        'scripts/validate-compatibility.cjs'
+        'docs/TESTING.md',
+        'docs/DEPLOYMENT.md',
+        'docs/IMPLEMENTATION_REFERENCE.md',
     ];
 
     for (const ref of requiredReferences) {
@@ -62,21 +76,30 @@ try {
     logError('Cannot read AGENTS.md');
 }
 
-// Test 3: Check README.md exists and is readable
-console.log('\n🏠 Checking README.md...');
+// Check that the public entry point reaches every public contributor document.
+console.log('\n🏠 Checking README.md references...');
 try {
     const readmeContent = fs.readFileSync('README.md', 'utf8');
+    const requiredReferences = [
+        'docs/CONTRIBUTING.md',
+        'docs/TESTING.md',
+        'docs/DEPLOYMENT.md',
+        'docs/WORKPLAN.md',
+        'AGENTS.md',
+    ];
 
-    if (readmeContent.length > 0) {
-        logSuccess('README.md is readable and has content');
-    } else {
-        logError('README.md is empty');
+    for (const ref of requiredReferences) {
+        if (readmeContent.includes(ref)) {
+            logSuccess(`README.md references: ${ref}`);
+        } else {
+            logError(`README.md missing reference: ${ref}`);
+        }
     }
 } catch {
     logError('Cannot read README.md');
 }
 
-// Test 5: Check validation scripts are executable
+// Check validation entry points.
 console.log('\n🔧 Checking validation scripts...');
 const validationScripts = [
     'scripts/validate-compatibility.cjs',
@@ -91,14 +114,10 @@ for (const script of validationScripts) {
     }
 }
 
-// Test 6: Check documentation structure consistency
+// Check documentation structure consistency.
 console.log('\n🔄 Checking documentation structure...');
 try {
-    const deploymentExists = fs.existsSync('docs/DEPLOYMENT.md');
-    const contributingExists = fs.existsSync('docs/CONTRIBUTING.md');
-    const agentsExists = fs.existsSync('AGENTS.md');
-
-    if (deploymentExists && contributingExists && agentsExists) {
+    if (docs.every((doc) => fs.existsSync(doc))) {
         logSuccess('All core documentation files present');
     } else {
         logError('Missing core documentation files');
@@ -110,9 +129,9 @@ try {
 // Final summary
 console.log('\n📊 Continuity Validation Summary');
 console.log('================================');
-console.log(`Tests Passed: ${testsPasssed}`);
+console.log(`Tests Passed: ${testsPassed}`);
 console.log(`Tests Failed: ${testsFailed}`);
-console.log(`Total Tests: ${testsPasssed + testsFailed}`);
+console.log(`Total Tests: ${testsPassed + testsFailed}`);
 
 if (testsFailed === 0) {
     console.log('\n🎉 All continuity validation tests passed!');

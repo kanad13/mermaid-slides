@@ -1,333 +1,124 @@
-# Contributing Guide
+# Contributing and Code Standards
 
-Guidelines for contributing to Mermaid Slides.
+## Setup
 
----
-
-## Development Setup
-
-**Build / maintainer requirement:** Node **20.19+** or **22.12+** (matches Vite 7).
+Use a Node version allowed by `package.json`.
 
 ```bash
-# Clone repository
 git clone https://github.com/kanad13/mermaid-slides.git
 cd mermaid-slides
-
-# Install dependencies
-npm install
-
-# Start development server
+npm ci
 npm run dev
-
-# Run tests once
-npm run test:run
 ```
 
----
-
-## Development Workflow
-
-### Before Coding
-
-- Review [DEPLOYMENT.md](DEPLOYMENT.md) for distribution requirements
-- Run `npm run validate:all` to check current state
-- Consider cross-platform compatibility (web, offline, Docker)
-
-### During Development
-
-- Follow TypeScript strict mode
-- Keep components under 100 lines
-- Use ES modules syntax (no CommonJS)
-- Write tests for new features
-- Follow existing code patterns
-
-### After Coding
-
-- Run `npm run test:run` to verify functionality
-- Run `npm run lint` to check code quality
-- Run `npm run build` and `npm run build:offline` to verify builds
-- Update documentation if adding features or changing APIs
-- Test offline package if distribution logic changed
-
----
-
-## Code Style
-
-**TypeScript:**
-
-- Strict mode enabled
-- Explicit types preferred
-- Avoid `any` types
-
-**React:**
-
-- Functional components with hooks
-- Component size: <100 lines
-- Props interface for each component
-
-**Styling:**
-
-- Tailwind CSS utility classes
-- Avoid inline styles
-- Follow existing theme patterns
-
-**Testing:**
-
-- Vitest + React Testing Library
-- Test user interactions, not implementation
-- Maintain >90% coverage
-
----
-
-## Versioning Strategy
-
-**Format**: Semantic Versioning (MAJOR.MINOR.PATCH)
-
-**Increment Rules:**
-
-- **MAJOR (X.0.0)**: Breaking changes, removed features, fundamental architecture changes
-- **MINOR (0.X.0)**: New features (backward compatible), new diagram types, new themes
-- **PATCH (0.0.X)**: Bug fixes, security updates, documentation updates, dependency updates
-
-**Examples:**
-
-- Major: Removing markdown format support, changing navigation behavior
-- Minor: Adding new Mermaid diagram support, grid view enhancements
-- Patch: Fixing rendering issues, correcting navigation bugs, security patches
-
-**Version Source**: `package.json` is the single source of truth
-
-**Cross-Channel Sync**: All channels (web, offline, Docker) use same version
-
----
-
-## Dependency Management
-
-### Update Strategy
-
-**Security Updates:**
-
-- Critical: Immediate patch
-- High-severity: Within 1 week
-- Medium/Low: Next scheduled release
-
-**Regular Updates:**
-
-- Major dependencies: Quarterly review
-- Minor/Patch: Monthly maintenance window
-- Test before deploying
-
-### Security Monitoring
-
-```bash
-# Check for vulnerabilities
-npm audit
-
-# Fix automatically fixable issues
-npm audit fix
-
-# Manual review for breaking changes
-npm audit fix --force  # Use with caution
-```
-
-**Automated Scanning:**
-
-- GitHub Dependabot enabled
-- Automatic security alerts
-- Weekly dependency update PRs
-
-### Current Dependency Lines (Core)
-
-- React 19.x
-- Mermaid 11.x
-- Vite 7.x
-- TypeScript 5.x
-- Tailwind CSS 3.4.x
-
----
-
-## Testing Procedures
-
-### Test Suite
-
-**Framework**: Vitest (44+ tests)
-**Libraries**: React Testing Library, jsdom
-
-**Structure:**
-
-```
-src/
-├── App.test.tsx
-├── components/__tests__/
-├── hooks/__tests__/
-└── utils/__tests__/
-```
-
-### Test Commands
-
-```bash
-# Run tests in watch mode
-npm test
-
-# Run tests once (for CI / validation)
-npm run test:run
-
-# Run with UI interface
-npm run test:ui
-
-# Full validation suite
-npm run validate:all
-```
-
-### Pre-Deployment Testing Checklist
-
-**Automated:**
-
-- [ ] All tests passing: `npm run test:run`
-- [ ] Linting clean: `npm run lint`
-- [ ] Build successful: `npm run build`
-- [ ] Offline build successful: `npm run build:offline`
-- [ ] Compatibility validated: `npm run validate:compatibility`
-- [ ] Continuity validated: `npm run validate:continuity`
-
-**Manual:**
-
-- [ ] Test on multiple browsers (Chrome, Firefox, Safari)
-- [ ] Test offline package on Windows, macOS, Linux
-- [ ] Verify all server scripts work (Python, Node.js, Shell, Batch)
-- [ ] Test Docker image builds and runs
-- [ ] Check mobile responsiveness
-
----
-
-## Git Workflow
-
-### Branch Strategy
-
-```
-main                  # Production-ready code
-├── feature/xxx       # Feature development
-├── bugfix/xxx        # Bug fixes
-└── hotfix/xxx        # Critical fixes
-```
-
-### Commit Messages
-
-**Format**: Conventional Commits
-
-```bash
-feat: Add new diagram type support
-fix: Correct keyboard navigation bug
-docs: Update deployment guide
-test: Add tests for title extraction
-chore: Update dependencies
-```
-
-### Pull Request Process
-
-1. Create feature branch from `main`
-2. Make changes with clear commits
-3. Run full validation: `npm run validate:all`
-4. Push branch and create PR
-5. Ensure CI passes
-6. Request review
-7. Merge when approved
-
----
-
-## Release Process
-
-### Creating a Release
-
-1. **Update Version**:
-
-   ```bash
-   # Update package.json version
-   npm version patch  # or minor, or major
-   ```
-
-2. **Build All Channels**:
-
-   ```bash
-   npm run build
-   npm run build:offline
-   ```
-
-3. **Run Full Validation**:
-
-   ```bash
-   npm run validate:all
-   ```
-
-4. **Commit and Tag**:
-
-   ```bash
-   git add .
-   git commit -m "Release v1.2.3"
-   git tag v1.2.3
-   ```
-
-5. **Push to Main**:
-
-   ```bash
-   git push origin main --tags
-   ```
-
-6. **Automated Deployment**: GitHub Actions deploys all channels automatically
-
-### Post-Release Verification
-
-- [ ] Web app live at https://mermaid-slides.com/
-- [ ] GitHub Release created with offline package
-- [ ] Docker image pushed to Docker Hub
-- [ ] Version numbers consistent across all channels
-
----
-
-## Project-Specific Notes
-
-### Title Extraction
-
-- Implementation: `src/utils/mermaidParser.ts`
-- Extracts markdown headers from diagram code
-- Settings: `src/components/Settings/SettingsPanel.tsx`
-
-### Build Artifacts
-
-- `dist/` - Web production build (git-ignored)
-- `offline-package/` - Offline distribution (git-ignored)
-- Both generated during build process
-
-### Validation Scripts
-
-- `scripts/validate-compatibility.cjs` - Cross-platform checks
-- `scripts/validate-continuity.cjs` - Documentation consistency
-
----
-
-## Documentation Standards
-
-**Keep It Concise:**
-
-- Avoid duplication across files
-- Focus on actionable information
-- Update when making changes
-
-**Documentation Files:**
-
-- [README.md](../README.md) - User-facing documentation, features
-- [AGENTS.md](../AGENTS.md) - AI agent context and commands
-- [DEPLOYMENT.md](DEPLOYMENT.md) - Multi-channel deployment strategy
-- [CONTRIBUTING.md](CONTRIBUTING.md) - This file
-
----
-
-## Getting Help
-
-**Issues**: [GitHub Issues](https://github.com/kanad13/mermaid-slides/issues)
-**Discussions**: [GitHub Discussions](https://github.com/kanad13/mermaid-slides/discussions)
-**Documentation**: Check docs/ directory for guides
-
----
-
-**Thank you for contributing to Mermaid Slides!**
+Before editing, read the active task in [WORKPLAN.md](WORKPLAN.md) and select the required evidence in
+[TESTING.md](TESTING.md).
+
+## Architecture
+
+- `src/App.tsx` owns top-level editor/viewer mode.
+- `src/components/` contains React UI.
+- `src/hooks/` contains reusable state and effects.
+- `src/utils/` contains parsing and pure transformations.
+- `src/styles/` contains shared and print styles.
+- `public/` contains assets copied into web and offline builds.
+- `scripts/` contains build preparation and repository validators.
+- `config/` contains TypeScript, Vite, Tailwind, PostCSS, and ESLint configuration.
+
+`dist/`, `offline-package/`, test reports, screenshots, and generated PDFs are disposable outputs, not
+source files.
+
+## Design and TypeScript
+
+- Implement the smallest design that satisfies a current requirement.
+- Keep components focused. A large component is a review signal; split by responsibility, not by an
+  arbitrary line count.
+- Put reusable stateful behavior in hooks and pure transformations in utilities.
+- Keep props, hook returns, exports, and configuration surfaces as narrow as current callers need.
+- Do not add speculative abstractions, compatibility layers, caches, or extension points.
+- Strict TypeScript must cover every TypeScript source and test file.
+- Narrow `unknown` at boundaries; do not use `any` to bypass a design problem.
+- Remove a replaced implementation rather than retaining parallel paths.
+
+## React, DOM, and CSS
+
+- Use functional components and hooks.
+- Effects clean up timers, listeners, pending work, and temporary DOM nodes.
+- Async effects cancel or ignore stale results.
+- Prefer observable events and state to timing guesses.
+- Render user-controlled values through React text/attributes or explicit DOM properties, never by
+  interpolating them into markup strings.
+- Mermaid-produced SVG is the only markup allowed in a Mermaid render container.
+- New or changed controls are keyboard-operable, labelled, and expose meaningful state.
+- Prefer layout constraints to pixel arithmetic based on assumed viewport or header sizes.
+- Handle flex shrinking explicitly with `min-width: 0` or `min-height: 0` when required.
+
+## Errors, names, and comments
+
+- A failed slide must not prevent remaining slides from rendering or printing.
+- Show useful, bounded error states without exposing raw markup.
+- Do not swallow unexpected errors to keep execution or tests green.
+- Names describe what code does. Comments explain a non-obvious reason, invariant, browser behavior,
+  or tradeoff.
+- Do not narrate syntax or preserve development history in code comments.
+- Update or remove comments when their underlying behavior changes.
+- Avoid claims such as “always”, “exact”, or “cannot fail” unless an enforced and tested invariant is
+  named.
+
+## Dependencies and automation
+
+- Add a dependency only for a concrete capability that is costly or unreliable to maintain locally.
+- Major upgrades require a security, support-lifecycle, or product-capability reason.
+- Use the lockfile and `npm ci` in automation.
+- Pin CI actions to commit SHAs and keep the release tag in a comment.
+- Audit, test, and build both web and offline artefacts after dependency changes.
+- Remove a dependency in the same change that removes its last use.
+
+## Documentation model
+
+Each topic has one owner. Other files link to the owner instead of restating it.
+
+| Topic | Owner |
+| --- | --- |
+| Product, features, quick start, public privacy summary, support | `README.md` |
+| AI-agent start, approval, closure, and handoff protocol | `AGENTS.md` |
+| Roadmap status, product decisions, acceptance criteria, next task | `docs/WORKPLAN.md` |
+| Setup, architecture, code, comments, dependencies, documentation governance | `docs/CONTRIBUTING.md` |
+| Test tools, change-to-test mapping, commands, fixtures, and gates | `docs/TESTING.md` |
+| Build channels, current workflow, release operation, and post-release checks | `docs/DEPLOYMENT.md` |
+| Extracted offline-package usage and safety | `public/offline-template/README.md` |
+| Optional prior code snippets | `docs/IMPLEMENTATION_REFERENCE.md` |
+| Bug and feature intake fields | `.github/ISSUE_TEMPLATE/*.md` |
+
+Documentation rules:
+
+- Describe the current product directly. Git history owns historical narrative.
+- Update code and its owning documentation in the same commit.
+- Do not duplicate command lists, version requirements, workflow mechanics, roadmap status, or
+  privacy claims when a link to the owner supplies the needed context. A distribution-specific file
+  may state the minimum subset required to operate that distribution safely.
+- Link to the owning document when context is needed elsewhere.
+- Avoid volatile counts of tests, hooks, components, checks, or files.
+- Every local link and heading anchor resolves.
+- Every Markdown document is reachable from an owning document, exposed by GitHub as an issue entry
+  point, or explicitly marked as optional internal reference material.
+- Every documented npm command exists in `package.json`.
+- Delete obsolete docs, examples, comments, commands, and references with the change that replaces
+  them.
+
+## Preventing orphans and drift
+
+- Use `rg` before and after renaming or deleting a symbol, file, command, heading, or feature.
+- Run the documentation validator after documentation, command, or path changes.
+- Run Knip for unused files, exports, dependencies, and unresolved imports once it is configured.
+- Configure real dynamic entry points explicitly; do not silence broad unused-code patterns.
+- Reject sync-conflict copies and duplicate numbered source files in repository validation.
+- A replacement is incomplete while the replaced code or documentation remains reachable.
+
+## Commits
+
+- Work on a non-default branch.
+- Keep one concern per commit and avoid unrelated cleanup.
+- Follow the verification gate in [TESTING.md](TESTING.md#change-verification-gate).
+- Use a concise Conventional Commit prefix such as `feat:`, `fix:`, `test:`, `docs:`, or `build:`.
+- Record any platform or distribution channel not checked.

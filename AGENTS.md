@@ -1,118 +1,72 @@
-# Mermaid Slides - Agent Context
+# Agent Operating Guide
 
-Transform markdown mermaid diagrams into presentation slides with navigation, theming, and automatic title extraction.
+This file defines how an AI coding agent starts, verifies, closes, and hands off work in this
+repository.
 
-**Live Demo**: https://mermaid-slides.com/
+## Authoritative documents
 
----
+Read these before changing code:
 
-## Commands
+1. [Work plan](docs/WORKPLAN.md) — current milestone and next task
+2. [Contributing guide](docs/CONTRIBUTING.md) — architecture, code standards, and documentation rules
+3. [Testing strategy](docs/TESTING.md) — required evidence and commands
 
-```bash
-npm run dev              # Development server (http://localhost:5173)
-npm run build           # Production build
-npm run build:offline   # Offline package with local server scripts
-npm test               # Run Vitest in watch mode during development
-npm run test:run       # Run the test suite once (CI/validation)
-npm run lint           # ESLint code quality check
-npm run validate:all   # Full cross-platform validation
-```
+Read [deployment](docs/DEPLOYMENT.md) when a task affects builds, distribution, workflows, versions,
+or releases. Read [implementation references](docs/IMPLEMENTATION_REFERENCE.md) only when the active
+task names a relevant area; it is never a source of requirements.
 
----
+## Start of a development turn
 
-## Architecture
+Before editing:
 
-**Core Structure:**
+1. Run `git status --short --branch` and inspect recent commits.
+2. Confirm the previous concern is committed and the tree is clean. If not, resolve or report it.
+3. Read the work plan's status and exact next task.
+4. Run the fastest relevant baseline from the testing strategy.
+5. State one bounded concern, the expected files, and the evidence required for completion.
+6. Identify the owning document for any product, command, workflow, or operational fact that may
+   change.
 
-- `src/App.tsx` - Main application entry point
-- `src/components/` - React components (<100 lines each, modular design)
-- `src/hooks/` - 8 custom React hooks for state and logic
-- `src/utils/` - Utilities and parsers (includes title extraction)
+Do not start a second concern merely because the first one finished quickly.
 
-**Key Features:**
+## During implementation
 
-- Automatic title extraction from markdown headers
-- Mixed content support (Mermaid diagrams + images)
-- Grid view with meaningful slide titles
-- Settings panel for title display and auto-hide behavior
-- Cross-platform compatibility (web, offline, Docker)
+- Keep production code, tests, and owning documentation in the same concern.
+- Add the failing behavioral test before implementing a bug fix or feature.
+- Keep the user informed during long-running work.
+- Put unrelated discoveries in the work-plan backlog.
+- Do not preserve unused compatibility code, exports, files, comments, or documentation.
+- Do not push, merge, tag, release, publish, or perform another external mutation without user
+  authorization.
 
----
+## Before presenting a change
 
-## Distribution Channels
+Complete the change verification gate in [TESTING.md](docs/TESTING.md#change-verification-gate):
 
-1. **Web App**: https://mermaid-slides.com/ (GitHub Pages, automated deployment)
-2. **Offline Package**: Standalone with Node.js/Python/shell server scripts
-3. **Docker**: `kunalpathak13/mermaid-slides` (Docker Hub, automated)
+1. Run the focused test and every required test layer.
+2. Run `git diff --check` and inspect the complete diff.
+3. Search for stale references after renames, deletions, or command changes.
+4. Run documentation and unused-code checks when available.
+5. Build or exercise each affected distribution channel.
+6. Update the work-plan status and record anything not checked.
 
-**Related VS Code Tools (separate repositories):**
+Report outcomes and gaps; do not describe an unchecked channel as passing.
 
-- **Mermaid Slideshow**: https://marketplace.visualstudio.com/items?itemName=KunalPathak.mermaid-slideshow
-- **Markdown Presentation Tool**: https://marketplace.visualstudio.com/items?itemName=KunalPathak.markdown-presentation-tool
+## When the user approves the change
 
----
+Treat approval as a boundary between concerns:
 
-## Code Style
+1. Re-run any gate invalidated since the last result.
+2. Confirm that replaced code, tests, exports, dependencies, comments, files, docs, links, and commands
+   are gone.
+3. Commit the accepted concern when authorized.
+4. Confirm the working tree is clean.
+5. Record one exact next task in `docs/WORKPLAN.md`.
+6. Stop before changing the next concern unless the user explicitly asked to continue.
 
-- **TypeScript**: Strict mode enabled
-- **React**: Functional components with hooks
-- **Component Size**: Keep under 100 lines
-- **Imports**: ES modules syntax (no CommonJS)
-- **Styling**: Tailwind CSS utility classes
-- **Testing**: Vitest + React Testing Library
+## End of a turn and next-session handoff
 
----
-
-## Workflow Guidelines
-
-**Before Coding:**
-
-- Review [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for distribution requirements
-- Run `npm run validate:all` to check current state
-- Ensure cross-platform compatibility considerations
-
-**After Coding:**
-
-- Run `npm run test:run` to verify functionality
-- Run `npm run lint` to check code quality
-- Run `npm run build` and `npm run build:offline` to verify builds
-- Update documentation if adding features or changing APIs
-- Test offline package functionality if distribution logic changed
-
-**Key Principles:**
-
-- Preserve cross-platform compatibility (web, offline, Docker)
-- Maintain modular component architecture
-- Keep dependencies minimal and purposeful
-- Document user-facing changes
-
----
-
-## Project-Specific Notes
-
-**Title Extraction:**
-
-- Implemented in `src/utils/mermaidParser.ts`
-- Extracts markdown headers (`#`, `##`, etc.) from diagram code
-- Settings toggle in `src/components/Settings/SettingsPanel.tsx`
-
-**Build Artifacts:**
-
-- `dist/` - Web production build (git-ignored)
-- `offline-package/` - Offline distribution (git-ignored, generated)
-- Both are generated during build process
-
-**Validation Scripts:**
-
-- `scripts/validate-compatibility.cjs` - Cross-platform checks
-- `scripts/validate-continuity.cjs` - Documentation consistency
-
----
-
-## Documentation Structure
-
-- **[README.md](README.md)** - User-facing documentation, features, quick start
-- **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** - Multi-channel deployment strategy
-- **[docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)** - Development guidelines, versioning, testing
-
-Keep documentation concise and actionable. Avoid duplication across files.
+- Leave the tree green and preferably committed.
+- State the branch, HEAD commit, checks run, and checks omitted.
+- Provide a continuation prompt that points to the authoritative documents and exact next task.
+- At the next session, repeat the start-of-turn protocol; do not rely on chat history as project state.

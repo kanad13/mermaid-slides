@@ -1,59 +1,45 @@
 ---
 name: Bug report
-about: Create a report to help us improve
-title: "[BUG] "
+about: Report reproducible incorrect behavior
+title: "[Bug] "
 labels: bug
 assignees: ""
 ---
 
-## 🐛 Bug Description
+## Summary
 
-A clear and concise description of what the bug is.
+Describe the incorrect behavior in one or two sentences.
 
-## 🔄 Steps to Reproduce
+## Reproduction
 
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
-
-## ✅ Expected Behavior
-
-A clear and concise description of what you expected to happen.
-
-## ❌ Actual Behavior
-
-A clear and concise description of what actually happened.
-
-## 📸 Screenshots
-
-If applicable, add screenshots to help explain your problem.
-
-## 🌍 Environment
-
-- **Browser:** [e.g. Chrome 91, Firefox 89, Safari 14]
-- **OS:** [e.g. Windows 10, macOS 12.0, Ubuntu 20.04]
-- **Device:** [e.g. Desktop, iPhone 12, iPad Pro]
-- **Version:** [e.g. latest from main branch, v1.2.3]
-
-## 📄 Sample Content
-
-If the bug is related to specific markdown content, please provide a minimal example:
+1. State the distribution: web, offline package, or Docker.
+2. List the exact actions that produce the problem.
+3. Include the smallest Markdown deck that reproduces it.
 
 ````markdown
-# Your sample markdown here
-
 ```mermaid
-graph TD
-    A[Start] --> B[End]
+flowchart LR
+    A --> B
 ```
 ````
 
-```
+## Expected and actual result
 
-## 🔍 Additional Context
-Add any other context about the problem here.
+Expected:
 
-## 🩹 Possible Solution
-If you have ideas on how to fix this, please share them here.
-```
+Actual:
+
+## Environment
+
+- Mermaid Slides version, release tag, or commit:
+- Browser and version:
+- Operating system:
+- Viewport size, when layout is involved:
+
+## Evidence
+
+Attach relevant screenshots, console errors, generated PDFs, or logs. Remove private content first.
+
+## Regression
+
+If this worked before, state the last version where it worked.

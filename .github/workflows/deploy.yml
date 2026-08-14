@@ -141,12 +141,12 @@ jobs:
 
           ### 🌐 Web Application
           - **Live Demo**: [https://mermaid-slides.com/](https://mermaid-slides.com/)
-          - **Features**: Instant access, mobile responsive, no installation required
+          - **Features**: Instant access, desktop-first viewer, no installation required
 
           ### 💾 Offline Package
           - **Download**: See assets below
           - **Requirements**: Python 3.x OR Node.js
-          - **Features**: Complete offline functionality, cross-platform compatibility
+          - **Features**: Bundled application assets and Python/Node launchers
 
           ### 🐳 Docker Image
           - **Pull**: \`docker pull kunalpathak13/mermaid-slides:${{ env.VERSION }}\`
@@ -171,10 +171,10 @@ jobs:
 
           ## 🔒 Security & Privacy
 
-          - ✅ Zero external network requests (offline mode)
-          - ✅ All processing happens locally
-          - ✅ No data collection or tracking
-          - ✅ Open source and transparent
+          - ✅ Application code and bundled examples are served locally
+          - ✅ Markdown and Mermaid source are processed locally
+          - ✅ No analytics, telemetry, or application backend
+          - ℹ️ User-authored remote images are requested from their hosts
 
           ---
 
@@ -182,7 +182,7 @@ jobs:
           - Version: ${{ env.VERSION }}
           - Commit: \`${{ github.sha }}\`
           - Built: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          - Tests: ✅ All passing
+          - Unit tests: ✅ Passed
           - Compatibility: ✅ Cross-platform validated
           EOF
 
@@ -267,7 +267,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: kunalpathak13/mermaid-slides
-          short-description: 'Transform markdown mermaid diagrams into beautiful presentation slides with navigation and theming'
+          short-description: 'Turn Mermaid diagrams and Markdown images into browser-based slides'
           readme-filepath: ./README.md
 
   # ==========================================
@@ -296,7 +296,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 🌐 Web Application" >> $GITHUB_STEP_SUMMARY
           echo "- **URL**: https://mermaid-slides.com/" >> $GITHUB_STEP_SUMMARY
-          echo "- **Features**: Instant access, mobile responsive" >> $GITHUB_STEP_SUMMARY
+          echo "- **Features**: Instant access, desktop-first viewer" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 💾 Offline Package" >> $GITHUB_STEP_SUMMARY
           echo "- **Download**: [Latest Release](https://github.com/kanad13/mermaid-slides/releases/latest)" >> $GITHUB_STEP_SUMMARY
