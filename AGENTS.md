@@ -1,118 +1,180 @@
-# Mermaid Slides - Agent Context
+# Mermaid Slides — Agent Context
 
-Transform markdown mermaid diagrams into presentation slides with navigation, theming, and automatic title extraction.
+A browser app that turns a Markdown file's Mermaid diagrams and images into a navigable slideshow.
+Everything runs client-side: there is no backend, no account, and no data leaves the device except
+images the author referenced by URL.
 
-**Live Demo**: https://mermaid-slides.com/
+**Live**: https://mermaid-slides.com/ · **Maintainer**: [Kunal Pathak](https://www.kunal-pathak.com)
+
+> **Read [docs/WORKPLAN.md](docs/WORKPLAN.md) first.** It is the source of truth for what is in
+> progress, what was decided, and what was deliberately declined. This file describes the codebase;
+> the work plan describes the work.
+
+---
+
+## Before you touch anything
+
+Merging to `master` **publishes**. A single push runs `deploy.yml`, which deploys to GitHub Pages,
+creates a GitHub release tagged from `package.json`, and pushes to Docker Hub. There is no staging
+step between a merge and users. Consequences:
+
+- Run the full channel matrix in [docs/TESTING.md](docs/TESTING.md) before merging, not after.
+- Bump the version once, in a commit immediately before the merge. The release action fails on a tag
+  that already exists.
+- Work on a branch. `validate.yml` runs on branches and pull requests and publishes nothing.
 
 ---
 
 ## Commands
 
 ```bash
-npm run dev              # Development server (http://localhost:5173)
-npm run build           # Production build
-npm run build:offline   # Offline package with local server scripts
-npm test               # Run Vitest in watch mode during development
-npm run test:run       # Run the test suite once (CI/validation)
-npm run lint           # ESLint code quality check
-npm run validate:all   # Full cross-platform validation
+npm run dev                   # Vite dev server
+npm run typecheck             # tsc --noEmit
+npm run lint                  # ESLint, zero warnings tolerated
+npm run test:run              # Vitest, single run
+npm test                      # Vitest, watch mode
+npm run build                 # Web build -> dist/
+npm run build:offline         # Offline package -> offline-package/
+npm run validate:compatibility # Checks offline-package/ — needs build:offline first
+npm run validate:continuity   # Checks documentation structure
+npm run validate:all          # typecheck + lint + tests + both validators
 ```
+
+The per-commit gate is `npm run typecheck && npm run lint && npm run test:run`. Note that
+`validate:all` includes `validate:compatibility`, which fails unless `offline-package/` has been
+built.
+
+Requires **Node 22.12+**. Node 20 reached end of life in April 2026.
 
 ---
 
 ## Architecture
 
-**Core Structure:**
+```
+src/
+  App.tsx              Two states: editor or viewer. That is the whole routing.
+  main.tsx             Mount point
+  components/
+    Editor/            Paste or load markdown; owns the text, parses on demand
+    FileUpload/        Drop zone, file input, action buttons
+    Viewer/            Presentation shell: header, single-slide view, grid view
+    Settings/          Session-only toggles (titles, auto-hide)
+    Legal/             Privacy policy, legal notice, footer, shared modal
+  hooks/               Six hooks (see below)
+  utils/               mermaidParser, fileHandler, sampleData
+  types/               Diagram and component prop types
+  styles/index.css     Tailwind entry plus the html/body/#root height chain
+config/                Vite, Vitest, Tailwind, PostCSS, ESLint, TypeScript
+scripts/               prepare-offline-package.cjs, validate-compatibility.cjs,
+                       validate-continuity.cjs
+public/offline-template Server scripts bundled into the offline package
+```
 
-- `src/App.tsx` - Main application entry point
-- `src/components/` - React components (<100 lines each, modular design)
-- `src/hooks/` - 8 custom React hooks for state and logic
-- `src/utils/` - Utilities and parsers (includes title extraction)
+### Hooks
 
-**Key Features:**
+| Hook                    | Responsibility                                             |
+| ----------------------- | ---------------------------------------------------------- |
+| `useMermaid`            | Shared Mermaid instance and rendered-SVG cache             |
+| `useDiagramParser`      | Background parse driving the editor's status message       |
+| `useFileHandler`        | File selection, drag and drop, validation                  |
+| `useViewerNavigation`   | Current slide index, grid toggle                           |
+| `useKeyboardNavigation` | Arrow keys, Home, End, Escape                              |
+| `useAutoHide`           | Hides the viewer header after inactivity                   |
 
-- Automatic title extraction from markdown headers
-- Mixed content support (Mermaid diagrams + images)
-- Grid view with meaningful slide titles
-- Settings panel for title display and auto-hide behavior
-- Cross-platform compatibility (web, offline, Docker)
+### Things that are easy to get wrong
 
----
+**One Mermaid instance, and rendering is cached.** `useMermaid` holds a module-level import promise
+and a cache keyed by diagram source. A cached SVG keeps the element id it was first rendered under,
+so a diagram first drawn in the grid carries a `grid-` prefixed id in single view. The id only scopes
+Mermaid's own styles, but do not select on it.
 
-## Distribution Channels
+**Sizing is done by layout, never arithmetic.** The height chain in `index.css` reaches `#root`, the
+viewer is `h-full`, and the slide area is a `flex-1 min-h-0` child. Nothing subtracts a header
+height. An earlier version hardcoded 120px, which was wrong at every viewport. Do not reintroduce
+viewport units here: on mobile they are measured with toolbars retracted and clip the bottom of the
+slide.
 
-1. **Web App**: https://mermaid-slides.com/ (GitHub Pages, automated deployment)
-2. **Offline Package**: Standalone with Node.js/Python/shell server scripts
-3. **Docker**: `kunalpathak13/mermaid-slides` (Docker Hub, automated)
+**Async render passes must be cancellable.** Both viewer components render through `await`, and their
+effects re-run when Mermaid finishes loading. Without a cancellation flag two passes interleave and
+clear each other's containers. This is what used to leave grid previews blank.
 
-**Related VS Code Tools (separate repositories):**
-
-- **Mermaid Slideshow**: https://marketplace.visualstudio.com/items?itemName=KunalPathak.mermaid-slideshow
-- **Markdown Presentation Tool**: https://marketplace.visualstudio.com/items?itemName=KunalPathak.markdown-presentation-tool
-
----
-
-## Code Style
-
-- **TypeScript**: Strict mode enabled
-- **React**: Functional components with hooks
-- **Component Size**: Keep under 100 lines
-- **Imports**: ES modules syntax (no CommonJS)
-- **Styling**: Tailwind CSS utility classes
-- **Testing**: Vitest + React Testing Library
-
----
-
-## Workflow Guidelines
-
-**Before Coding:**
-
-- Review [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for distribution requirements
-- Run `npm run validate:all` to check current state
-- Ensure cross-platform compatibility considerations
-
-**After Coding:**
-
-- Run `npm run test:run` to verify functionality
-- Run `npm run lint` to check code quality
-- Run `npm run build` and `npm run build:offline` to verify builds
-- Update documentation if adding features or changing APIs
-- Test offline package functionality if distribution logic changed
-
-**Key Principles:**
-
-- Preserve cross-platform compatibility (web, offline, Docker)
-- Maintain modular component architecture
-- Keep dependencies minimal and purposeful
-- Document user-facing changes
+**Presenting parses on demand.** The debounced parse in `Editor` only feeds the error message.
+`handleViewDiagrams` parses the current text directly, because reading the debounced result made
+paste-then-click silently do nothing.
 
 ---
 
-## Project-Specific Notes
+## Security model
 
-**Title Extraction:**
+Markdown is untrusted input. A `.md` file can come from anywhere.
 
-- Implemented in `src/utils/mermaidParser.ts`
-- Extracts markdown headers (`#`, `##`, etc.) from diagram code
-- Settings toggle in `src/components/Settings/SettingsPanel.tsx`
+- A **Content-Security-Policy** ships in `index.html`, so it covers all three channels — none of
+  which can set response headers. `script-src 'self'` refuses inline script, which is what stops a
+  crafted image tag in markdown from executing.
+- `style-src` needs `'unsafe-inline'`: Mermaid injects a `<style>` block per diagram.
+- `img-src` is **deliberately permissive**. Remote images are placed by the author on purpose and
+  refusing them would break real documents. The trade-off — that loading one reveals the viewer's IP
+  to that host — is stated plainly in the README and the in-app privacy policy. Do not "fix" this by
+  blocking them, and do not write documentation claiming the app makes zero network requests.
+- The offline package's Node server resolves request paths and checks containment before serving.
+  It previously did not, and served arbitrary files to the local network.
+- The shipped HTML must contain **no absolute URLs**; `scripts/validate-compatibility.cjs`
+  enforces it, and it is what lets the offline package promise it needs nothing from the network.
 
-**Build Artifacts:**
-
-- `dist/` - Web production build (git-ignored)
-- `offline-package/` - Offline distribution (git-ignored, generated)
-- Both are generated during build process
-
-**Validation Scripts:**
-
-- `scripts/validate-compatibility.cjs` - Cross-platform checks
-- `scripts/validate-continuity.cjs` - Documentation consistency
+The app stores nothing: no cookies, no local storage, no session storage, no service worker. Settings
+are session-only by design — losing preferences on reload is the intended behaviour, not a gap.
 
 ---
 
-## Documentation Structure
+## Code style
 
-- **[README.md](README.md)** - User-facing documentation, features, quick start
-- **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** - Multi-channel deployment strategy
-- **[docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)** - Development guidelines, versioning, testing
+- TypeScript strict mode, and it genuinely runs — `config/tsconfig.json` resolves paths relative to
+  itself, so `include` is `../src`. It once read `src`, matched zero files, and hid 66 errors.
+- Functional components with explicit prop types from `src/types/components.ts`.
+- Tailwind utility classes; no CSS modules.
+- ES modules only. The offline server scripts are CommonJS and ship with their own `package.json`
+  declaring that.
+- Comments explain **why**, not what. A comment restating the code should be deleted rather than
+  updated.
 
-Keep documentation concise and actionable. Avoid duplication across files.
+---
+
+## Testing
+
+The suite mocks Mermaid entirely, so it covers parsing, hooks and component structure but **no
+integration path** — nothing where a real diagram reaches the DOM. For rendering, layout and
+distribution behaviour, the manual checklist in [docs/TESTING.md](docs/TESTING.md) is the test suite,
+not a supplement to it.
+
+When fixing a bug, confirm the new test fails against the old behaviour. A test that passes either
+way documents nothing.
+
+---
+
+## Distribution
+
+| Channel  | Artefact                              | Notes                                    |
+| -------- | ------------------------------------- | ---------------------------------------- |
+| Web      | `dist/` → GitHub Pages                | Absolute base path                       |
+| Offline  | `offline-package/` → release archive  | Relative paths; Python and Node servers  |
+| Docker   | `kunalpathak13/mermaid-slides`        | Unprivileged, digest-pinned, amd64+arm64 |
+
+The offline package resolves assets relatively, so a change that works on Pages can still break it
+and the Docker image. Steps 3 and 4 of the testing matrix are not optional for anything touching the
+build, `index.html`, or asset references.
+
+Related VS Code extensions live in separate repositories: **Mermaid Slideshow** and **Markdown
+Presentation Tool**.
+
+---
+
+## Documentation map
+
+- [README.md](README.md) — users: what it is, how to run it, what it discloses
+- [docs/WORKPLAN.md](docs/WORKPLAN.md) — current work, decisions, declined items, backlog
+- [docs/TESTING.md](docs/TESTING.md) — gates, channel matrix, smoke checklist
+- [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — release flow and channel specifics
+- [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) — development workflow
+
+Keep them aligned in the same commit as the change. The privacy claims in particular exist in more
+than one place, and they have gone stale before.

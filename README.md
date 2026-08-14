@@ -1,35 +1,32 @@
-# Mermaid Slides
+# 🧜‍♀️ Mermaid Slides
 
-Turn Markdown files with Mermaid diagrams and images into a presentation-ready deck in seconds. Mermaid Slides keeps the source plain-text, renders everything locally, and lets you present the result in the browser, offline, or from Docker — ideal for architecture reviews, demos, and docs walkthroughs.
+Turn a Markdown file's Mermaid diagrams and images into a presentation you can actually give. Point it
+at your architecture docs and present them — no export step, no conversion, no upload.
 
-Built and maintained by [Kunal Pathak](https://www.kunal-pathak.com).
+Everything runs in your browser. Your Markdown never leaves your device.
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-blue?style=for-the-badge)](https://mermaid-slides.com/)
-[![Docker Image](https://img.shields.io/badge/Docker_Image-blue?style=for-the-badge)](https://hub.docker.com/r/kunalpathak13/mermaid-slides)
-[![Mermaid Slideshow VS Code](https://img.shields.io/badge/VS_Code-Mermaid_Slideshow-purple?style=for-the-badge)](https://marketplace.visualstudio.com/items?itemName=KunalPathak.mermaid-slideshow)
-[![Markdown Presentation Tool](https://img.shields.io/badge/VS_Code-Markdown_Presentation_Tool-7c3aed?style=for-the-badge)](https://marketplace.visualstudio.com/items?itemName=KunalPathak.markdown-presentation-tool)
-[![Documentation](https://img.shields.io/badge/Documentation-green?style=for-the-badge)](docs/)
-[![Privacy First](https://img.shields.io/badge/Privacy_First-orange?style=for-the-badge)](#-privacy--security)
+**[▶ Try it](https://mermaid-slides.com/)** · **[🐳 Docker](https://hub.docker.com/r/kunalpathak13/mermaid-slides)** · **[💾 Offline package](https://github.com/kanad13/mermaid-slides/releases/latest)** · **[📖 Docs](docs/)** · **[🔒 Privacy](#privacy)**
+
+Built and maintained by **[Kunal Pathak](https://www.kunal-pathak.com)**.
 
 ![Mermaid Slides Demo](docs/assets/mermai-slides-demo.gif)
 
-## Quick Start
+---
 
-### **Online (Recommended)**
+## Quick start
 
-Visit **[Mermaid Slides](https://mermaid-slides.com/)** and start creating presentations immediately.
+### Online
 
-### **Docker Container**
+Open **[mermaid-slides.com](https://mermaid-slides.com/)**, drop in a Markdown file, and present.
+Nothing to install.
 
-Run Mermaid Slides in a Docker container for easy deployment:
+### Docker
 
 ```bash
-# Pull and run the latest version
-docker pull kunalpathak13/mermaid-slides:latest
 docker run -p 3000:3000 kunalpathak13/mermaid-slides:latest
-
-# Open browser to http://localhost:3000
 ```
+
+Then open http://localhost:3000.
 
 The image holds static files and a small Python server. Nothing writes to disk and nothing calls out,
 so you can lock it down further:
@@ -38,35 +35,25 @@ so you can lock it down further:
 docker run -p 3000:3000 --read-only --cap-drop=ALL kunalpathak13/mermaid-slides:latest
 ```
 
-- **Container Ready**: Multi-platform support (AMD64, ARM64)
-- **Runs Unprivileged**: Serves as a non-root user, with a digest-pinned base image
-- **Isolated Environment**: Complete containerized solution
-- **Easy Deployment**: Perfect for corporate environments
+Multi-platform (amd64, arm64), runs as an unprivileged user, built from a digest-pinned base.
 
-### **Offline Package**
+### Offline package
 
-Download the complete offline package for local use without internet dependency:
+Download the archive from the [latest release](https://github.com/kanad13/mermaid-slides/releases/latest),
+extract it, and start whichever server suits the machine:
 
 ```bash
-# Download from GitHub Releases
-# Visit: https://github.com/kanad13/mermaid-slides/releases/latest
-
-# Extract and run:
-unzip mermaid-slides-offline-v*.zip
-cd mermaid-slides-offline
-
-# Choose your preferred server:
-python3 start-server.py  # Python option
-node start-server.js     # Node.js option
-./start-server.sh        # Auto-detect (macOS/Linux)
-start-server.bat         # Auto-detect (Windows)
-
-# Open browser to http://localhost:3000
+python3 start-server.py     # Python
+node start-server.js        # Node.js
+./start-server.sh           # macOS/Linux, auto-detects
+start-server.bat            # Windows, auto-detects
 ```
 
-### **Local Development**
+Then open http://localhost:3000. No internet connection needed, at any point.
 
-Requires **Node 20.19+** or **22.12+** for local development and production builds (matches Vite 7 requirements).
+### From source
+
+Requires **Node 22.12+**.
 
 ```bash
 git clone https://github.com/kanad13/mermaid-slides.git
@@ -75,126 +62,108 @@ npm install
 npm run dev
 ```
 
-## Thanks Mermaid.js Team!
+---
 
-> **Important Notice:** This is an independent, community-driven project and is **not an official product** of the Mermaid.js team. Mermaid Slides (this project) is built with deep gratitude to the Mermaid.js creators and uses their library under the MIT License. All credit for the core diagramming functionality goes to the [Mermaid.js project](https://github.com/mermaid-js/mermaid).
+## How it works
 
-## Key Features
+Write ordinary Markdown. Every ```` ```mermaid ```` block and every `![image](...)` becomes a slide, in
+document order. The nearest preceding heading becomes that slide's title.
 
-### **Presentation & Navigation**
+````markdown
+## Deployment flow
 
-- **File Handling** - Drag & drop, file browser, or paste markdown content
-- **Mixed Content** - Mermaid diagrams + images in unified presentations
-- **Title Extraction** - Automatically extracts markdown headers as slide titles with user toggle
-- **Navigation** - Keyboard controls, progress bar, grid view, thumbnails
-- **Settings Panel** - Toggle title display and auto-hide behavior during a session
-- **Presentation Mode** - Full-screen, distraction-free experience
-- **Responsive** - Works on desktop, tablet, and mobile devices
+```mermaid
+graph TD
+    A[Commit] --> B{Tests pass?}
+    B -->|Yes| C[Deploy]
+    B -->|No| D[Fix]
+```
+````
 
-### **Privacy & Security**
+That is the entire format. There are no slide delimiters to learn and no front matter — a document
+written for reading is already a deck.
 
-- **Zero Tracking** - No analytics, telemetry, or data collection, and nothing stored in the browser
-- **Offline First** - Complete functionality without internet dependency
-- **Local Processing** - All parsing and diagram rendering happens on your device
-- **Self-Contained** - All distributions bundle dependencies locally
-- **Content-Security-Policy** - Enforced in every distribution; see [Privacy & Security](#privacy--security)
-- **Privacy Modals** - Built-in privacy policy and legal notice information
+**Presenting**: arrow keys to navigate, `Home` and `End` to jump to either end, `Esc` to return to the
+editor. A grid view shows every slide at once; click one to jump to it. Titles and header auto-hide
+can be toggled while presenting.
 
-### **Multi-Platform Availability**
-
-- **Web App** - Instant access via GitHub Pages
-- **Offline Package** - Download and run locally on any OS
-- **Docker Container** - Containerized deployment for any environment
-
-## Related VS Code Tools
-
-If you prefer editor-native presentations, these companion tools are already live in the VS Code Marketplace:
-
-### **Mermaid Slideshow**
-
-- **Marketplace**: [KunalPathak.mermaid-slideshow](https://marketplace.visualstudio.com/items?itemName=KunalPathak.mermaid-slideshow)
-- **Best for**: Mermaid-only files where each diagram becomes its own focused slide
-- **Highlights**: Keyboard navigation, live preview updates, Mermaid theme selection
-
-### **Markdown Presentation Tool**
-
-- **Marketplace**: [KunalPathak.markdown-presentation-tool](https://marketplace.visualstudio.com/items?itemName=KunalPathak.markdown-presentation-tool)
-- **Best for**: Full Markdown decks with headings, text, Mermaid diagrams, code blocks, and images
-- **Highlights**: `<!-- slide -->` delimiters, theme awareness, style controls, rich mixed-content slides
-
-Both tools are published separately from this repository and complement the web/offline/Docker versions of Mermaid Slides.
-
-## Privacy & Security
-
-Mermaid Slides is designed with privacy as a core principle:
-
-- **No Data Collection** - Zero analytics, tracking, or telemetry. The app stores nothing: no cookies, no local storage, no session storage, no service worker
-- **Local Processing** - Your markdown never leaves your device. Parsing and diagram rendering happen entirely in your browser
-- **Self-Contained** - No CDN dependencies. Every distribution bundles its own assets, so the app itself never contacts a third party
-- **Offline Operation** - Full functionality without an internet connection
-- **Simple Local Servers** - The offline package uses lightweight local Python or Node.js servers only
-- **Content-Security-Policy** - A strict policy is enforced in every distribution. Scripts may only load from the app's own files, and inline script is refused outright, so a markdown file cannot execute code in the page
-
-### One thing to be aware of
-
-If your markdown references a remote image — `![diagram](https://example.com/chart.png)` — your browser
-fetches it, and that request tells the hosting server your IP address and user agent. That is how
-images work on the web, and the policy above deliberately permits it: you put the image there on
-purpose, and silently refusing to load it would break real documents.
-
-Nothing else in the app reaches the network. If you want a presentation that provably makes no outside
-requests, use local image paths or diagrams only.
-
-## Documentation
-
-- **[Deployment Guide](docs/DEPLOYMENT.md)** - Multi-channel deployment, release flow, and channel-specific notes
-- **[Contributing Guide](docs/CONTRIBUTING.md)** - Development workflow, testing, and release checklist
-- **[Work Plan](docs/WORKPLAN.md)** - Scheduled work, decisions taken, and what was deliberately declined
-- **[Testing Guide](docs/TESTING.md)** - Per-commit gate, channel matrix, and the manual smoke checklist
-- **[AI Agent Context](AGENTS.md)** - Workspace context and verified commands for coding agents
-
-## Technology
-
-**Frontend**: React 19 + TypeScript | **Build**: Vite 7 | **Styling**: Tailwind CSS 3.4
-**Diagrams**: Mermaid.js 11 | **Testing**: Vitest + React Testing Library | **Deployment**: GitHub Pages, offline package, Docker
-
-## Supported Content
-
-**Mermaid Diagrams**: Flowcharts, Sequence, ER, Class, State, Gantt, Pie Charts, Git Graphs
-**Images**: PNG, JPEG, GIF, WebP with automatic scaling and responsive display
-
-## Contributing
-
-We welcome contributions! See our [Contributing Guidelines](docs/CONTRIBUTING.md) for development setup and guidelines.
-
-## Maintainer
-
-Mermaid Slides is built and maintained by **[Kunal Pathak](https://www.kunal-pathak.com)** as a
-non-commercial open-source project. No advertising, no tracking, no accounts.
-
-## License
-
-MIT License - see [LICENSE](LICENSE) for details.
-
-## Acknowledgments
-
-Mermaid Slides is built with and redistributes the following open source projects. I am grateful for their contributions to the community:
-
-- **[Mermaid.js](https://github.com/mermaid-js/mermaid)** (MIT License) — Copyright (c) Knut Sveidqvist
-  _The core diagramming engine that makes this project possible_
-- **[React](https://github.com/facebook/react)** (MIT License) — Copyright (c) Meta Platforms, Inc.
-  _The foundation for our modern, interactive user interface_
-- **[Vite](https://github.com/vitejs/vite)** (MIT License) — Copyright (c) Evan You
-  _Lightning-fast development and build tooling_
-- **[Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)** (MIT License) — Copyright (c) Tailwind Labs, Inc.
-  _Utility-first CSS framework for rapid UI development_
-- **[TypeScript](https://github.com/microsoft/TypeScript)** (Apache-2.0 License) — Copyright (c) Microsoft Corporation
-  _Type safety and developer experience enhancements_
-
-See [package.json](package.json) for a complete list of all dependencies.
-
-**Special thanks to the Mermaid.js team** for creating such a powerful and flexible diagramming library that enables developers to create beautiful diagrams with simple text syntax.
+**Supported diagrams**: flowcharts, sequence, ER, class, state, Gantt, pie, git graphs — whatever
+Mermaid 11 renders. **Images**: PNG, JPEG, GIF, WebP, scaled to fit.
 
 ---
 
-**[Try it now](https://mermaid-slides.com/) | [Full Documentation](docs/) | [Report Issues](https://github.com/kanad13/mermaid-slides/issues)**
+## Privacy
+
+This is the part the project actually cares about, so it is worth being precise rather than
+reassuring.
+
+**What the app stores: nothing.** No cookies, no local storage, no session storage, no service
+worker. No analytics, no telemetry, no error reporting. Settings reset when you reload, by design —
+losing your preferences is the feature.
+
+**What the app sends: nothing.** Your Markdown is parsed and rendered entirely in your browser. There
+is no server to send it to; the hosted version is static files.
+
+**The one exception, and it is your choice.** If your Markdown references an image by URL —
+`![chart](https://example.com/chart.png)` — your browser fetches it, and that request tells the
+hosting server your IP address and browser details. That is how images work on the web. Mermaid
+Slides permits it deliberately, because you put that image there on purpose and silently refusing to
+load it would break real documents.
+
+If you want a deck that provably reaches nobody, use local image paths or diagrams only — or run the
+offline package or Docker image, which involve no third party at all.
+
+**Hosting.** The web version is served from GitHub Pages and may pass through Cloudflare. Both may
+log technical data such as your IP, and Cloudflare may set strictly necessary cookies. Those are
+theirs, not ours. The offline and Docker channels avoid them entirely.
+
+**Enforcement, not just intent.** A Content-Security-Policy ships with every channel. Scripts load
+only from the app's own files and inline script is refused outright, so a Markdown file cannot run
+code in the page even if it is crafted to try. The offline servers bind locally and refuse request
+paths that escape their directory.
+
+---
+
+## Documentation
+
+- **[Work Plan](docs/WORKPLAN.md)** — what is in progress, what was decided, what was declined
+- **[Testing Guide](docs/TESTING.md)** — gates, channel matrix, manual smoke checklist
+- **[Deployment Guide](docs/DEPLOYMENT.md)** — release flow and channel specifics
+- **[Contributing Guide](docs/CONTRIBUTING.md)** — development workflow
+- **[Agent Context](AGENTS.md)** — architecture notes and the traps worth knowing
+
+---
+
+## Also available in VS Code
+
+Two companion extensions, published from separate repositories:
+
+- **[Mermaid Slideshow](https://marketplace.visualstudio.com/items?itemName=KunalPathak.mermaid-slideshow)** — Mermaid-only files, one diagram per slide
+- **[Markdown Presentation Tool](https://marketplace.visualstudio.com/items?itemName=KunalPathak.markdown-presentation-tool)** — full Markdown decks with `<!-- slide -->` delimiters
+
+---
+
+## Built with
+
+React 19 · TypeScript · Vite 7 · Tailwind CSS 3.4 · Mermaid.js 11 · Vitest
+
+Mermaid Slides is an independent, community project and **not an official product** of the Mermaid.js
+team. It uses their library under the MIT Licence, and exists because of their work.
+
+Grateful to [Mermaid.js](https://github.com/mermaid-js/mermaid) (Knut Sveidqvist),
+[React](https://github.com/facebook/react) (Meta), [Vite](https://github.com/vitejs/vite) (Evan You),
+[Tailwind CSS](https://github.com/tailwindlabs/tailwindcss), and
+[TypeScript](https://github.com/microsoft/TypeScript). Full dependency list in
+[package.json](package.json).
+
+---
+
+## Contributing
+
+Issues and pull requests are welcome — see the [Contributing Guide](docs/CONTRIBUTING.md). One thing
+to know up front: merging to `master` publishes to all three channels immediately, so the testing
+matrix runs before a merge rather than after.
+
+## Licence
+
+MIT — see [LICENSE](LICENSE).
