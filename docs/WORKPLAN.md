@@ -17,7 +17,7 @@ rewrites props across fourteen component files and conflicts with every UI chang
 | Order | Branch                | Contents                          | Target  | Status      |
 | ----- | --------------------- | --------------------------------- | ------- | ----------- |
 | 1     | `security/hardening`  | C0, S1, S7, S8, S5, S9, S10, S11   | v1.3.0  | merged |
-| 2     | `ux/foundations`      | U13, U8, U3, U7, U9, U1            | v1.4.0  | not started |
+| 2     | `ux/foundations`      | B1, U13, U8, U3, U7, U9, U1        | v1.4.0  | in progress |
 | 3     | `ux/features`         | U6, U10, U12                       | v1.5.0  | not started |
 | 4     | `feat/print-to-pdf`   | Print stylesheet export            | v1.6.0  | not started |
 | —     | `deps/majors`         | Major version migrations           | —       | parked      |
@@ -47,6 +47,7 @@ and the silent no-op is gone.** Any visible difference is a regression.
 
 | ID   | Task                                                          | Status |
 | ---- | ------------------------------------------------------------- | ------ |
+| B1   | Declare the offline package as CommonJS                        | done   |
 | U13  | Remove dead components, de-duplicate `useFileHandler`          | todo   |
 | U8   | Clean up the uncancelled timer in `GridView`                   | todo   |
 | U3   | Remove the hardcoded layout arithmetic                         | todo   |
@@ -163,16 +164,6 @@ Before starting, run the opening ritual above and confirm the tree is green.
 
 Found during the work, deliberately not acted on because they fall outside the current scope.
 Each needs a decision before it is scheduled.
-
-**B1 — The offline package's Node server cannot be run from inside the repository.**
-`start-server.js` is CommonJS, and the repository's `package.json` declares `"type": "module"`, so
-Node treats the `.js` file as an ES module and it exits with `require is not defined in ES module
-scope`. The shipped archive is unaffected: a user extracts it somewhere with no parent
-`package.json`, Node falls back to CommonJS, and it runs. Verified both ways. The consequence is that
-one of the four documented start paths cannot be exercised in place, which is presumably why nobody
-noticed. Writing a `package.json` containing `{"type": "commonjs"}` into the package from
-`scripts/prepare-offline-package.cjs` would fix it without changing any documented command. Roughly
-four lines. `docs/TESTING.md` documents the workaround in the meantime.
 
 **B2 — The offline package ships a redundant copy of the server scripts.**
 Vite copies all of `public/` into the build, which includes `public/offline-template/`, so the archive
