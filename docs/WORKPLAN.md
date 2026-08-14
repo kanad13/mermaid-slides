@@ -14,7 +14,7 @@ rewrites props across fourteen component files and conflicts with every UI chang
 
 | Order | Branch                | Contents                          | Target  | Status      |
 | ----- | --------------------- | --------------------------------- | ------- | ----------- |
-| 1     | `security/hardening`  | C0, S1, S7, S8, S5, S9, S10, S11   | v1.3.0  | in progress |
+| 1     | `security/hardening`  | C0, S1, S7, S8, S5, S9, S10, S11   | v1.3.0  | ready to merge |
 | 2     | `ux/foundations`      | U13, U14, U8, U3, U7, U9, U1       | v1.4.0  | not started |
 | 3     | `ux/features`         | U6, U10, U12                       | v1.5.0  | not started |
 | 4     | `feat/print-to-pdf`   | Print stylesheet export            | v1.6.0  | not started |
@@ -36,7 +36,7 @@ Rollback floor for the whole programme: tag `checkpoint/pre-hardening-v1.2.1`.
 | S5   | Content-Security-Policy                                        | done   |
 | S9   | Docker image hardening                                         | done   |
 | S10  | Reproducible releases and pinned CI actions                    | done   |
-| S11  | Replace the `innerHTML` modals with React components           | todo   |
+| S11  | Replace the `innerHTML` modals with React components           | done   |
 
 ## Branch 2 — `ux/foundations`
 
@@ -148,9 +148,16 @@ name the current task ID from memory; or leaving the tree red through more than 
 
 ## Next action
 
-Replace the `innerHTML` privacy and legal modals with React components (S11). That is the
-last task on this branch; after it, run the full channel matrix in docs/TESTING.md, bump the
-version to 1.3.0 in the merge commit, and merge.
+All eight tasks on `security/hardening` are complete and the tree is green. Before merging:
+
+1. Run the full channel matrix in [TESTING.md](TESTING.md) — the Docker and offline-package steps
+   in particular, since merging to master publishes to all three channels immediately.
+2. Push the branch and confirm the new validation workflow passes on GitHub.
+3. Decide on backlog item B1.
+4. Bump the version to 1.3.0 **in the merge commit**, once — every push to master cuts a release,
+   and the release action fails on a tag that already exists.
+
+Then start `ux/foundations` with U13.
 
 ## Backlog
 
