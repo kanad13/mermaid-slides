@@ -240,7 +240,7 @@ graph TB
 
 ### Command Reference
 
-**Maintainer build requirement:** Node **20.19+** or **22.12+** for repository builds and CI.
+**Maintainer build requirement:** Node **22.12+** for repository builds and CI. Node 20 reached end of life on 30 April 2026.
 
 ```bash
 # Development
@@ -281,7 +281,7 @@ npm run validate:continuity    # Documentation consistency
 
 **Repository Build / CI:**
 
-- Node.js: 20.19+ or 22.12+
+- Node.js: 22.12+
 - Commands: `npm run test:run`, `npm run build`, `npm run build:offline`
 
 **Offline Channel:**

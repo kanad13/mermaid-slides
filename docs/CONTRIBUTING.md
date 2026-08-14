@@ -6,7 +6,7 @@ Guidelines for contributing to Mermaid Slides.
 
 ## Development Setup
 
-**Build / maintainer requirement:** Node **20.19+** or **22.12+** (matches Vite 7).
+**Build / maintainer requirement:** Node **22.12+**. Node 20 reached end of life on 30 April 2026 and no longer receives security patches.
 
 ```bash
 # Clone repository
