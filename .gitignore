@@ -83,6 +83,18 @@ nbproject/
 
 # macOS
 .DS_Store
+
+# Conflict copies from file-sync tools ("Foo 2.tsx", ".git 2"). These are
+# untracked, but anything under src/ still lands in the TypeScript program and
+# gets linted, so a stale copy can quietly pass or fail checks alongside the
+# real file. Ignoring them keeps them out of commits; config/tsconfig.json
+# excludes them from the build.
+* [0-9].ts
+* [0-9].tsx
+* [0-9].md
+* [0-9].yml
+* [0-9].json
+".git [0-9]"
 .AppleDouble
 .LSOverride
 ._*
