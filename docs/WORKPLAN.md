@@ -198,6 +198,14 @@ Before starting, run the opening ritual above and confirm the tree is green.
 Found during the work, deliberately not acted on because they fall outside the current scope.
 Each needs a decision before it is scheduled.
 
+**B7 — `isExtensionMode` is unreachable in this app.**
+The prop is threaded through Viewer, ViewerHeader, GridView, BackButton and SettingsPanel, and every
+`isExtensionMode === true` branch is dead: nothing in this repository ever passes it. An audit flagged
+it as dead code. It was deliberately left in place, because it is a seam for the separate VS Code
+extension repositories rather than an accident, and removing it touches six files to save nothing a
+user can perceive. Decide whether those extensions will ever share these components; if not, delete
+the prop and its branches in one pass.
+
 **B2 — The offline package ships a redundant copy of the server scripts.**
 Vite copies all of `public/` into the build, which includes `public/offline-template/`, so the archive
 contains both `start-server.js` and `offline-template/start-server.js`. Harmless but confusing, and it

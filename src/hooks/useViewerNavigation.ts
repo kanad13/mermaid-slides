@@ -7,12 +7,8 @@ interface UseViewerNavigationReturn {
   goToNext: () => void;
   goToFirst: () => void;
   goToLast: () => void;
-  goToIndex: (_index: number) => void;
   toggleGridView: () => void;
   handleDiagramSelect: (_index: number) => void;
-  resetNavigation: () => void;
-  setCurrentIndex: (_index: number) => void;
-  setIsGridView: (_isGrid: boolean) => void;
 }
 
 export const useViewerNavigation = (totalItems: number = 0): UseViewerNavigationReturn => {
@@ -35,24 +31,12 @@ export const useViewerNavigation = (totalItems: number = 0): UseViewerNavigation
     setCurrentIndex(totalItems - 1);
   }, [totalItems]);
 
-  const goToIndex = useCallback((index: number): void => {
-    if (index >= 0 && index < totalItems) {
-      setCurrentIndex(index);
-    }
-  }, [totalItems]);
-
   const toggleGridView = useCallback((): void => {
     setIsGridView(prev => !prev);
   }, []);
 
   const handleDiagramSelect = useCallback((index: number): void => {
     setCurrentIndex(index);
-    setIsGridView(false);
-  }, []);
-
-  // Reset when total items changes
-  const resetNavigation = useCallback((): void => {
-    setCurrentIndex(0);
     setIsGridView(false);
   }, []);
 
@@ -63,11 +47,7 @@ export const useViewerNavigation = (totalItems: number = 0): UseViewerNavigation
     goToNext,
     goToFirst,
     goToLast,
-    goToIndex,
     toggleGridView,
-    handleDiagramSelect,
-    resetNavigation,
-    setCurrentIndex,
-    setIsGridView
+    handleDiagramSelect
   };
 };
