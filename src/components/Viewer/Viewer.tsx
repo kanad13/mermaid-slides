@@ -35,8 +35,12 @@ export const Viewer: React.FC<ViewerProps> = ({
     onEscape: onBackToEditor
   });
 
+  // h-full rides the height chain in index.css rather than using h-screen, so
+  // the column is not measured in viewport units. Bounding it here is what lets
+  // the slide area take whatever the header leaves, at any width, instead of
+  // subtracting a guessed header height.
   return (
-    <div className={`${isExtensionMode ? 'h-screen' : 'min-h-screen'} flex flex-col relative bg-white`}>
+    <div className="h-full flex flex-col relative bg-white">
       <ViewerHeader
         currentIndex={currentIndex}
         totalDiagrams={diagrams.length}
@@ -54,7 +58,10 @@ export const Viewer: React.FC<ViewerProps> = ({
         onShowTitlesToggle={setShowTitles}
       />
 
-      <div className="flex-1 bg-white">
+      {/* flex so that GridView's own flex-1 + overflow-auto actually apply:
+          without it the grid is content-sized, escapes the bounded column and
+          scrolls the whole page instead of itself. */}
+      <div className="flex-1 min-h-0 bg-white flex flex-col">
         {isGridView ? (
           <GridView
             diagrams={diagrams}

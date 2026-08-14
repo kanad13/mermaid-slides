@@ -50,7 +50,7 @@ and the silent no-op is gone.** Any visible difference is a regression.
 | B1   | Declare the offline package as CommonJS                        | done   |
 | U13  | Remove dead components, de-duplicate `useFileHandler`          | done   |
 | U8   | Clean up the uncancelled timer in `GridView`                   | done   |
-| U3   | Remove the hardcoded layout arithmetic                         | todo   |
+| U3   | Remove the hardcoded layout arithmetic                         | done   |
 | U7   | One Mermaid instance, cache rendered diagrams                  | todo   |
 | U9   | Debounce parsing                                               | todo   |
 | U1   | Fix the silent no-op on paste-then-present                     | todo   |
