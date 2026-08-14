@@ -143,6 +143,8 @@ architecture-beta
 
 ## Display not just diagrams, but also images
 
-Image taken from https://en.wikipedia.org/wiki/File:THE_VIEW_(Virtual_Reality).jpg
+Images sit alongside diagrams in the same deck. This one ships with the app, so the
+sample makes no network request of its own — a remote URL would work here too, but
+loading it would tell that server your IP address.
 
-![Virtual Reality](https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/THE_VIEW_%28Virtual_Reality%29.jpg/960px-THE_VIEW_%28Virtual_Reality%29.jpg)`;
+![A bundled example photograph](examples/assets/673x1024-pixels.jpg)`;
