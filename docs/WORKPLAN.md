@@ -49,18 +49,22 @@ and the silent no-op is gone.** Any visible difference is a regression.
 | ---- | ------------------------------------------------------------- | ------ |
 | B1   | Declare the offline package as CommonJS                        | done   |
 | U13  | Remove dead components, de-duplicate `useFileHandler`          | done   |
-| U8   | Clean up the uncancelled timer in `GridView`                   | todo   |
+| U8   | Clean up the uncancelled timer in `GridView`                   | done   |
 | U3   | Remove the hardcoded layout arithmetic                         | todo   |
 | U7   | One Mermaid instance, cache rendered diagrams                  | todo   |
 | U9   | Debounce parsing                                               | todo   |
 | U1   | Fix the silent no-op on paste-then-present                     | todo   |
 
-**Measured severity of U7/U8.** Grid view does not finish rendering. Against the sample deck, the
-production build leaves previews stuck on "Loading preview…" — 5 of 8 blank before the S7 dependency
-update, 2 of 8 after it. The effect re-runs when `isLoaded` flips, starting a second render loop that
-races the first, and each call clears the container the other is writing into. The dependency update
-changed the timing but not the defect. Fixing U8 then U7 should close this; verify with the grid step
-of the smoke checklist, not by eye on a three-slide deck.
+**Grid rendering — fixed by U8.** Grid view used to leave previews stuck on "Loading preview…": 5 of 8
+blank before the S7 dependency update, 2 of 8 after it. The cause was the uncancelled timer, not the
+render logic — the effect re-ran when `isLoaded` flipped, and because rendering awaits between
+diagrams the two passes interleaved and cleared each other's containers. With cancellation the sample
+deck renders **8 of 8**, and still 8 of 8 after eight rapid view toggles.
+
+U7 is therefore no longer a correctness fix. It remains worth doing for cost: `useMermaid` is called
+once per component, so each mount re-imports and re-initialises Mermaid, and nothing caches a rendered
+diagram. Re-entering grid view re-renders every slide from source. Judge it on measurements, not on
+the assumption that it fixes anything visible.
 
 ## Branch 3 — `ux/features`
 
