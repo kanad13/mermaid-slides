@@ -3,7 +3,9 @@
 Active tracker for the hardening programme started 14 Aug 2026. Read this first at the start of any
 session; it is the source of truth for what is done, what is next, and what was deliberately declined.
 
-[docs/LATER.md](LATER.md) remains the long-range idea backlog. Where the two overlap, this file wins.
+This file replaced `docs/LATER.md`, which was removed: it had become a mix of work already done, work
+scheduled here, and observations stale enough to mislead. Everything worth keeping was migrated into
+the backlog at the bottom. Future UI/UX work starts from a fresh review rather than from old notes.
 
 ---
 
@@ -15,7 +17,7 @@ rewrites props across fourteen component files and conflicts with every UI chang
 | Order | Branch                | Contents                          | Target  | Status      |
 | ----- | --------------------- | --------------------------------- | ------- | ----------- |
 | 1     | `security/hardening`  | C0, S1, S7, S8, S5, S9, S10, S11   | v1.3.0  | ready to merge |
-| 2     | `ux/foundations`      | U13, U14, U8, U3, U7, U9, U1       | v1.4.0  | not started |
+| 2     | `ux/foundations`      | U13, U8, U3, U7, U9, U1            | v1.4.0  | not started |
 | 3     | `ux/features`         | U6, U10, U12                       | v1.5.0  | not started |
 | 4     | `feat/print-to-pdf`   | Print stylesheet export            | v1.6.0  | not started |
 | —     | `deps/majors`         | Major version migrations           | —       | parked      |
@@ -46,7 +48,6 @@ and the silent no-op is gone.** Any visible difference is a regression.
 | ID   | Task                                                          | Status |
 | ---- | ------------------------------------------------------------- | ------ |
 | U13  | Remove dead components, de-duplicate `useFileHandler`          | todo   |
-| U14  | Fix the Open Graph preview image path                          | todo   |
 | U8   | Clean up the uncancelled timer in `GridView`                   | todo   |
 | U3   | Remove the hardcoded layout arithmetic                         | todo   |
 | U7   | One Mermaid instance, cache rendered diagrams                  | todo   |
@@ -121,6 +122,8 @@ Reviewed and deliberately not scheduled. Do not re-propose without new informati
 - **S4** — Mermaid `securityLevel: 'loose'`.
 - **S6** — remote-image leakage. Superseded by the decision above.
 - **U2, U4, U5, U11** — button state, swipe navigation, fullscreen, landing-page decluttering.
+- **U14** — resolved on `security/hardening` instead: the broken `og:image` was removed rather than
+  repaired, along with the Twitter card block, so there is nothing left to fix.
 - **Export beyond print** — PPTX, jsPDF, SVG, PNG and ZIP export were all considered and declined.
 
 ---
@@ -178,3 +181,23 @@ four lines. `docs/TESTING.md` documents the workaround in the meantime.
 Vite copies all of `public/` into the build, which includes `public/offline-template/`, so the archive
 contains both `start-server.js` and `offline-template/start-server.js`. Harmless but confusing, and it
 means a user could edit the copy that is never run.
+
+**B3 — `KeyboardShortcutsHelp` tests log React `act(...)` warnings.**
+The tests pass, but the component's timer-driven state update is not wrapped, so every run prints a
+warning. Noise that trains people to ignore test output.
+
+**B4 — `scripts/validate-continuity.cjs` only checks that files exist.**
+It does not verify that documentation links resolve, that README anchors are still valid, or that
+version strings match `package.json`. Extending it is what would turn documentation drift into a build
+failure rather than a matter of discipline — the reason the privacy claims were able to go stale in
+the first place.
+
+**B5 — There is no single release-prep command.**
+Building `dist/`, building `offline-package/`, zipping the archive and running a local Docker build are
+four separate steps done by hand before a merge. A script would make the pre-merge matrix in
+[TESTING.md](TESTING.md) one command instead of a checklist to follow correctly.
+
+**B6 — README badges load from `img.shields.io`.**
+Six badges fetch images from a third party whenever the README is viewed. This affects GitHub's
+rendering of the repository page, not the app, and no user of Mermaid Slides is exposed by it. Noted
+only because it is the last third-party request anywhere in the project.

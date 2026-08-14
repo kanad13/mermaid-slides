@@ -149,7 +149,8 @@ requests, use local image paths or diagrams only.
 
 - **[Deployment Guide](docs/DEPLOYMENT.md)** - Multi-channel deployment, release flow, and channel-specific notes
 - **[Contributing Guide](docs/CONTRIBUTING.md)** - Development workflow, testing, and release checklist
-- **[Future Work](docs/LATER.md)** - Planned follow-up improvements and rationale
+- **[Work Plan](docs/WORKPLAN.md)** - Scheduled work, decisions taken, and what was deliberately declined
+- **[Testing Guide](docs/TESTING.md)** - Per-commit gate, channel matrix, and the manual smoke checklist
 - **[AI Agent Context](AGENTS.md)** - Workspace context and verified commands for coding agents
 
 ## Technology
