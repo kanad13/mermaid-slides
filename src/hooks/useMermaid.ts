@@ -44,17 +44,48 @@ const loadMermaid = (): Promise<MermaidApi> => {
  * through here; oldest out first, which matches how decks are read.
  */
 const MAX_CACHED_DIAGRAMS = 100;
-const svgCache = new Map<string, string>();
 
-const cacheSvg = (code: string, svg: string): void => {
+interface CachedRender {
+  svg: string;
+  /** The id Mermaid used, which appears throughout the markup it produced. */
+  renderId: string;
+}
+
+const svgCache = new Map<string, CachedRender>();
+
+const cacheSvg = (code: string, entry: CachedRender): void => {
   if (svgCache.size >= MAX_CACHED_DIAGRAMS) {
     const oldest = svgCache.keys().next().value;
     if (oldest !== undefined) {
       svgCache.delete(oldest);
     }
   }
-  svgCache.set(code, svg);
+  svgCache.set(code, entry);
 };
+
+/**
+ * Give a cached render a fresh set of element ids.
+ *
+ * Mermaid derives every id in its output from the one it was given — the root
+ * svg, arrow markers, filters, node groups and the `url(#…)` references between
+ * them. Inserting the same cached string twice therefore produces duplicate
+ * ids, which an audit measured at 18 duplicated values for a deck containing
+ * two identical diagrams. Rendering survived it, because the duplicated
+ * definitions were identical, but `getElementById` and `url(#…)` both resolve
+ * to the first match, so it stops being harmless as soon as two copies differ —
+ * and printing renders every slide at once.
+ *
+ * A plain string replacement is exact here: the render id is a unique token
+ * that every derived id is prefixed with.
+ */
+const withFreshIds = (entry: CachedRender, newRenderId: string): string =>
+  entry.svg.split(entry.renderId).join(newRenderId);
+
+/**
+ * Monotonic, rather than Date.now(): two diagrams rendered inside the same
+ * millisecond would otherwise share an id.
+ */
+let renderCounter = 0;
 
 /** Exposed for tests; the app has no reason to call this. */
 export const clearMermaidCache = (): void => {
@@ -98,17 +129,28 @@ export const useMermaid = (): UseMermaidReturn => {
         throw new Error('Element not found');
       }
 
+      const uniqueId = `${elementId}-${renderCounter++}`;
+
       const cached = svgCache.get(code);
       if (cached) {
-        element.innerHTML = cached;
+        element.innerHTML = withFreshIds(cached, uniqueId);
         return element.querySelector('svg');
       }
 
       const mermaid = await loadMermaid();
-      const uniqueId = `${elementId}-${Date.now()}`;
-      const { svg } = await mermaid.render(uniqueId, code);
 
-      cacheSvg(code, svg);
+      let svg: string;
+      try {
+        ({ svg } = await mermaid.render(uniqueId, code));
+      } finally {
+        // Mermaid appends a temporary container to <body> and removes it on
+        // success. On failure it is left behind, so every malformed diagram
+        // grew the document by an orphaned error graphic — an audit measured
+        // six of them, and the page taller each time.
+        document.getElementById(`d${uniqueId}`)?.remove();
+      }
+
+      cacheSvg(code, { svg, renderId: uniqueId });
       element.innerHTML = svg;
 
       return element.querySelector('svg');
