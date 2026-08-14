@@ -216,13 +216,19 @@ name the current task ID from memory; or leaving the tree red through more than 
 
 ## Next action
 
-`ux/foundations` is merged and released as v1.4.0. The repository is at a clean checkpoint: tree
-clean, all channels verified, docs redrafted to match the code.
+`feat/print-to-pdf` is merged and released as v1.6.0. PDF export was the agreed stopping point for
+this programme, and the repository is at a clean checkpoint: tree clean, all channels verified, docs
+matching the code.
 
-Next branch is `ux/features` — U6, U10, U12, U15 — starting with U6. Open a new session for it; the
-branch boundary is a clean seam and nothing needs to carry over beyond this file.
+Independent audit of v1.6.0 is the next step, before any further work.
 
-Before starting, run the opening ritual above and confirm the tree is green.
+Remaining scheduled work, in order, whenever it resumes:
+
+1. `ux/features` — U6 (dark mode, session-only, following the OS preference), U10 (accessibility,
+   confirmed outstanding by audit), U12, U15.
+2. Backlog items B2, B3, B5, B7, B8 — each needs a decision, not just implementation.
+
+Before starting anything, run the opening ritual above and confirm the tree is green.
 
 ## Backlog
 
