@@ -2,6 +2,7 @@ import { BackButton } from './HeaderControls/BackButton';
 import { HeaderNavigation } from './HeaderControls/HeaderNavigation';
 import { SettingsPanel } from '../Settings/SettingsPanel';
 import { GridViewToggle } from './HeaderControls/GridViewToggle';
+import { PrintButton } from './HeaderControls/PrintButton';
 import { ProgressBar } from './HeaderControls/ProgressBar';
 import { useAutoHide } from '../../hooks/useAutoHide';
 import { ViewerHeaderProps } from '../../types/components';
@@ -20,7 +21,9 @@ export const ViewerHeader = ({
   autoHideEnabled = false,
   onAutoHideToggle,
   showTitles = true,
-  onShowTitlesToggle
+  onShowTitlesToggle,
+  onPrint,
+  isPreparingPrint = false
 }: ViewerHeaderProps) => {
   const { isVisible } = useAutoHide({
     timeout: autoHideEnabled ? 2000 : 0,
@@ -75,6 +78,8 @@ export const ViewerHeader = ({
             isExtensionMode={isExtensionMode}
           />
           
+          <PrintButton onPrint={onPrint} isPreparing={isPreparingPrint} />
+
           <GridViewToggle 
             isGridView={isGridView}
             onToggleGridView={onToggleGridView}

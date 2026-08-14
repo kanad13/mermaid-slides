@@ -100,6 +100,8 @@ export interface ViewerHeaderProps {
   onAutoHideToggle: (_enabled: boolean) => void;
   showTitles?: boolean;
   onShowTitlesToggle: (_enabled: boolean) => void;
+  onPrint: () => void;
+  isPreparingPrint?: boolean;
 }
 
 // ---------------------------------------------------------------------------

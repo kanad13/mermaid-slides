@@ -107,6 +107,15 @@ reach.
 - [ ] Malformed Mermaid syntax shows the error card rather than a blank slide
 - [ ] Markdown headers appear as slide titles
 
+**Printing**
+
+- [ ] The printer button prepares the deck and opens the print dialog
+- [ ] The preview shows one slide per page, landscape, with titles
+- [ ] Diagram and image slides both appear; nothing is clipped at the page edge
+- [ ] "Save as PDF" produces a file with one page per slide and selectable text
+- [ ] Cancelling the dialog returns to the viewer with the current slide intact
+- [ ] Pressing Ctrl/Cmd+P without using the button prints the current slide, not a blank page
+
 **Settings**
 
 - [ ] Show Titles toggles titles on and off

@@ -87,6 +87,12 @@ written for reading is already a deck.
 editor. A grid view shows every slide at once; click one to jump to it. Titles and header auto-hide
 can be toggled while presenting.
 
+**Exporting to PDF**: the printer button lays the whole deck out one slide per page in landscape and
+opens your browser's print dialog — choose "Save as PDF" as the destination. The output is vector, so
+diagrams stay sharp at any zoom and the text remains selectable. It works offline and in the Docker
+image, because it is your browser doing the work; nothing is uploaded and no conversion service is
+involved.
+
 **Supported diagrams**: flowcharts, sequence, ER, class, state, Gantt, pie, git graphs — whatever
 Mermaid 11 renders. **Images**: PNG, JPEG, GIF, WebP, scaled to fit.
 

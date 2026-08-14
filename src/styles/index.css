@@ -20,3 +20,87 @@ body,
 #root {
   height: 100%;
 }
+
+/*
+  Printing the deck.
+
+  The on-screen viewer shows one slide at a time, so PrintView draws the whole
+  deck into a separate tree. While it is being prepared that tree sits off to
+  the side rather than hidden: Mermaid measures text to lay a diagram out, and
+  `display: none` leaves nothing to measure.
+
+  These rules only take effect once `data-print-ready` is set, after every slide
+  has drawn. Applying them unconditionally would mean Ctrl+P — which never waits
+  for us — printed a blank page. Unprepared, it prints the current slide instead.
+*/
+.print-deck {
+  position: fixed;
+  left: -20000px;
+  top: 0;
+  width: 273mm; /* A4 landscape less the page margins below */
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 12mm;
+  }
+
+  /* Diagram fills are the content here, not decoration, so keep them. */
+  html[data-print-ready] {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  html[data-print-ready] .app-shell {
+    display: none !important;
+  }
+
+  html[data-print-ready] .print-deck {
+    position: static;
+    left: auto;
+    width: auto;
+  }
+
+  .print-slide {
+    /* 210mm tall, less 12mm margins top and bottom. */
+    height: 186mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6mm;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .print-slide:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  .print-slide-title {
+    flex: 0 0 auto;
+    margin: 0;
+    font-size: 16pt;
+    font-weight: 700;
+    text-align: center;
+    color: #1d4ed8;
+  }
+
+  .print-slide-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .print-slide-body svg,
+  .print-slide-body img {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+  }
+}

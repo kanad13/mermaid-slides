@@ -19,8 +19,8 @@ rewrites props across fourteen component files and conflicts with every UI chang
 | 1     | `security/hardening`  | C0, S1, S7, S8, S5, S9, S10, S11   | v1.3.0  | merged |
 | 2     | `ux/foundations`      | B1, U13, U8, U3, U7, U9, U1        | v1.4.0  | merged |
 | A     | `fix/audit-findings`  | Independent audit follow-up        | v1.5.0  | merged |
-| 3     | `ux/features`         | U6, U10, U12, U15                  | v1.6.0  | not started |
-| 4     | `feat/print-to-pdf`   | Print stylesheet export            | v1.7.0  | not started |
+| 3     | `ux/features`         | U6, U10, U12, U15                  | v1.7.0  | not started |
+| 4     | `feat/print-to-pdf`   | Print stylesheet export            | v1.6.0  | merged |
 | —     | `deps/majors`         | Not scheduled — see Decisions      | —       | policy      |
 
 Rollback floor for the whole programme: tag `checkpoint/pre-hardening-v1.2.1`.
@@ -116,7 +116,7 @@ for it — so this is a matter of rendering it somewhere sensible, not rebuildin
 
 | ID   | Task                                                          | Status |
 | ---- | ------------------------------------------------------------- | ------ |
-| E1   | Print stylesheet, one slide per page, landscape                | todo   |
+| E1   | Print stylesheet, one slide per page, landscape                | done   |
 
 ---
 
@@ -130,7 +130,13 @@ These are not arbitrary. Changing the order breaks something concrete.
   worse than not caching, so sizing is corrected before caching is introduced.
 - **U7 before U6.** Dark mode passes a theme into Mermaid; U7 is what creates a single instance to
   pass it to.
-- **E1 last.** Print export renders every slide at once, which depends on the shared renderer from U7.
+- **E1 needed U7, and only U7.** Print renders every slide at once, which is affordable because the
+  renderer is shared and cached. It was originally sequenced after `ux/features`; once U7 shipped that
+  dependency was satisfied, so it was brought forward rather than left waiting behind unrelated work.
+- **U6 must not undo E1.** When dark mode arrives it has to force light colours for print, or a
+  printed deck wastes ink and reads badly. The print rules already set `print-color-adjust: exact`,
+  which will preserve whatever theme is active — so the theme, not the print sheet, is what needs the
+  override.
 
 ---
 
@@ -210,13 +216,19 @@ name the current task ID from memory; or leaving the tree red through more than 
 
 ## Next action
 
-`ux/foundations` is merged and released as v1.4.0. The repository is at a clean checkpoint: tree
-clean, all channels verified, docs redrafted to match the code.
+`feat/print-to-pdf` is merged and released as v1.6.0. PDF export was the agreed stopping point for
+this programme, and the repository is at a clean checkpoint: tree clean, all channels verified, docs
+matching the code.
 
-Next branch is `ux/features` — U6, U10, U12, U15 — starting with U6. Open a new session for it; the
-branch boundary is a clean seam and nothing needs to carry over beyond this file.
+Independent audit of v1.6.0 is the next step, before any further work.
 
-Before starting, run the opening ritual above and confirm the tree is green.
+Remaining scheduled work, in order, whenever it resumes:
+
+1. `ux/features` — U6 (dark mode, session-only, following the OS preference), U10 (accessibility,
+   confirmed outstanding by audit), U12, U15.
+2. Backlog items B2, B3, B5, B7, B8 — each needs a decision, not just implementation.
+
+Before starting anything, run the opening ritual above and confirm the tree is green.
 
 ## Backlog
 
