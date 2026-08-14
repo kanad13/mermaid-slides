@@ -196,7 +196,7 @@ npm run validate:all
 - [ ] Test offline package on Windows, macOS, Linux
 - [ ] Verify all server scripts work (Python, Node.js, Shell, Batch)
 - [ ] Test Docker image builds and runs
-- [ ] Check mobile responsiveness
+- [ ] Check the layout down to tablet width (the app is desktop-first)
 
 ---
 
@@ -205,11 +205,15 @@ npm run validate:all
 ### Branch Strategy
 
 ```
-main                  # Production-ready code
-├── feature/xxx       # Feature development
-├── bugfix/xxx        # Bug fixes
-└── hotfix/xxx        # Critical fixes
+master                # Production-ready code; merging here publishes
+├── security/xxx      # Security and hardening work
+├── ux/xxx            # Interface work
+├── fix/xxx           # Bug fixes
+└── feat/xxx          # New capabilities
 ```
+
+Branches run sequentially rather than in parallel; see [WORKPLAN.md](WORKPLAN.md) for the current
+order and why.
 
 ### Commit Messages
 
@@ -225,7 +229,7 @@ chore: Update dependencies
 
 ### Pull Request Process
 
-1. Create feature branch from `main`
+1. Create a branch from `master`
 2. Make changes with clear commits
 3. Run full validation: `npm run validate:all`
 4. Push branch and create PR
@@ -237,52 +241,37 @@ chore: Update dependencies
 
 ## Release Process
 
-### Creating a Release
+Merging to `master` **publishes**. One push runs `deploy.yml`, which deploys to GitHub Pages, creates
+a GitHub release tagged from `package.json`, and pushes to Docker Hub. There is no staging step and no
+manual tagging — creating the tag yourself makes the release action fail on a tag that already exists.
 
-1. **Update Version**:
+1. **Work on a branch.** `validate.yml` runs on branches and pull requests and publishes nothing.
 
-   ```bash
-   # Update package.json version
-   npm version patch  # or minor, or major
-   ```
+2. **Run the full channel matrix** in [TESTING.md](TESTING.md) *before* merging. Local checks alone
+   are not enough: the offline package and Docker image resolve assets differently from the web build.
 
-2. **Build All Channels**:
-
-   ```bash
-   npm run build
-   npm run build:offline
-   ```
-
-3. **Run Full Validation**:
+3. **Bump the version once**, in a single commit immediately before the merge:
 
    ```bash
-   npm run validate:all
+   npm version 1.5.0 --no-git-tag-version   # --no-git-tag-version matters
+   git commit -am "chore(release): 1.5.0"
    ```
 
-4. **Commit and Tag**:
+   `npm version` creates a git tag by default. The workflow creates that tag itself, so suppress it.
+
+4. **Merge and push:**
 
    ```bash
-   git add .
-   git commit -m "Release v1.2.3"
-   git tag v1.2.3
+   git checkout master
+   git merge --no-ff your-branch
+   git push origin master
    ```
 
-5. **Push to Main**:
+5. **Verify all three channels** once the workflow finishes — the live site, the release assets, and
+   the published image. Do not assume a green workflow means a correct artefact.
 
-   ```bash
-   git push origin main --tags
-   ```
-
-6. **Automated Deployment**: GitHub Actions deploys all channels automatically
-
-### Post-Release Verification
-
-- [ ] Web app live at https://mermaid-slides.com/
-- [ ] GitHub Release created with offline package
-- [ ] Docker image pushed to Docker Hub
-- [ ] Version numbers consistent across all channels
-
----
+The default branch is `master`. The deploy workflow also triggers on `main`, so do not create a branch
+by that name: pushing it would publish.
 
 ## Project-Specific Notes
 

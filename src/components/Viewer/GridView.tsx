@@ -56,11 +56,11 @@ export const GridView = ({
       return undefined;
     }
 
-    // This effect re-runs when Mermaid finishes loading. Without cancellation
-    // the first pass keeps going, and since rendering awaits between diagrams
-    // the two passes interleave — each clearing the container the other is
-    // midway through filling. That is what left previews stuck on
-    // "Loading preview…".
+    // This effect re-runs when `isLoaded` flips as Mermaid finishes loading.
+    // Without cancellation the first pass keeps going, and since rendering
+    // awaits between diagrams the two passes interleave — each clearing the
+    // container the other is midway through filling. That is what left previews
+    // stuck on "Loading preview…".
     let cancelled = false;
 
     const renderGridContent = async () => {
