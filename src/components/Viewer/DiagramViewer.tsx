@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { useMermaid } from '../../hooks/useMermaid';
 import { useLayoutCalculations } from '../../hooks/useLayoutCalculations';
+import { DiagramViewerProps } from '../../types/components';
 
 /**
  * DiagramViewer Component
@@ -19,7 +20,7 @@ export const DiagramViewer = ({
   diagram, 
   onError,
   showTitles = true
-}) => {
+}: DiagramViewerProps) => {
   const { isLoaded, error, renderDiagram } = useMermaid();
   const { availableHeight, availableWidth } = useLayoutCalculations(true);
   
@@ -59,13 +60,34 @@ export const DiagramViewer = ({
           // - Automatic centering with margin: 0 auto
           // - Error fallback displays user-friendly message for broken/missing images
           element.innerHTML = `
-            <img 
-              src="${diagram.src}" 
-              alt="${diagram.alt || 'Slide image'}" 
+            <img
+              src="${diagram.src}"
+              alt="${diagram.alt || 'Slide image'}"
               style="max-width: ${availableWidth}; max-height: ${getAdjustedHeight()}; object-fit: contain; display: block; margin: 0 auto;"
-              onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=&quot;color: #dc2626; padding: 1rem; border: 1px solid #fca5a5; border-radius: 0.375rem; background-color: #fef2f2; text-align: center;&quot;><p style=&quot;font-weight: 500;&quot;>Error loading image:</p><p style=&quot;font-size: 0.875rem; margin-top: 0.25rem;&quot;>${diagram.src}</p></div>'"
             />
           `;
+
+          // The fallback is attached as a listener rather than written as an
+          // inline onerror attribute: the Content-Security-Policy blocks inline
+          // handlers, so an attribute here would fail silently and a broken
+          // image would show nothing at all.
+          element.querySelector('img')?.addEventListener('error', () => {
+            const card = document.createElement('div');
+            card.style.cssText =
+              'color: #dc2626; padding: 1rem; border: 1px solid #fca5a5; ' +
+              'border-radius: 0.375rem; background-color: #fef2f2; text-align: center;';
+
+            const heading = document.createElement('p');
+            heading.style.fontWeight = '500';
+            heading.textContent = 'Error loading image:';
+
+            const source = document.createElement('p');
+            source.style.cssText = 'font-size: 0.875rem; margin-top: 0.25rem;';
+            source.textContent = diagram.src ?? '';
+
+            card.append(heading, source);
+            element.replaceChildren(card);
+          });
         } else if (isLoaded) {
           // Handle Mermaid diagram rendering with layout-aware sizing
           const svgElement = await renderDiagram(diagram.id, diagram.code);
@@ -85,11 +107,12 @@ export const DiagramViewer = ({
           }
         }
       } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
         console.error('Error rendering content:', err);
         element.innerHTML = `
           <div style="color: #dc2626; padding: 1rem; border: 1px solid #fca5a5; border-radius: 0.375rem; background-color: #fef2f2; text-align: center;">
             <p style="font-weight: 500;">Error rendering content:</p>
-            <p style="font-size: 0.875rem; margin-top: 0.25rem;">${err.message}</p>
+            <p style="font-size: 0.875rem; margin-top: 0.25rem;">${message}</p>
             <pre style="font-size: 0.75rem; margin-top: 0.5rem; background-color: #f3f4f6; padding: 0.5rem; border-radius: 0.375rem; overflow: auto; text-align: left;">${diagram.code || diagram.src}</pre>
           </div>
         `;

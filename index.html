@@ -4,25 +4,67 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!--
+		Content-Security-Policy.
+
+		Delivered as a meta tag because the app is served as static files from
+		GitHub Pages and from the offline package's own small servers, none of
+		which can set response headers.
+
+		Notes on the individual directives:
+
+		- script-src 'self' blocks inline scripts and inline event handler
+		  attributes, so markdown that smuggles an onerror= into the page cannot
+		  execute. Nothing in the app relies on inline script.
+		- style-src needs 'unsafe-inline'. Mermaid injects a <style> block per
+		  diagram, and the app sizes diagrams with inline style attributes.
+		- img-src is deliberately permissive. Remote images in a markdown file
+		  are placed there by the author on purpose, and refusing to load them
+		  would break real documents. The trade-off is that loading one does
+		  reveal the viewer's IP address and user agent to that host; the
+		  privacy policy says so rather than pretending otherwise.
+		- connect-src 'self' allows no outbound requests to third parties. The
+		  app makes no network calls of its own.
+		- frame-ancestors and sandbox are omitted because browsers ignore them
+		  in a meta tag; they would need response headers to have any effect.
+	-->
+	<meta http-equiv="Content-Security-Policy" content="
+		default-src 'self';
+		script-src 'self';
+		style-src 'self' 'unsafe-inline';
+		img-src 'self' data: blob: https: http:;
+		font-src 'self' data:;
+		connect-src 'self';
+		object-src 'none';
+		base-uri 'none';
+		form-action 'none'
+	">
 	<title>Mermaid Slides - Transform Markdown Diagrams into Presentations</title>
 	<meta name="description"
 		content="Transform markdown mermaid diagrams into beautiful presentation slides. Available as web app, offline package, and Docker container with 3-channel distribution strategy.">
 
-	<!-- Open Graph / Facebook -->
+	<!-- Name only, no href. Keeping the shipped HTML free of absolute URLs is
+	     what lets the offline package guarantee it needs nothing from the
+	     network; validate-compatibility.cjs enforces that. The maintainer's site
+	     is linked from the app's footer and legal pages instead. -->
+	<meta name="author" content="Kunal Pathak">
+
+	<!--
+		Link preview text, read by chat and messaging clients when someone pastes
+		the URL. These are inert strings in the page: nothing is requested from
+		anyone, and no data reaches any platform.
+
+		The Twitter-specific block that used to sit here is gone — the project has
+		no account there, and clients fall back to these values anyway. The
+		og:image is gone too: it pointed at /docs/assets/, which is not part of the
+		published build, so it had always resolved to a 404.
+	-->
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://mermaid-slides.com/">
 	<meta property="og:title" content="🧜‍♀️ Mermaid Slides">
 	<meta property="og:description"
 		content="Transform markdown mermaid diagrams into beautiful presentation slides. Available as web app, offline package, and Docker container.">
-	<meta property="og:image" content="https://mermaid-slides.com/docs/assets/mermai-slides-demo.gif">
-
-	<!-- Twitter -->
-	<meta property="twitter:card" content="summary_large_image">
-	<meta property="twitter:url" content="https://mermaid-slides.com/">
-	<meta property="twitter:title" content="🧜‍♀️ Mermaid Slides">
-	<meta property="twitter:description"
-		content="Transform markdown mermaid diagrams into beautiful presentation slides. Available as web app, offline package, and Docker container.">
-	<meta property="twitter:image" content="https://mermaid-slides.com/docs/assets/mermai-slides-demo.gif">
 
 	<!-- Favicon -->
 	<link rel="icon"

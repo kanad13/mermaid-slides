@@ -1,4 +1,5 @@
-export const StatusMessages = ({ error }) => {
+import { StatusMessagesProps } from '../../../types/components';
+export const StatusMessages = ({ error }: StatusMessagesProps) => {
   return (
     <>
       {/* Error Display */}

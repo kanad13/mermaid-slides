@@ -2,6 +2,8 @@
 
 Turn Markdown files with Mermaid diagrams and images into a presentation-ready deck in seconds. Mermaid Slides keeps the source plain-text, renders everything locally, and lets you present the result in the browser, offline, or from Docker — ideal for architecture reviews, demos, and docs walkthroughs.
 
+Built and maintained by [Kunal Pathak](https://www.kunal-pathak.com).
+
 [![Live Demo](https://img.shields.io/badge/Live_Demo-blue?style=for-the-badge)](https://mermaid-slides.com/)
 [![Docker Image](https://img.shields.io/badge/Docker_Image-blue?style=for-the-badge)](https://hub.docker.com/r/kunalpathak13/mermaid-slides)
 [![Mermaid Slideshow VS Code](https://img.shields.io/badge/VS_Code-Mermaid_Slideshow-purple?style=for-the-badge)](https://marketplace.visualstudio.com/items?itemName=KunalPathak.mermaid-slideshow)
@@ -29,7 +31,15 @@ docker run -p 3000:3000 kunalpathak13/mermaid-slides:latest
 # Open browser to http://localhost:3000
 ```
 
+The image holds static files and a small Python server. Nothing writes to disk and nothing calls out,
+so you can lock it down further:
+
+```bash
+docker run -p 3000:3000 --read-only --cap-drop=ALL kunalpathak13/mermaid-slides:latest
+```
+
 - **Container Ready**: Multi-platform support (AMD64, ARM64)
+- **Runs Unprivileged**: Serves as a non-root user, with a digest-pinned base image
 - **Isolated Environment**: Complete containerized solution
 - **Easy Deployment**: Perfect for corporate environments
 
@@ -83,10 +93,11 @@ npm run dev
 
 ### **Privacy & Security**
 
-- **Zero Tracking** - No analytics, telemetry, or data collection
+- **Zero Tracking** - No analytics, telemetry, or data collection, and nothing stored in the browser
 - **Offline First** - Complete functionality without internet dependency
-- **Local Processing** - All diagram rendering happens on your device
+- **Local Processing** - All parsing and diagram rendering happens on your device
 - **Self-Contained** - All distributions bundle dependencies locally
+- **Content-Security-Policy** - Enforced in every distribution; see [Privacy & Security](#privacy--security)
 - **Privacy Modals** - Built-in privacy policy and legal notice information
 
 ### **Multi-Platform Availability**
@@ -117,18 +128,29 @@ Both tools are published separately from this repository and complement the web/
 
 Mermaid Slides is designed with privacy as a core principle:
 
-- **No Data Collection** - Zero analytics, tracking, or telemetry
-- **Offline Operation** - Full functionality without internet connection
-- **Local Processing** - All diagram rendering happens on your device
-- **Self-Contained** - No external CDN dependencies in any distribution
+- **No Data Collection** - Zero analytics, tracking, or telemetry. The app stores nothing: no cookies, no local storage, no session storage, no service worker
+- **Local Processing** - Your markdown never leaves your device. Parsing and diagram rendering happen entirely in your browser
+- **Self-Contained** - No CDN dependencies. Every distribution bundles its own assets, so the app itself never contacts a third party
+- **Offline Operation** - Full functionality without an internet connection
 - **Simple Local Servers** - The offline package uses lightweight local Python or Node.js servers only
-- **No External Requests** - All distributions make zero network calls during operation
+- **Content-Security-Policy** - A strict policy is enforced in every distribution. Scripts may only load from the app's own files, and inline script is refused outright, so a markdown file cannot execute code in the page
+
+### One thing to be aware of
+
+If your markdown references a remote image — `![diagram](https://example.com/chart.png)` — your browser
+fetches it, and that request tells the hosting server your IP address and user agent. That is how
+images work on the web, and the policy above deliberately permits it: you put the image there on
+purpose, and silently refusing to load it would break real documents.
+
+Nothing else in the app reaches the network. If you want a presentation that provably makes no outside
+requests, use local image paths or diagrams only.
 
 ## Documentation
 
 - **[Deployment Guide](docs/DEPLOYMENT.md)** - Multi-channel deployment, release flow, and channel-specific notes
 - **[Contributing Guide](docs/CONTRIBUTING.md)** - Development workflow, testing, and release checklist
-- **[Future Work](docs/LATER.md)** - Planned follow-up improvements and rationale
+- **[Work Plan](docs/WORKPLAN.md)** - Scheduled work, decisions taken, and what was deliberately declined
+- **[Testing Guide](docs/TESTING.md)** - Per-commit gate, channel matrix, and the manual smoke checklist
 - **[AI Agent Context](AGENTS.md)** - Workspace context and verified commands for coding agents
 
 ## Technology
@@ -144,6 +166,11 @@ Mermaid Slides is designed with privacy as a core principle:
 ## Contributing
 
 We welcome contributions! See our [Contributing Guidelines](docs/CONTRIBUTING.md) for development setup and guidelines.
+
+## Maintainer
+
+Mermaid Slides is built and maintained by **[Kunal Pathak](https://www.kunal-pathak.com)** as a
+non-commercial open-source project. No advertising, no tracking, no accounts.
 
 ## License
 

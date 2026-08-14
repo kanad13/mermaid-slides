@@ -1,4 +1,5 @@
-export const ActionButtons = ({ onLoadSample, onViewDiagrams, onClear, hasMarkdown }) => {
+import { ActionButtonsProps } from '../../../types/components';
+export const ActionButtons = ({ onLoadSample, onViewDiagrams, onClear, hasMarkdown }: ActionButtonsProps) => {
   return (
     <div className="flex gap-4 w-full">
       {/* Load Content Box */}

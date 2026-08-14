@@ -14,12 +14,19 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    /* `globals: true` in the vite config injects vi/describe/it at runtime;
+       this is what tells the compiler they exist. */
+    "types": ["vitest/globals"],
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  // Paths resolve relative to this file, not to the repository root. "src"
+  // silently matched nothing for as long as it was written that way, so every
+  // strict-mode option above was inert.
+  "include": ["../src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

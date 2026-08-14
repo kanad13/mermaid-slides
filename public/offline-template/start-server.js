@@ -46,27 +46,82 @@ const mimeTypes = {
     '.wasm': 'application/wasm'
 };
 
-const server = http.createServer((req, res) => {
-    const filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url);
+// Everything served must live inside this directory. Requests are resolved
+// against it and then checked, rather than trusted, because a request path is
+// attacker-controlled input: `/../../../etc/passwd` is a perfectly valid thing
+// for a client to send.
+const ROOT = path.resolve(__dirname);
 
-    if (!fs.existsSync(filePath)) {
-        res.writeHead(404);
-        res.end('File not found');
+/**
+ * Turn a request URL into an absolute path inside ROOT, or null if it escapes.
+ *
+ * Returning null rather than throwing keeps the caller's error handling in one
+ * place: every rejection is answered identically, so a probe cannot tell a
+ * malformed path from a blocked one from a missing file.
+ */
+function resolveWithinRoot(requestUrl) {
+    let pathname;
+
+    try {
+        // The base is a throwaway; only the pathname is used. Parsing this way
+        // discards the query string and fragment, which would otherwise end up
+        // in the filename and confuse the extension lookup below.
+        pathname = decodeURIComponent(new URL(requestUrl, 'http://localhost').pathname);
+    } catch {
+        // Malformed percent-encoding, e.g. a stray '%'.
+        return null;
+    }
+
+    // A null byte can truncate the path inside some system calls.
+    if (pathname.indexOf('\0') !== -1) {
+        return null;
+    }
+
+    // Leading '.' makes the path relative, so resolve() cannot be pushed to the
+    // filesystem root by a leading slash.
+    const resolved = path.resolve(ROOT, '.' + pathname);
+
+    // The separator check matters: without it, a sibling directory whose name
+    // merely starts with ROOT would pass.
+    if (resolved !== ROOT && !resolved.startsWith(ROOT + path.sep)) {
+        return null;
+    }
+
+    return resolved;
+}
+
+const server = http.createServer((req, res) => {
+    const resolved = resolveWithinRoot(req.url);
+
+    if (resolved === null) {
+        res.writeHead(403);
+        res.end('Forbidden');
         return;
     }
 
-    const extname = path.extname(filePath).toLowerCase();
-    const contentType = mimeTypes[extname] || 'application/octet-stream';
-
-    fs.readFile(filePath, (err, content) => {
-        if (err) {
-            res.writeHead(500);
-            res.end('Server error');
+    fs.stat(resolved, (statErr, stats) => {
+        if (statErr) {
+            res.writeHead(404);
+            res.end('File not found');
             return;
         }
 
-        res.writeHead(200, { 'Content-Type': contentType });
-        res.end(content);
+        // A directory serves its index.html, which is also how '/' reaches the
+        // application itself.
+        const filePath = stats.isDirectory() ? path.join(resolved, 'index.html') : resolved;
+        const extname = path.extname(filePath).toLowerCase();
+        const contentType = mimeTypes[extname] || 'application/octet-stream';
+
+        fs.readFile(filePath, (err, content) => {
+            if (err) {
+                res.writeHead(err.code === 'ENOENT' ? 404 : 500);
+                res.end(err.code === 'ENOENT' ? 'File not found' : 'Server error');
+                return;
+            }
+
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(content);
+        });
     });
 });
 

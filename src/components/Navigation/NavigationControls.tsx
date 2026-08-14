@@ -1,4 +1,5 @@
 import { ChevronLeft, ChevronRight, SkipBack, SkipForward } from 'lucide-react';
+import { NavigationControlsProps } from '../../types/components';
 
 export const NavigationControls = ({
   currentIndex,
@@ -8,7 +9,7 @@ export const NavigationControls = ({
   onFirst,
   onLast,
   isVisible = true
-}) => {
+}: NavigationControlsProps) => {
   const isDisabled = totalDiagrams <= 1;
 
   return (

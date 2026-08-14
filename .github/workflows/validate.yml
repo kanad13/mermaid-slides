@@ -1,0 +1,99 @@
+name: ✅ Validate
+
+# Runs on every branch and pull request except the default branch, which is
+# handled by deploy.yml. Nothing here publishes: no Pages deployment, no
+# release, no registry push. Merging to master is what publishes, so this is
+# the only chance to catch a problem before it reaches users.
+on:
+  pull_request:
+  push:
+    branches-ignore: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: 🔍 Type, Lint & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '20.19.0'
+          cache: 'npm'
+
+      - name: 📥 Install Dependencies
+        run: npm ci
+
+      - name: 🔠 Typecheck
+        run: npm run typecheck
+
+      - name: 🔍 Lint
+        run: npm run lint
+
+      - name: 🧪 Test
+        run: npm run test:run
+
+      - name: 🔒 Audit Production Dependencies
+        run: npm audit --omit=dev --audit-level=high
+        continue-on-error: true
+
+  builds:
+    name: 🏗️ Build All Channels
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '20.19.0'
+          cache: 'npm'
+
+      - name: 📥 Install Dependencies
+        run: npm ci
+
+      - name: 🏗️ Build Web Application
+        run: npm run build
+
+      - name: 📦 Build Offline Package
+        run: npm run build:offline
+
+      - name: ✅ Validate Cross-Platform Compatibility
+        run: npm run validate:compatibility
+
+      - name: 📄 Validate Documentation Continuity
+        run: npm run validate:continuity
+
+      # The published image is built from offline-package/, so this verifies
+      # the same artefact the release pipeline would ship. It is never pushed.
+      - name: 🐳 Build Docker Image
+        run: docker build -t mermaid-slides:validate .
+
+      - name: 🚦 Smoke Test Container
+        run: |
+          docker run -d --rm --name ms-validate -p 3000:3000 mermaid-slides:validate
+          for i in $(seq 1 20); do
+            if curl -fsS http://localhost:3000/ > /dev/null; then
+              echo "✅ Container served index.html"
+              docker stop ms-validate
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "❌ Container did not serve a response within 20s"
+          docker logs ms-validate || true
+          docker stop ms-validate || true
+          exit 1
