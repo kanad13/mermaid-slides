@@ -28,5 +28,9 @@
   // silently matched nothing for as long as it was written that way, so every
   // strict-mode option above was inert.
   "include": ["../src"],
+  // Conflict copies created by file-sync tools would otherwise be compiled
+  // alongside the real files, so a stale duplicate could pass or fail the
+  // typecheck without appearing in any diff.
+  "exclude": ["../**/* [0-9].ts", "../**/* [0-9].tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

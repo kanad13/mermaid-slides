@@ -1,38 +1,23 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import { useMermaid } from '../../hooks/useMermaid';
-import { useLayoutCalculations } from '../../hooks/useLayoutCalculations';
 import { DiagramViewerProps } from '../../types/components';
 
 /**
- * DiagramViewer Component
- * 
- * Renders both Mermaid diagrams and image files with consistent layout and responsive sizing.
- * Supports mixed content presentations where diagrams and images can be seamlessly combined.
- * 
- * Features:
- * - Mermaid diagram rendering with theme support
- * - Image file display (PNG, JPEG, GIF, WebP) with automatic scaling
- * - Responsive layout that adapts to screen size and navigation controls
- * - Error handling for both diagram rendering failures and missing images
- * - Consistent centering and spacing for both content types
+ * Renders one slide: either a Mermaid diagram or an image.
+ *
+ * Sizing is done by the layout, not by arithmetic. The component fills the
+ * height its parent gives it, the title takes what it needs, and the diagram
+ * gets the rest — so it stays correct at any viewport and with or without a
+ * title. An earlier version subtracted a hardcoded 120px for the header, which
+ * actually measures 109px on a wide screen and 157px on a narrow one, and a
+ * further hardcoded 120px for the title.
  */
-export const DiagramViewer = ({ 
-  diagram, 
+export const DiagramViewer = ({
+  diagram,
   onError,
   showTitles = true
 }: DiagramViewerProps) => {
   const { isLoaded, error, renderDiagram } = useMermaid();
-  const { availableHeight, availableWidth } = useLayoutCalculations(true);
-  
-  // Calculate adjusted height when titles are shown
-  const getAdjustedHeight = useCallback(() => {
-    if (showTitles && diagram?.title) {
-      // Title takes approximately 120px (pt-8 + text + border + pb-4)
-      const titleHeight = 120;
-      return `calc(${availableHeight} - ${titleHeight}px)`;
-    }
-    return availableHeight;
-  }, [showTitles, diagram?.title, availableHeight]);
 
   useEffect(() => {
     if (error) {
@@ -42,8 +27,10 @@ export const DiagramViewer = ({
 
   useEffect(() => {
     if (!diagram) {
-      return;
+      return undefined;
     }
+
+    let cancelled = false;
 
     const renderContent = async () => {
       const element = document.getElementById(diagram.id);
@@ -53,17 +40,11 @@ export const DiagramViewer = ({
 
       try {
         if (diagram.type === 'image') {
-          // Handle image rendering with layout-aware sizing
-          // Features:
-          // - Responsive sizing using calculated available space (accounts for navigation)
-          // - object-fit: contain maintains aspect ratio while preventing overflow
-          // - Automatic centering with margin: 0 auto
-          // - Error fallback displays user-friendly message for broken/missing images
           element.innerHTML = `
             <img
               src="${diagram.src}"
               alt="${diagram.alt || 'Slide image'}"
-              style="max-width: ${availableWidth}; max-height: ${getAdjustedHeight()}; object-fit: contain; display: block; margin: 0 auto;"
+              style="max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: 0 auto;"
             />
           `;
 
@@ -89,17 +70,17 @@ export const DiagramViewer = ({
             element.replaceChildren(card);
           });
         } else if (isLoaded) {
-          // Handle Mermaid diagram rendering with layout-aware sizing
           const svgElement = await renderDiagram(diagram.id, diagram.code);
-          
+
+          // A newer render may have taken over during the await.
+          if (cancelled) {
+            return;
+          }
+
           if (svgElement) {
-            // Reset any previous styling
-            element.style.cssText = '';
             svgElement.style.cssText = '';
-            
-            // Apply layout-aware sizing and centering
-            svgElement.style.maxWidth = availableWidth;
-            svgElement.style.maxHeight = getAdjustedHeight();
+            svgElement.style.maxWidth = '100%';
+            svgElement.style.maxHeight = '100%';
             svgElement.style.width = 'auto';
             svgElement.style.height = 'auto';
             svgElement.style.display = 'block';
@@ -107,6 +88,9 @@ export const DiagramViewer = ({
           }
         }
       } catch (err) {
+        if (cancelled) {
+          return;
+        }
         const message = err instanceof Error ? err.message : String(err);
         console.error('Error rendering content:', err);
         element.innerHTML = `
@@ -120,11 +104,14 @@ export const DiagramViewer = ({
     };
 
     renderContent();
-  }, [isLoaded, diagram, renderDiagram, availableHeight, availableWidth, showTitles, getAdjustedHeight]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isLoaded, diagram, renderDiagram]);
 
   return (
-    <div className="flex-1 flex flex-col" style={{ height: 'calc(100vh - 120px)' }}>
-      {/* Title Display */}
+    <div className="h-full flex flex-col">
       {showTitles && diagram?.title && (
         <div className="flex-shrink-0 pt-8 pb-4 px-6 text-center">
           <h1 className="text-3xl font-bold border-b-2 pb-3 inline-block text-blue-600 border-blue-300">
@@ -132,12 +119,20 @@ export const DiagramViewer = ({
           </h1>
         </div>
       )}
-      
-      {/* Diagram Content */}
-      <div className="flex-1 flex items-center justify-center p-4">
-        <div id={diagram?.id} className="flex items-center justify-center w-full h-full">
+
+      {/* min-h-0 lets this shrink below its content, which is what keeps a tall
+          diagram inside the viewport instead of pushing the page taller. */}
+      <div className="flex-1 min-h-0 flex items-center justify-center p-4">
+        <div
+          id={diagram?.id}
+          className="flex items-center justify-center w-full h-full overflow-hidden"
+        >
           <div className="text-gray-500 text-center">
-            {diagram?.type === 'image' ? 'Loading image...' : (isLoaded ? 'Rendering diagram...' : 'Loading Mermaid...')}
+            {diagram?.type === 'image'
+              ? 'Loading image...'
+              : isLoaded
+                ? 'Rendering diagram...'
+                : 'Loading Mermaid...'}
           </div>
         </div>
       </div>

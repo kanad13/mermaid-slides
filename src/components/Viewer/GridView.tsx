@@ -13,14 +13,26 @@ export const GridView = ({
   const { isLoaded, renderDiagram } = useMermaid();
 
   useEffect(() => {
-    if (diagrams.length === 0) {return;}
+    if (diagrams.length === 0) {return undefined;}
+
+    // This effect re-runs when Mermaid finishes loading, because `isLoaded`
+    // and `renderDiagram` both change at that moment. Without cancellation the
+    // first pass keeps going, and since rendering awaits between diagrams the
+    // two passes interleave — each one clearing the container the other is
+    // midway through filling. That is what left grid previews stuck on
+    // "Loading preview…".
+    let cancelled = false;
 
     const renderGridContent = async () => {
       for (let i = 0; i < diagrams.length; i++) {
+        if (cancelled) {
+          return;
+        }
+
         const diagram = diagrams[i];
         const gridId = `grid-${diagram.id}`;
         const element = document.getElementById(gridId);
-        
+
         if (!element) {
           continue;
         }
@@ -55,7 +67,13 @@ export const GridView = ({
           } else if (isLoaded) {
             // Render Mermaid diagram
             const svgElement = await renderDiagram(gridId, diagram.code);
-            
+
+            // Another pass may have taken over during the await; leave its
+            // work alone rather than styling a node it is about to replace.
+            if (cancelled) {
+              return;
+            }
+
             if (svgElement) {
               svgElement.style.maxWidth = '100%';
               svgElement.style.maxHeight = '100%';
@@ -64,13 +82,21 @@ export const GridView = ({
             }
           }
         } catch (err) {
+          if (cancelled) {
+            return;
+          }
           console.error(`Error rendering grid content ${i}:`, err);
           element.innerHTML = `<div class="text-red-500 text-xs">Error</div>`;
         }
       }
     };
 
-    setTimeout(renderGridContent, 100);
+    const timer = setTimeout(renderGridContent, 100);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
   }, [isLoaded, diagrams, renderDiagram]);
 
   return (

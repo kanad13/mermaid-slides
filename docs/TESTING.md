@@ -46,23 +46,10 @@ Run the smoke checklist again. This is the build that reaches mermaid-slides.com
 ```bash
 npm run build:offline
 cd offline-package
-python3 start-server.py --no-browser
+python3 start-server.py --no-browser        # then, separately:
+node start-server.js --no-browser
+./start-server.sh
 ```
-
-**`node start-server.js` cannot be run from inside the repository.** The server script is CommonJS,
-and the repository's own `package.json` declares `"type": "module"`, so Node treats the `.js` file as
-an ES module and it exits immediately with `require is not defined in ES module scope`. The shipped
-artefact is unaffected — a user extracts the archive somewhere with no parent `package.json`, so Node
-falls back to CommonJS and the server runs normally. To exercise the Node path, copy the built package
-outside the repository first:
-
-```bash
-cp -R offline-package /tmp/mermaid-slides-offline
-cd /tmp/mermaid-slides-offline && node start-server.js --no-browser
-```
-
-This is tracked in the work plan backlog; shipping a `package.json` with `"type": "commonjs"` inside
-the package would remove the discrepancy.
 
 Assets are referenced relatively here (`base: './'`), so this catches path problems the web build
 cannot. `start-server.bat` needs a Windows host; if none is available, say so in the merge notes

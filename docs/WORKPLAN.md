@@ -17,10 +17,10 @@ rewrites props across fourteen component files and conflicts with every UI chang
 | Order | Branch                | Contents                          | Target  | Status      |
 | ----- | --------------------- | --------------------------------- | ------- | ----------- |
 | 1     | `security/hardening`  | C0, S1, S7, S8, S5, S9, S10, S11   | v1.3.0  | merged |
-| 2     | `ux/foundations`      | U13, U8, U3, U7, U9, U1            | v1.4.0  | not started |
+| 2     | `ux/foundations`      | B1, U13, U8, U3, U7, U9, U1        | v1.4.0  | merged |
 | 3     | `ux/features`         | U6, U10, U12                       | v1.5.0  | not started |
 | 4     | `feat/print-to-pdf`   | Print stylesheet export            | v1.6.0  | not started |
-| —     | `deps/majors`         | Major version migrations           | —       | parked      |
+| —     | `deps/majors`         | Not scheduled — see Decisions      | —       | policy      |
 
 Rollback floor for the whole programme: tag `checkpoint/pre-hardening-v1.2.1`.
 
@@ -47,27 +47,45 @@ and the silent no-op is gone.** Any visible difference is a regression.
 
 | ID   | Task                                                          | Status |
 | ---- | ------------------------------------------------------------- | ------ |
-| U13  | Remove dead components, de-duplicate `useFileHandler`          | todo   |
-| U8   | Clean up the uncancelled timer in `GridView`                   | todo   |
-| U3   | Remove the hardcoded layout arithmetic                         | todo   |
-| U7   | One Mermaid instance, cache rendered diagrams                  | todo   |
-| U9   | Debounce parsing                                               | todo   |
-| U1   | Fix the silent no-op on paste-then-present                     | todo   |
+| B1   | Declare the offline package as CommonJS                        | done   |
+| U13  | Remove dead components, de-duplicate `useFileHandler`          | done   |
+| U8   | Clean up the uncancelled timer in `GridView`                   | done   |
+| U3   | Remove the hardcoded layout arithmetic                         | done   |
+| U7   | One Mermaid instance, cache rendered diagrams                  | done   |
+| U9   | Debounce parsing                                               | done   |
+| U1   | Fix the silent no-op on paste-then-present                     | done   |
 
-**Measured severity of U7/U8.** Grid view does not finish rendering. Against the sample deck, the
-production build leaves previews stuck on "Loading preview…" — 5 of 8 blank before the S7 dependency
-update, 2 of 8 after it. The effect re-runs when `isLoaded` flips, starting a second render loop that
-races the first, and each call clears the container the other is writing into. The dependency update
-changed the timing but not the defect. Fixing U8 then U7 should close this; verify with the grid step
-of the smoke checklist, not by eye on a three-slide deck.
+**Grid rendering — fixed by U8.** Grid view used to leave previews stuck on "Loading preview…": 5 of 8
+blank before the S7 dependency update, 2 of 8 after it. The cause was the uncancelled timer, not the
+render logic — the effect re-ran when `isLoaded` flipped, and because rendering awaits between
+diagrams the two passes interleaved and cleared each other's containers. With cancellation the sample
+deck renders **8 of 8**, and still 8 of 8 after eight rapid view toggles.
+
+U7 was done on cost grounds rather than correctness, and paid off: re-entering grid view on the
+eight-slide sample rendered over a **404ms spread** before caching and **0ms** after — every diagram
+appears in the same tick. That scales with deck size.
+
+Measuring here needs care. The browser pane throttles timers to ~1s when backgrounded, so wall-clock
+figures are meaningless; the spread between first and last card is the number that means something.
+
+Note that a cached SVG keeps the element id from wherever it was first rendered, so a diagram rendered
+in the grid and later shown in single view carries a `grid-` prefixed id. That is cosmetic — the id is
+only used by Mermaid's own scoped styles — but it will mislead anyone selecting on it. Audited: zero
+duplicate ids in the document.
 
 ## Branch 3 — `ux/features`
 
 | ID   | Task                                                          | Status |
 | ---- | ------------------------------------------------------------- | ------ |
-| U6   | Dark mode and opt-in settings persistence                      | todo   |
+| U6   | Dark mode, session-only, following the OS preference           | todo   |
 | U10  | Accessibility pass                                             | todo   |
 | U12  | Presenter affordances                                          | todo   |
+| U15  | Show which file is currently loaded                            | todo   |
+
+**U15 context.** `CurrentFileDisplay` existed but was never rendered, so the app has never told you
+which file you loaded. U13 deleted the component rather than wiring it up, because `ux/foundations`
+must not change behaviour. The state is still there — `useFileHandler` tracks `fileName` and has tests
+for it — so this is a matter of rendering it somewhere sensible, not rebuilding anything.
 
 ## Branch 4 — `feat/print-to-pdf`
 
@@ -87,9 +105,6 @@ These are not arbitrary. Changing the order breaks something concrete.
   worse than not caching, so sizing is corrected before caching is introduced.
 - **U7 before U6.** Dark mode passes a theme into Mermaid; U7 is what creates a single instance to
   pass it to.
-- **S11 before U6.** S11 moves the privacy policy into a component. U6 introduces the first
-  `localStorage` write in the app's history, which amends that policy — better to edit a component
-  than an HTML string.
 - **E1 last.** Print export renders every slide at once, which depends on the shared renderer from U7.
 
 ---
@@ -98,15 +113,34 @@ These are not arbitrary. Changing the order breaks something concrete.
 
 Recorded so they are not re-litigated in a later session.
 
-**Dependencies — semver now, majors later.** Every one of the 23 advisories is fixable inside the
-existing major versions. Majors (`tailwindcss` 4, `typescript` 7, `eslint` 10, `vitest` 4, `vite` 8,
-`lucide-react` 1.x, `jsdom` 30) are parked on `deps/majors` so that a migration failure is never
-confused with a security fix.
-
 **Remote images are not blocked.** The CSP permits them. Users place remote images in their markdown
 deliberately, and breaking those decks would be user-hostile. The consequence is that a remote image
 does reach a third-party server and reveals the viewer's IP and user agent. The documentation states
 this plainly rather than claiming otherwise.
+
+**No settings persistence, ever.** Dark mode follows `prefers-color-scheme` on load and can be
+overridden for the session, but nothing is written to `localStorage` or anywhere else. Losing your
+preferences on reload is the intended behaviour: the app's promise is that it retains nothing, and a
+preference store is still a store. Following the OS setting gets a dark-mode user a dark app on first
+paint without keeping anything — which is why persistence buys so little here.
+
+**No blanket major upgrades.** A major version is taken when it delivers something concrete: a
+security fix not backported to the current line, a capability the project needs, or end-of-life of
+what we are on. Upgrading because a higher number exists is churn, and churn on a release pipeline
+that publishes on merge is risk without benefit. `deps/majors` is not a scheduled branch; it is a
+standing policy.
+
+Applying that test to what is currently available:
+
+| Available            | Take it? | Why                                                          |
+| -------------------- | -------- | ------------------------------------------------------------ |
+| Node 22 (CI runtime) | **Yes**  | Node 20 hit end of life 2026-04-30; CI was publishing all three channels on an unpatched runtime. Done. |
+| `lucide-react` 1.x   | Later    | 0.x means every minor can break. Moving to a stable line is a stability win, but it is an icon library — schedule it with UI work, not alone. |
+| Tailwind 4           | No       | CSS-first config rewrite across every component, for no user-visible gain. |
+| TypeScript 7         | No       | 5.9 typechecks this project in under two seconds. |
+| Vite 8, Vitest 4, ESLint 10, jsdom 30 | No | Current lines are supported and have no outstanding advisories. |
+
+Revisit when one of them moves from "newer" to "needed".
 
 **Server-side rendering is a non-goal.** Headless-browser PDF generation and hosted conversion
 endpoints produce better output than anything achievable in the browser. They are still refused,
@@ -151,11 +185,11 @@ name the current task ID from memory; or leaving the tree red through more than 
 
 ## Next action
 
-`security/hardening` is merged and released as v1.3.0.
+`ux/foundations` is merged and released as v1.4.0. The repository is at a clean checkpoint: tree
+clean, all channels verified, docs redrafted to match the code.
 
-Next: start `ux/foundations` from a fresh branch off master, beginning with U13. Open a new session
-for it — the branch is a clean boundary and nothing from this one needs to carry over beyond this
-file.
+Next branch is `ux/features` — U6, U10, U12, U15 — starting with U6. Open a new session for it; the
+branch boundary is a clean seam and nothing needs to carry over beyond this file.
 
 Before starting, run the opening ritual above and confirm the tree is green.
 
@@ -163,16 +197,6 @@ Before starting, run the opening ritual above and confirm the tree is green.
 
 Found during the work, deliberately not acted on because they fall outside the current scope.
 Each needs a decision before it is scheduled.
-
-**B1 — The offline package's Node server cannot be run from inside the repository.**
-`start-server.js` is CommonJS, and the repository's `package.json` declares `"type": "module"`, so
-Node treats the `.js` file as an ES module and it exits with `require is not defined in ES module
-scope`. The shipped archive is unaffected: a user extracts it somewhere with no parent
-`package.json`, Node falls back to CommonJS, and it runs. Verified both ways. The consequence is that
-one of the four documented start paths cannot be exercised in place, which is presumably why nobody
-noticed. Writing a `package.json` containing `{"type": "commonjs"}` into the package from
-`scripts/prepare-offline-package.cjs` would fix it without changing any documented command. Roughly
-four lines. `docs/TESTING.md` documents the workaround in the meantime.
 
 **B2 — The offline package ships a redundant copy of the server scripts.**
 Vite copies all of `public/` into the build, which includes `public/offline-template/`, so the archive
@@ -194,7 +218,6 @@ Building `dist/`, building `offline-package/`, zipping the archive and running a
 four separate steps done by hand before a merge. A script would make the pre-merge matrix in
 [TESTING.md](TESTING.md) one command instead of a checklist to follow correctly.
 
-**B6 — README badges load from `img.shields.io`.**
-Six badges fetch images from a third party whenever the README is viewed. This affects GitHub's
-rendering of the repository page, not the app, and no user of Mermaid Slides is exposed by it. Noted
-only because it is the last third-party request anywhere in the project.
+**B6 — resolved.** The shields.io badges are gone, replaced with emoji and plain links. No image is
+fetched, nothing needs hosting, and the row renders in any Markdown viewer including plain text. The
+badges also carried a stale anchor (`#-privacy--security`) that no longer matched any heading.

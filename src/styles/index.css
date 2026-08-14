@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*
+  Give the app a real height to fill.
+
+  Presentation mode needs a container bounded by the window, so the slide area
+  can take whatever the header leaves instead of every child guessing the
+  header's height.
+
+  A percentage chain is used rather than `100vh` because on mobile browsers the
+  viewport unit is measured against the window with its toolbars retracted, so a
+  `100vh` element runs under the toolbar and loses its last several dozen pixels
+  — the bottom of the slide is exactly what you cannot afford to clip here.
+  Percentages resolve against the real containing block instead.
+*/
+html,
+body,
+#root {
+  height: 100%;
+}
