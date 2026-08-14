@@ -219,10 +219,10 @@ graph TB
     end
 
     subgraph "Docker Build"
-        C1[Dockerfile] --> C2[Python Alpine Base]
-        C2 --> C3[Install Node.js]
+        C1[Dockerfile] --> C2[Digest-pinned Python Alpine Base]
+        C2 --> C3[Create unprivileged user]
         C3 --> C4[Copy offline-package]
-        C4 --> C5[Run bundled local server]
+        C4 --> C5[Run bundled Python server]
         C5 --> C6[Multi-platform Images]
     end
 

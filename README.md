@@ -29,7 +29,15 @@ docker run -p 3000:3000 kunalpathak13/mermaid-slides:latest
 # Open browser to http://localhost:3000
 ```
 
+The image holds static files and a small Python server. Nothing writes to disk and nothing calls out,
+so you can lock it down further:
+
+```bash
+docker run -p 3000:3000 --read-only --cap-drop=ALL kunalpathak13/mermaid-slides:latest
+```
+
 - **Container Ready**: Multi-platform support (AMD64, ARM64)
+- **Runs Unprivileged**: Serves as a non-root user, with a digest-pinned base image
 - **Isolated Environment**: Complete containerized solution
 - **Easy Deployment**: Perfect for corporate environments
 

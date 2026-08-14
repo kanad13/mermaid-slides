@@ -34,7 +34,7 @@ Rollback floor for the whole programme: tag `checkpoint/pre-hardening-v1.2.1`.
 | S7   | Update dependencies within existing majors                     | done   |
 | S8   | Make TypeScript checking actually run, fix resulting errors    | done   |
 | S5   | Content-Security-Policy                                        | done   |
-| S9   | Docker image hardening                                         | todo   |
+| S9   | Docker image hardening                                         | done   |
 | S10  | Reproducible releases and pinned CI actions                    | todo   |
 | S11  | Replace the `innerHTML` modals with React components           | todo   |
 
@@ -148,7 +148,7 @@ name the current task ID from memory; or leaving the tree red through more than 
 
 ## Next action
 
-Harden the Docker image (S9).
+Reproducible releases and pinned CI actions (S10).
 
 ## Backlog
 
