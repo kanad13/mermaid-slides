@@ -20,7 +20,7 @@ rewrites props across fourteen component files and conflicts with every UI chang
 | 2     | `ux/foundations`      | B1, U13, U8, U3, U7, U9, U1        | v1.4.0  | ready to merge |
 | 3     | `ux/features`         | U6, U10, U12                       | v1.5.0  | not started |
 | 4     | `feat/print-to-pdf`   | Print stylesheet export            | v1.6.0  | not started |
-| —     | `deps/majors`         | Major version migrations           | —       | parked      |
+| —     | `deps/majors`         | Not scheduled — see Decisions      | —       | policy      |
 
 Rollback floor for the whole programme: tag `checkpoint/pre-hardening-v1.2.1`.
 
@@ -77,7 +77,7 @@ duplicate ids in the document.
 
 | ID   | Task                                                          | Status |
 | ---- | ------------------------------------------------------------- | ------ |
-| U6   | Dark mode and opt-in settings persistence                      | todo   |
+| U6   | Dark mode, session-only, following the OS preference           | todo   |
 | U10  | Accessibility pass                                             | todo   |
 | U12  | Presenter affordances                                          | todo   |
 | U15  | Show which file is currently loaded                            | todo   |
@@ -105,9 +105,6 @@ These are not arbitrary. Changing the order breaks something concrete.
   worse than not caching, so sizing is corrected before caching is introduced.
 - **U7 before U6.** Dark mode passes a theme into Mermaid; U7 is what creates a single instance to
   pass it to.
-- **S11 before U6.** S11 moves the privacy policy into a component. U6 introduces the first
-  `localStorage` write in the app's history, which amends that policy — better to edit a component
-  than an HTML string.
 - **E1 last.** Print export renders every slide at once, which depends on the shared renderer from U7.
 
 ---
@@ -116,15 +113,34 @@ These are not arbitrary. Changing the order breaks something concrete.
 
 Recorded so they are not re-litigated in a later session.
 
-**Dependencies — semver now, majors later.** Every one of the 23 advisories is fixable inside the
-existing major versions. Majors (`tailwindcss` 4, `typescript` 7, `eslint` 10, `vitest` 4, `vite` 8,
-`lucide-react` 1.x, `jsdom` 30) are parked on `deps/majors` so that a migration failure is never
-confused with a security fix.
-
 **Remote images are not blocked.** The CSP permits them. Users place remote images in their markdown
 deliberately, and breaking those decks would be user-hostile. The consequence is that a remote image
 does reach a third-party server and reveals the viewer's IP and user agent. The documentation states
 this plainly rather than claiming otherwise.
+
+**No settings persistence, ever.** Dark mode follows `prefers-color-scheme` on load and can be
+overridden for the session, but nothing is written to `localStorage` or anywhere else. Losing your
+preferences on reload is the intended behaviour: the app's promise is that it retains nothing, and a
+preference store is still a store. Following the OS setting gets a dark-mode user a dark app on first
+paint without keeping anything — which is why persistence buys so little here.
+
+**No blanket major upgrades.** A major version is taken when it delivers something concrete: a
+security fix not backported to the current line, a capability the project needs, or end-of-life of
+what we are on. Upgrading because a higher number exists is churn, and churn on a release pipeline
+that publishes on merge is risk without benefit. `deps/majors` is not a scheduled branch; it is a
+standing policy.
+
+Applying that test to what is currently available:
+
+| Available            | Take it? | Why                                                          |
+| -------------------- | -------- | ------------------------------------------------------------ |
+| Node 22 (CI runtime) | **Yes**  | Node 20 hit end of life 2026-04-30; CI was publishing all three channels on an unpatched runtime. Done. |
+| `lucide-react` 1.x   | Later    | 0.x means every minor can break. Moving to a stable line is a stability win, but it is an icon library — schedule it with UI work, not alone. |
+| Tailwind 4           | No       | CSS-first config rewrite across every component, for no user-visible gain. |
+| TypeScript 7         | No       | 5.9 typechecks this project in under two seconds. |
+| Vite 8, Vitest 4, ESLint 10, jsdom 30 | No | Current lines are supported and have no outstanding advisories. |
+
+Revisit when one of them moves from "newer" to "needed".
 
 **Server-side rendering is a non-goal.** Headless-browser PDF generation and hosted conversion
 endpoints produce better output than anything achievable in the browser. They are still refused,
@@ -202,7 +218,6 @@ Building `dist/`, building `offline-package/`, zipping the archive and running a
 four separate steps done by hand before a merge. A script would make the pre-merge matrix in
 [TESTING.md](TESTING.md) one command instead of a checklist to follow correctly.
 
-**B6 — README badges load from `img.shields.io`.**
-Six badges fetch images from a third party whenever the README is viewed. This affects GitHub's
-rendering of the repository page, not the app, and no user of Mermaid Slides is exposed by it. Noted
-only because it is the last third-party request anywhere in the project.
+**B6 — resolved.** The shields.io badges are gone, replaced with emoji and plain links. No image is
+fetched, nothing needs hosting, and the row renders in any Markdown viewer including plain text. The
+badges also carried a stale anchor (`#-privacy--security`) that no longer matched any heading.
