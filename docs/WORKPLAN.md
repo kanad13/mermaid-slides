@@ -51,7 +51,7 @@ and the silent no-op is gone.** Any visible difference is a regression.
 | U13  | Remove dead components, de-duplicate `useFileHandler`          | done   |
 | U8   | Clean up the uncancelled timer in `GridView`                   | done   |
 | U3   | Remove the hardcoded layout arithmetic                         | done   |
-| U7   | One Mermaid instance, cache rendered diagrams                  | todo   |
+| U7   | One Mermaid instance, cache rendered diagrams                  | done   |
 | U9   | Debounce parsing                                               | todo   |
 | U1   | Fix the silent no-op on paste-then-present                     | todo   |
 
@@ -61,10 +61,17 @@ render logic — the effect re-ran when `isLoaded` flipped, and because renderin
 diagrams the two passes interleaved and cleared each other's containers. With cancellation the sample
 deck renders **8 of 8**, and still 8 of 8 after eight rapid view toggles.
 
-U7 is therefore no longer a correctness fix. It remains worth doing for cost: `useMermaid` is called
-once per component, so each mount re-imports and re-initialises Mermaid, and nothing caches a rendered
-diagram. Re-entering grid view re-renders every slide from source. Judge it on measurements, not on
-the assumption that it fixes anything visible.
+U7 was done on cost grounds rather than correctness, and paid off: re-entering grid view on the
+eight-slide sample rendered over a **404ms spread** before caching and **0ms** after — every diagram
+appears in the same tick. That scales with deck size.
+
+Measuring here needs care. The browser pane throttles timers to ~1s when backgrounded, so wall-clock
+figures are meaningless; the spread between first and last card is the number that means something.
+
+Note that a cached SVG keeps the element id from wherever it was first rendered, so a diagram rendered
+in the grid and later shown in single view carries a `grid-` prefixed id. That is cosmetic — the id is
+only used by Mermaid's own scoped styles — but it will mislead anyone selecting on it. Audited: zero
+duplicate ids in the document.
 
 ## Branch 3 — `ux/features`
 
