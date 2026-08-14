@@ -67,10 +67,6 @@ export interface ActionButtonsProps {
   hasMarkdown: boolean;
 }
 
-export interface CurrentFileDisplayProps {
-  fileName: string;
-}
-
 // ---------------------------------------------------------------------------
 // Viewer
 // ---------------------------------------------------------------------------
@@ -129,34 +125,7 @@ export interface GridViewToggleProps {
   onToggleGridView: () => void;
 }
 
-export interface DiagramCounterProps {
-  currentIndex: number;
-  totalDiagrams: number;
-}
-
 export interface ProgressBarProps {
-  currentIndex: number;
-  totalDiagrams: number;
-}
-
-// ---------------------------------------------------------------------------
-// Standalone navigation
-//
-// NavigationControls and ProgressIndicator are not currently rendered anywhere.
-// They are typed here for completeness; U13 decides whether they stay.
-// ---------------------------------------------------------------------------
-
-export interface NavigationControlsProps {
-  currentIndex: number;
-  totalDiagrams: number;
-  onPrevious: () => void;
-  onNext: () => void;
-  onFirst: () => void;
-  onLast: () => void;
-  isVisible?: boolean;
-}
-
-export interface ProgressIndicatorProps {
   currentIndex: number;
   totalDiagrams: number;
 }

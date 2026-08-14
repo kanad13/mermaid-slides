@@ -3,7 +3,6 @@ import { FileUpload } from '../FileUpload/FileUpload';
 import { LegalFooter } from '../Legal';
 import { sampleMarkdown } from '../../utils/sampleData';
 import { useDiagramParser } from '../../hooks/useDiagramParser';
-import { useFileHandler } from '../../hooks/useFileHandler';
 import { EditorHeader } from './EditorComponents/EditorHeader';
 import { MarkdownTextarea } from './EditorComponents/MarkdownTextarea';
 import { StatusMessages } from './EditorComponents/StatusMessages';
@@ -12,17 +11,14 @@ import { EditorProps } from '../../types/components';
 
 export const Editor: React.FC<EditorProps> = ({ onViewDiagrams }) => {
   const [markdownText, setMarkdownText] = useState<string>('');
-  const { setFileName } = useFileHandler();
   const { diagrams, error, processDiagrams } = useDiagramParser();
 
-  const handleFileLoad = (content: string, name: string): void => {
+  const handleFileLoad = (content: string): void => {
     setMarkdownText(content);
-    setFileName(name);
   };
 
   const loadSample = (): void => {
     setMarkdownText(sampleMarkdown);
-    setFileName('Sample Document');
   };
 
   const handleViewDiagrams = (): void => {
@@ -31,7 +27,6 @@ export const Editor: React.FC<EditorProps> = ({ onViewDiagrams }) => {
 
   const handleClear = (): void => {
     setMarkdownText('');
-    setFileName('');
   };
 
   // Auto-process diagrams when markdown content changes

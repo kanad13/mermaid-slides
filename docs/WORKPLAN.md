@@ -48,7 +48,7 @@ and the silent no-op is gone.** Any visible difference is a regression.
 | ID   | Task                                                          | Status |
 | ---- | ------------------------------------------------------------- | ------ |
 | B1   | Declare the offline package as CommonJS                        | done   |
-| U13  | Remove dead components, de-duplicate `useFileHandler`          | todo   |
+| U13  | Remove dead components, de-duplicate `useFileHandler`          | done   |
 | U8   | Clean up the uncancelled timer in `GridView`                   | todo   |
 | U3   | Remove the hardcoded layout arithmetic                         | todo   |
 | U7   | One Mermaid instance, cache rendered diagrams                  | todo   |
@@ -69,6 +69,12 @@ of the smoke checklist, not by eye on a three-slide deck.
 | U6   | Dark mode and opt-in settings persistence                      | todo   |
 | U10  | Accessibility pass                                             | todo   |
 | U12  | Presenter affordances                                          | todo   |
+| U15  | Show which file is currently loaded                            | todo   |
+
+**U15 context.** `CurrentFileDisplay` existed but was never rendered, so the app has never told you
+which file you loaded. U13 deleted the component rather than wiring it up, because `ux/foundations`
+must not change behaviour. The state is still there — `useFileHandler` tracks `fileName` and has tests
+for it — so this is a matter of rendering it somewhere sensible, not rebuilding anything.
 
 ## Branch 4 — `feat/print-to-pdf`
 
