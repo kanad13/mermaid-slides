@@ -16,7 +16,7 @@ rewrites props across fourteen component files and conflicts with every UI chang
 
 | Order | Branch                | Contents                          | Target  | Status      |
 | ----- | --------------------- | --------------------------------- | ------- | ----------- |
-| 1     | `security/hardening`  | C0, S1, S7, S8, S5, S9, S10, S11   | v1.3.0  | ready to merge |
+| 1     | `security/hardening`  | C0, S1, S7, S8, S5, S9, S10, S11   | v1.3.0  | merged |
 | 2     | `ux/foundations`      | U13, U8, U3, U7, U9, U1            | v1.4.0  | not started |
 | 3     | `ux/features`         | U6, U10, U12                       | v1.5.0  | not started |
 | 4     | `feat/print-to-pdf`   | Print stylesheet export            | v1.6.0  | not started |
@@ -151,16 +151,13 @@ name the current task ID from memory; or leaving the tree red through more than 
 
 ## Next action
 
-All eight tasks on `security/hardening` are complete and the tree is green. Before merging:
+`security/hardening` is merged and released as v1.3.0.
 
-1. Run the full channel matrix in [TESTING.md](TESTING.md) — the Docker and offline-package steps
-   in particular, since merging to master publishes to all three channels immediately.
-2. Push the branch and confirm the new validation workflow passes on GitHub.
-3. Decide on backlog item B1.
-4. Bump the version to 1.3.0 **in the merge commit**, once — every push to master cuts a release,
-   and the release action fails on a tag that already exists.
+Next: start `ux/foundations` from a fresh branch off master, beginning with U13. Open a new session
+for it — the branch is a clean boundary and nothing from this one needs to carry over beyond this
+file.
 
-Then start `ux/foundations` with U13.
+Before starting, run the opening ritual above and confirm the tree is green.
 
 ## Backlog
 
