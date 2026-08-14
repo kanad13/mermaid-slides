@@ -98,6 +98,12 @@ slide.
 effects re-run when Mermaid finishes loading. Without a cancellation flag two passes interleave and
 clear each other's containers. This is what used to leave grid previews blank.
 
+**Printing draws a second copy of the deck.** The viewer only ever renders the current slide, so
+`PrintView` renders all of them into a separate tree. While preparing it sits off-screen rather than
+hidden — Mermaid measures text to lay out a diagram, and `display: none` gives it nothing to measure.
+The print stylesheet is gated on a `data-print-ready` attribute so that pressing Ctrl+P before the
+deck is drawn prints the current slide rather than a blank page.
+
 **Presenting parses on demand.** The debounced parse in `Editor` only feeds the error message.
 `handleViewDiagrams` parses the current text directly, because reading the debounced result made
 paste-then-click silently do nothing.

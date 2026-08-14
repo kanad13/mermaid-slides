@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ViewerHeader } from './ViewerHeader';
 import { DiagramViewer } from './DiagramViewer';
 import { GridView } from './GridView';
+import { PrintView } from './PrintView';
 import { KeyboardShortcutsHelp } from './ViewerComponents/KeyboardShortcutsHelp';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 import { useViewerNavigation } from '../../hooks/useViewerNavigation';
+import { usePrintDeck } from '../../hooks/usePrintDeck';
 import { ViewerProps } from '../../types/components';
 
 export const Viewer: React.FC<ViewerProps> = ({ 
@@ -26,6 +28,18 @@ export const Viewer: React.FC<ViewerProps> = ({
     handleDiagramSelect
   } = useViewerNavigation(diagrams.length);
 
+  const { isPreparing, isPrintReady, startPrinting, handleDeckReady } = usePrintDeck();
+
+  // The print stylesheet keys off the document element, so that a stray Ctrl+P
+  // before the deck is drawn prints the current slide rather than nothing.
+  useEffect(() => {
+    if (!isPrintReady) {
+      return undefined;
+    }
+    document.documentElement.setAttribute('data-print-ready', '');
+    return () => document.documentElement.removeAttribute('data-print-ready');
+  }, [isPrintReady]);
+
   useKeyboardNavigation({
     isActive: true,
     onPrevious: goToPrevious,
@@ -40,7 +54,8 @@ export const Viewer: React.FC<ViewerProps> = ({
   // the slide area take whatever the header leaves, at any width, instead of
   // subtracting a guessed header height.
   return (
-    <div className="h-full flex flex-col relative bg-white">
+    <>
+    <div className="app-shell h-full flex flex-col relative bg-white">
       <ViewerHeader
         currentIndex={currentIndex}
         totalDiagrams={diagrams.length}
@@ -56,6 +71,8 @@ export const Viewer: React.FC<ViewerProps> = ({
         onAutoHideToggle={setAutoHideState}
         showTitles={showTitles}
         onShowTitlesToggle={setShowTitles}
+        onPrint={startPrinting}
+        isPreparingPrint={isPreparing}
       />
 
       {/* flex so that GridView's own flex-1 + overflow-auto actually apply:
@@ -81,5 +98,14 @@ export const Viewer: React.FC<ViewerProps> = ({
       {/* Keyboard shortcuts help - only show in single view */}
       {!isGridView && <KeyboardShortcutsHelp currentIndex={currentIndex} />}
     </div>
+
+    {isPreparing && (
+      <PrintView
+        diagrams={diagrams}
+        showTitles={showTitles}
+        onReady={handleDeckReady}
+      />
+    )}
+    </>
   );
 };
