@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { useMermaid } from '../../hooks/useMermaid';
 import { useLayoutCalculations } from '../../hooks/useLayoutCalculations';
+import { DiagramViewerProps } from '../../types/components';
 
 /**
  * DiagramViewer Component
@@ -19,7 +20,7 @@ export const DiagramViewer = ({
   diagram, 
   onError,
   showTitles = true
-}) => {
+}: DiagramViewerProps) => {
   const { isLoaded, error, renderDiagram } = useMermaid();
   const { availableHeight, availableWidth } = useLayoutCalculations(true);
   
@@ -85,11 +86,12 @@ export const DiagramViewer = ({
           }
         }
       } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
         console.error('Error rendering content:', err);
         element.innerHTML = `
           <div style="color: #dc2626; padding: 1rem; border: 1px solid #fca5a5; border-radius: 0.375rem; background-color: #fef2f2; text-align: center;">
             <p style="font-weight: 500;">Error rendering content:</p>
-            <p style="font-size: 0.875rem; margin-top: 0.25rem;">${err.message}</p>
+            <p style="font-size: 0.875rem; margin-top: 0.25rem;">${message}</p>
             <pre style="font-size: 0.75rem; margin-top: 0.5rem; background-color: #f3f4f6; padding: 0.5rem; border-radius: 0.375rem; overflow: auto; text-align: left;">${diagram.code || diagram.src}</pre>
           </div>
         `;

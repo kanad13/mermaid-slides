@@ -1,4 +1,5 @@
 import { ChevronLeft, ChevronRight, SkipBack, SkipForward } from 'lucide-react';
+import { HeaderNavigationProps } from '../../../types/components';
 
 export const HeaderNavigation = ({
   currentIndex,
@@ -7,7 +8,7 @@ export const HeaderNavigation = ({
   onNext,
   onFirst,
   onLast
-}) => {
+}: HeaderNavigationProps) => {
   const isDisabled = totalDiagrams <= 1;
 
   return (

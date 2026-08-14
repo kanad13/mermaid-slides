@@ -1,4 +1,5 @@
-export const FileInput = ({ onFileSelect }) => {
+import { FileInputProps } from '../../../types/components';
+export const FileInput = ({ onFileSelect }: FileInputProps) => {
   return (
     <input
       type="file"

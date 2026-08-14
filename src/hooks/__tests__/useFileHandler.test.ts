@@ -1,3 +1,4 @@
+import React from 'react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
 import { useFileHandler } from '../useFileHandler'
@@ -40,7 +41,10 @@ describe('useFileHandler', () => {
     }
 
     await act(async () => {
-      await result.current.handleFileSelect(mockEvent, mockOnFileLoad)
+      await result.current.handleFileSelect(
+        mockEvent as unknown as React.ChangeEvent<HTMLInputElement>,
+        mockOnFileLoad
+      )
     })
 
     expect(result.current.fileName).toBe('test.md')
@@ -55,14 +59,18 @@ describe('useFileHandler', () => {
     }
 
     act(() => {
-      result.current.handleDragEvents.onDragOver(mockEvent)
+      result.current.handleDragEvents.onDragOver(
+        mockEvent as unknown as React.DragEvent<HTMLDivElement>
+      )
     })
 
     expect(result.current.isDragging).toBe(true)
     expect(mockEvent.preventDefault).toHaveBeenCalled()
 
     act(() => {
-      result.current.handleDragEvents.onDragLeave(mockEvent)
+      result.current.handleDragEvents.onDragLeave(
+        mockEvent as unknown as React.DragEvent<HTMLDivElement>
+      )
     })
 
     expect(result.current.isDragging).toBe(false)
@@ -79,7 +87,10 @@ describe('useFileHandler', () => {
     }
 
     await act(async () => {
-      await result.current.handleDragEvents.onDrop(mockEvent, mockOnFileLoad)
+      await result.current.handleDragEvents.onDrop(
+        mockEvent as unknown as React.DragEvent<HTMLDivElement>,
+        mockOnFileLoad
+      )
     })
 
     expect(result.current.fileName).toBe('dropped.md')

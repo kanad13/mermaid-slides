@@ -1,12 +1,21 @@
 import React from 'react';
 import { Diagram } from './diagram';
 
-// Editor Component Props
+/**
+ * Props for every component in the app.
+ *
+ * Parameter names in function types carry a leading underscore to satisfy the
+ * `no-unused-vars` lint rule, which is configured with `argsIgnorePattern: '^_'`.
+ */
+
+// ---------------------------------------------------------------------------
+// Application shell
+// ---------------------------------------------------------------------------
+
 export interface EditorProps {
   onViewDiagrams: (_diagrams: Diagram[]) => void;
 }
 
-// Viewer Component Props
 export interface ViewerProps {
   diagrams: Diagram[];
   onBackToEditor: () => void;
@@ -14,7 +23,23 @@ export interface ViewerProps {
   autoHideEnabled?: boolean;
 }
 
-// File Upload Props
+// ---------------------------------------------------------------------------
+// Editor
+// ---------------------------------------------------------------------------
+
+export interface MarkdownTextareaProps {
+  markdownText: string;
+  onTextChange: (_value: string) => void;
+}
+
+export interface StatusMessagesProps {
+  error: string;
+}
+
+// ---------------------------------------------------------------------------
+// File upload
+// ---------------------------------------------------------------------------
+
 export interface FileUploadProps {
   onFileLoad: (_content: string, _name: string) => void;
   onLoadSample: () => void;
@@ -23,8 +48,74 @@ export interface FileUploadProps {
   hasMarkdown: boolean;
 }
 
-// Navigation Props
-export interface NavigationControlsProps {
+export interface DropZoneProps {
+  isDragging: boolean;
+  onDragOver: (_e: React.DragEvent<HTMLDivElement>) => void;
+  onDragLeave: (_e: React.DragEvent<HTMLDivElement>) => void;
+  onDrop: (_e: React.DragEvent<HTMLDivElement>) => void;
+  children?: React.ReactNode;
+}
+
+export interface FileInputProps {
+  onFileSelect: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface ActionButtonsProps {
+  onLoadSample: () => void;
+  onViewDiagrams: () => void;
+  onClear: () => void;
+  hasMarkdown: boolean;
+}
+
+export interface CurrentFileDisplayProps {
+  fileName: string;
+}
+
+// ---------------------------------------------------------------------------
+// Viewer
+// ---------------------------------------------------------------------------
+
+export interface DiagramViewerProps {
+  diagram?: Diagram;
+  onError?: (_error: string) => void;
+  showTitles?: boolean;
+}
+
+export interface GridViewProps {
+  diagrams: Diagram[];
+  currentIndex: number;
+  onDiagramSelect: (_index: number) => void;
+  isExtensionMode?: boolean;
+  showTitles?: boolean;
+}
+
+export interface ViewerHeaderProps {
+  currentIndex: number;
+  totalDiagrams: number;
+  isGridView: boolean;
+  onBackToEditor: () => void;
+  onToggleGridView: () => void;
+  onPrevious: () => void;
+  onNext: () => void;
+  onFirst: () => void;
+  onLast: () => void;
+  isExtensionMode?: boolean;
+  autoHideEnabled?: boolean;
+  onAutoHideToggle: (_enabled: boolean) => void;
+  showTitles?: boolean;
+  onShowTitlesToggle: (_enabled: boolean) => void;
+}
+
+// ---------------------------------------------------------------------------
+// Header controls
+// ---------------------------------------------------------------------------
+
+export interface BackButtonProps {
+  onBackToEditor: () => void;
+  isExtensionMode?: boolean;
+}
+
+export interface HeaderNavigationProps {
   currentIndex: number;
   totalDiagrams: number;
   onPrevious: () => void;
@@ -33,68 +124,39 @@ export interface NavigationControlsProps {
   onLast: () => void;
 }
 
-// Viewer Header Props
-export interface ViewerHeaderProps {
-  currentIndex: number;
-  totalDiagrams: number;
+export interface GridViewToggleProps {
   isGridView: boolean;
-  onBackToEditor: () => void;
   onToggleGridView: () => void;
 }
 
-// Diagram Viewer Props
-export interface DiagramViewerProps {
-  diagram: Diagram;
-}
-
-// Grid View Props
-export interface GridViewProps {
-  diagrams: Diagram[];
-  currentIndex: number;
-  onDiagramSelect: (_index: number) => void;
-}
-
-// Editor Component Props
-export interface MarkdownTextareaProps {
-  value: string;
-  onChange: (_value: string) => void;
-  placeholder?: string;
-}
-
-export interface ActionButtonsProps {
-  onProcessDiagrams: () => void;
-  onViewDiagrams: () => void;
-}
-
-export interface StatusMessagesProps {
-  error: string;
-}
-
-// File Upload Component Props
-export interface DropZoneProps {
-  isDragging: boolean;
-  onDragOver: (_e: React.DragEvent<HTMLDivElement>) => void;
-  onDragLeave: (_e: React.DragEvent<HTMLDivElement>) => void;
-  onDrop: (_e: React.DragEvent<HTMLDivElement>) => void;
-  onFileSelect: (_e: React.ChangeEvent<HTMLInputElement>) => void;
-  onLoadSample: () => void;
-}
-
-export interface CurrentFileDisplayProps {
-  fileName: string;
-}
-
-export interface FileInputProps {
-  onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-// Progress and Navigation
-export interface ProgressIndicatorProps {
+export interface DiagramCounterProps {
   currentIndex: number;
   totalDiagrams: number;
 }
 
 export interface ProgressBarProps {
+  currentIndex: number;
+  totalDiagrams: number;
+}
+
+// ---------------------------------------------------------------------------
+// Standalone navigation
+//
+// NavigationControls and ProgressIndicator are not currently rendered anywhere.
+// They are typed here for completeness; U13 decides whether they stay.
+// ---------------------------------------------------------------------------
+
+export interface NavigationControlsProps {
+  currentIndex: number;
+  totalDiagrams: number;
+  onPrevious: () => void;
+  onNext: () => void;
+  onFirst: () => void;
+  onLast: () => void;
+  isVisible?: boolean;
+}
+
+export interface ProgressIndicatorProps {
   currentIndex: number;
   totalDiagrams: number;
 }

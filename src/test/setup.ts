@@ -40,7 +40,7 @@ Object.defineProperty(window, 'FileReader', {
         this.result = 'mock file content'
         if (this.onload) {
           // Create a minimal ProgressEvent-like object for the mock
-          const mockEvent = { target: this } as ProgressEvent<FileReader>
+          const mockEvent = { target: this } as unknown as ProgressEvent<FileReader>
           this.onload(mockEvent)
         }
       }, 0)

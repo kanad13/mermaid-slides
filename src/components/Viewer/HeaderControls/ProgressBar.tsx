@@ -1,4 +1,5 @@
-export const ProgressBar = ({ currentIndex, totalDiagrams }) => {
+import { ProgressBarProps } from '../../../types/components';
+export const ProgressBar = ({ currentIndex, totalDiagrams }: ProgressBarProps) => {
   const progressPercentage = ((currentIndex + 1) / totalDiagrams) * 100;
 
   return (
