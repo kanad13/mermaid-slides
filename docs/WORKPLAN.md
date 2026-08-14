@@ -17,7 +17,7 @@ rewrites props across fourteen component files and conflicts with every UI chang
 | Order | Branch                | Contents                          | Target  | Status      |
 | ----- | --------------------- | --------------------------------- | ------- | ----------- |
 | 1     | `security/hardening`  | C0, S1, S7, S8, S5, S9, S10, S11   | v1.3.0  | merged |
-| 2     | `ux/foundations`      | B1, U13, U8, U3, U7, U9, U1        | v1.4.0  | ready to merge |
+| 2     | `ux/foundations`      | B1, U13, U8, U3, U7, U9, U1        | v1.4.0  | merged |
 | 3     | `ux/features`         | U6, U10, U12                       | v1.5.0  | not started |
 | 4     | `feat/print-to-pdf`   | Print stylesheet export            | v1.6.0  | not started |
 | —     | `deps/majors`         | Not scheduled — see Decisions      | —       | policy      |
@@ -185,11 +185,11 @@ name the current task ID from memory; or leaving the tree red through more than 
 
 ## Next action
 
-`security/hardening` is merged and released as v1.3.0.
+`ux/foundations` is merged and released as v1.4.0. The repository is at a clean checkpoint: tree
+clean, all channels verified, docs redrafted to match the code.
 
-Next: start `ux/foundations` from a fresh branch off master, beginning with U13. Open a new session
-for it — the branch is a clean boundary and nothing from this one needs to carry over beyond this
-file.
+Next branch is `ux/features` — U6, U10, U12, U15 — starting with U6. Open a new session for it; the
+branch boundary is a clean seam and nothing needs to carry over beyond this file.
 
 Before starting, run the opening ritual above and confirm the tree is green.
 
