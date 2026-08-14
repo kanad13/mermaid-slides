@@ -15,9 +15,7 @@ const PARSE_DEBOUNCE_MS = 200;
 
 export const Editor: React.FC<EditorProps> = ({ onViewDiagrams }) => {
   const [markdownText, setMarkdownText] = useState<string>('');
-  // Only `error` is consumed now: the parsed result drives the status message
-  // while typing, while presenting parses fresh from the current text.
-  const { error, processDiagrams } = useDiagramParser();
+  const { error, checkDiagrams } = useDiagramParser();
 
   const handleFileLoad = (content: string): void => {
     setMarkdownText(content);
@@ -49,11 +47,11 @@ export const Editor: React.FC<EditorProps> = ({ onViewDiagrams }) => {
     }
 
     const timer = setTimeout(() => {
-      processDiagrams(markdownText);
+      checkDiagrams(markdownText);
     }, PARSE_DEBOUNCE_MS);
 
     return () => clearTimeout(timer);
-  }, [markdownText, processDiagrams]);
+  }, [markdownText, checkDiagrams]);
 
   return (
     <div className="min-h-screen p-6 bg-gray-50">

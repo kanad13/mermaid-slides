@@ -18,8 +18,9 @@ rewrites props across fourteen component files and conflicts with every UI chang
 | ----- | --------------------- | --------------------------------- | ------- | ----------- |
 | 1     | `security/hardening`  | C0, S1, S7, S8, S5, S9, S10, S11   | v1.3.0  | merged |
 | 2     | `ux/foundations`      | B1, U13, U8, U3, U7, U9, U1        | v1.4.0  | merged |
-| 3     | `ux/features`         | U6, U10, U12, U15                  | v1.5.0  | not started |
-| 4     | `feat/print-to-pdf`   | Print stylesheet export            | v1.6.0  | not started |
+| A     | `fix/audit-findings`  | Independent audit follow-up        | v1.5.0  | merged |
+| 3     | `ux/features`         | U6, U10, U12, U15                  | v1.6.0  | not started |
+| 4     | `feat/print-to-pdf`   | Print stylesheet export            | v1.7.0  | not started |
 | —     | `deps/majors`         | Not scheduled — see Decisions      | —       | policy      |
 
 Rollback floor for the whole programme: tag `checkpoint/pre-hardening-v1.2.1`.
@@ -72,6 +73,30 @@ Note that a cached SVG keeps the element id from wherever it was first rendered,
 in the grid and later shown in single view carries a `grid-` prefixed id. That is cosmetic — the id is
 only used by Mermaid's own scoped styles — but it will mislead anyone selecting on it. Audited: zero
 duplicate ids in the document.
+
+## Branch A — `fix/audit-findings` (merged, v1.5.0)
+
+An independent audit of v1.4.0 found eleven issues. Eight were fixed here; three were reviewed and
+deferred with reasons.
+
+| Finding | Outcome |
+| ------- | ------- |
+| Crafted markdown could redirect the page via an injected `<meta refresh>` | fixed — images and errors are React elements |
+| The bundled sample fetched an image from Wikimedia | fixed — sample uses a bundled image |
+| Debounced parsing never settled | fixed — stable callback, no array in state |
+| Malformed diagrams leaked DOM nodes | fixed — scratch container removed in `finally` |
+| Identical cached diagrams produced duplicate ids | fixed — ids rewritten on cache insert |
+| Auto-hide reclaimed no space | fixed — header collapses, `min-h-0` is the trick |
+| Release docs described a broken workflow | fixed — rewritten around publish-on-merge |
+| Comments and validators asserted false things | fixed — validators extended to 22 checks |
+| Viewer controls clipped below ~500px | **deferred** — the app is desktop-first and no longer claims mobile support |
+| Dead `isExtensionMode` branches | **deferred** — see B7 |
+| Real-browser integration testing | **outstanding** — see B8 |
+
+**The audit's central lesson.** The CSP was accepted as sufficient mitigation for markdown injection
+because it blocks script. It does not block *markup*, and `<meta http-equiv="refresh">` needs no
+script. Generalising from the payloads one happens to think of is the failure mode; the fix was to
+stop building markup from strings entirely rather than to block another payload.
 
 ## Branch 3 — `ux/features`
 
@@ -197,6 +222,22 @@ Before starting, run the opening ritual above and confirm the tree is green.
 
 Found during the work, deliberately not acted on because they fall outside the current scope.
 Each needs a decision before it is scheduled.
+
+**B8 — Successful Mermaid renders cannot be tested outside a real browser.**
+Mermaid needs SVG layout APIs — `getBBox`, `getComputedTextLength` — that jsdom does not implement,
+so a successful render cannot be exercised in the current suite; attempts hang rather than fail.
+Parse failures happen before any of that and are covered. Closing the gap means browser-mode Vitest,
+which adds Playwright as a dependency — a call to make against the standing policy on majors and
+dependencies rather than by default. Until then, rendering, layout and CSP behaviour are verified by
+the manual matrix in [TESTING.md](TESTING.md).
+
+**B7 — `isExtensionMode` is unreachable in this app.**
+The prop is threaded through Viewer, ViewerHeader, GridView, BackButton and SettingsPanel, and every
+`isExtensionMode === true` branch is dead: nothing in this repository ever passes it. An audit flagged
+it as dead code. It was deliberately left in place, because it is a seam for the separate VS Code
+extension repositories rather than an accident, and removing it touches six files to save nothing a
+user can perceive. Decide whether those extensions will ever share these components; if not, delete
+the prop and its branches in one pass.
 
 **B2 — The offline package ships a redundant copy of the server scripts.**
 Vite copies all of `public/` into the build, which includes `public/offline-template/`, so the archive

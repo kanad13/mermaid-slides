@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useMermaid } from '../../hooks/useMermaid';
 import { DiagramViewerProps } from '../../types/components';
 
@@ -9,8 +9,12 @@ import { DiagramViewerProps } from '../../types/components';
  * height its parent gives it, the title takes what it needs, and the diagram
  * gets the rest — so it stays correct at any viewport and with or without a
  * title. An earlier version subtracted a hardcoded 120px for the header, which
- * actually measures 109px on a wide screen and 157px on a narrow one, and a
- * further hardcoded 120px for the title.
+ * actually measures 109px on a wide screen and 157px on a narrow one.
+ *
+ * Nothing derived from the markdown is ever written as markup. Images and error
+ * states are React elements, so their attributes are set as values rather than
+ * parsed as HTML. Only Mermaid's own SVG output goes through innerHTML, and
+ * only after Mermaid has sanitised it.
  */
 export const DiagramViewer = ({
   diagram,
@@ -18,6 +22,8 @@ export const DiagramViewer = ({
   showTitles = true
 }: DiagramViewerProps) => {
   const { isLoaded, error, renderDiagram } = useMermaid();
+  const [renderError, setRenderError] = useState<string | null>(null);
+  const [imageFailed, setImageFailed] = useState(false);
 
   useEffect(() => {
     if (error) {
@@ -25,8 +31,16 @@ export const DiagramViewer = ({
     }
   }, [error, onError]);
 
+  // Reset per-slide failure state when the slide changes, so an error on one
+  // slide does not persist onto the next.
   useEffect(() => {
-    if (!diagram) {
+    setRenderError(null);
+    setImageFailed(false);
+  }, [diagram?.id]);
+
+  useEffect(() => {
+    // Images are rendered by React below; this effect is only for Mermaid.
+    if (!diagram || diagram.type === 'image' || !isLoaded) {
       return undefined;
     }
 
@@ -39,67 +53,27 @@ export const DiagramViewer = ({
       }
 
       try {
-        if (diagram.type === 'image') {
-          element.innerHTML = `
-            <img
-              src="${diagram.src}"
-              alt="${diagram.alt || 'Slide image'}"
-              style="max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: 0 auto;"
-            />
-          `;
+        const svgElement = await renderDiagram(diagram.id, diagram.code);
 
-          // The fallback is attached as a listener rather than written as an
-          // inline onerror attribute: the Content-Security-Policy blocks inline
-          // handlers, so an attribute here would fail silently and a broken
-          // image would show nothing at all.
-          element.querySelector('img')?.addEventListener('error', () => {
-            const card = document.createElement('div');
-            card.style.cssText =
-              'color: #dc2626; padding: 1rem; border: 1px solid #fca5a5; ' +
-              'border-radius: 0.375rem; background-color: #fef2f2; text-align: center;';
+        // A newer render may have taken over during the await.
+        if (cancelled) {
+          return;
+        }
 
-            const heading = document.createElement('p');
-            heading.style.fontWeight = '500';
-            heading.textContent = 'Error loading image:';
-
-            const source = document.createElement('p');
-            source.style.cssText = 'font-size: 0.875rem; margin-top: 0.25rem;';
-            source.textContent = diagram.src ?? '';
-
-            card.append(heading, source);
-            element.replaceChildren(card);
-          });
-        } else if (isLoaded) {
-          const svgElement = await renderDiagram(diagram.id, diagram.code);
-
-          // A newer render may have taken over during the await.
-          if (cancelled) {
-            return;
-          }
-
-          if (svgElement) {
-            svgElement.style.cssText = '';
-            svgElement.style.maxWidth = '100%';
-            svgElement.style.maxHeight = '100%';
-            svgElement.style.width = 'auto';
-            svgElement.style.height = 'auto';
-            svgElement.style.display = 'block';
-            svgElement.style.margin = '0 auto';
-          }
+        if (svgElement) {
+          svgElement.style.cssText = '';
+          svgElement.style.maxWidth = '100%';
+          svgElement.style.maxHeight = '100%';
+          svgElement.style.width = 'auto';
+          svgElement.style.height = 'auto';
+          svgElement.style.display = 'block';
+          svgElement.style.margin = '0 auto';
         }
       } catch (err) {
         if (cancelled) {
           return;
         }
-        const message = err instanceof Error ? err.message : String(err);
-        console.error('Error rendering content:', err);
-        element.innerHTML = `
-          <div style="color: #dc2626; padding: 1rem; border: 1px solid #fca5a5; border-radius: 0.375rem; background-color: #fef2f2; text-align: center;">
-            <p style="font-weight: 500;">Error rendering content:</p>
-            <p style="font-size: 0.875rem; margin-top: 0.25rem;">${message}</p>
-            <pre style="font-size: 0.75rem; margin-top: 0.5rem; background-color: #f3f4f6; padding: 0.5rem; border-radius: 0.375rem; overflow: auto; text-align: left;">${diagram.code || diagram.src}</pre>
-          </div>
-        `;
+        setRenderError(err instanceof Error ? err.message : String(err));
       }
     };
 
@@ -109,6 +83,55 @@ export const DiagramViewer = ({
       cancelled = true;
     };
   }, [isLoaded, diagram, renderDiagram]);
+
+  const renderSlideBody = () => {
+    if (!diagram) {
+      return null;
+    }
+
+    if (diagram.type === 'image') {
+      if (imageFailed) {
+        return (
+          <div className="text-red-600 p-4 border border-red-300 rounded-md bg-red-50 text-center">
+            <p className="font-medium">Error loading image:</p>
+            <p className="text-sm mt-1 break-all">{diagram.src}</p>
+          </div>
+        );
+      }
+
+      return (
+        <img
+          src={diagram.src}
+          alt={diagram.alt || 'Slide image'}
+          onError={() => setImageFailed(true)}
+          className="max-w-full max-h-full object-contain block mx-auto"
+        />
+      );
+    }
+
+    if (renderError) {
+      return (
+        <div className="text-red-600 p-4 border border-red-300 rounded-md bg-red-50 text-center max-w-full overflow-auto">
+          <p className="font-medium">Error rendering content:</p>
+          <p className="text-sm mt-1">{renderError}</p>
+          <pre className="text-xs mt-2 bg-gray-100 p-2 rounded overflow-auto text-left">
+            {diagram.code || diagram.src}
+          </pre>
+        </div>
+      );
+    }
+
+    return (
+      <div
+        id={diagram.id}
+        className="flex items-center justify-center w-full h-full overflow-hidden"
+      >
+        <div className="text-gray-500 text-center">
+          {isLoaded ? 'Rendering diagram...' : 'Loading Mermaid...'}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="h-full flex flex-col">
@@ -123,18 +146,7 @@ export const DiagramViewer = ({
       {/* min-h-0 lets this shrink below its content, which is what keeps a tall
           diagram inside the viewport instead of pushing the page taller. */}
       <div className="flex-1 min-h-0 flex items-center justify-center p-4">
-        <div
-          id={diagram?.id}
-          className="flex items-center justify-center w-full h-full overflow-hidden"
-        >
-          <div className="text-gray-500 text-center">
-            {diagram?.type === 'image'
-              ? 'Loading image...'
-              : isLoaded
-                ? 'Rendering diagram...'
-                : 'Loading Mermaid...'}
-          </div>
-        </div>
+        {renderSlideBody()}
       </div>
     </div>
   );

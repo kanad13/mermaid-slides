@@ -44,10 +44,12 @@
 	<meta name="description"
 		content="Transform markdown mermaid diagrams into beautiful presentation slides. Available as web app, offline package, and Docker container with 3-channel distribution strategy.">
 
-	<!-- Name only, no href. Keeping the shipped HTML free of absolute URLs is
-	     what lets the offline package guarantee it needs nothing from the
-	     network; validate-compatibility.cjs enforces that. The maintainer's site
-	     is linked from the app's footer and legal pages instead. -->
+	<!-- Name only, no href. What matters for the offline package is that nothing
+	     here causes a *fetch*: validate-compatibility.cjs rejects absolute href
+	     and src attributes for that reason. The og:url below is an absolute URL
+	     but is never requested — it is a string other sites read when someone
+	     shares a link. The maintainer's site is linked from the app's footer and
+	     legal pages instead. -->
 	<meta name="author" content="Kunal Pathak">
 
 	<!--

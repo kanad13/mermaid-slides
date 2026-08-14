@@ -42,16 +42,16 @@ describe('useViewerNavigation', () => {
 
   it('navigates to previous diagram correctly', () => {
     const { result } = renderHook(() => useViewerNavigation(totalItems))
-    
-    // Start at index 2
+
+    // Reach index 2 the way the app does: picking a card in grid view.
     act(() => {
-      result.current.goToIndex(2)
+      result.current.handleDiagramSelect(2)
     })
-    
+
     act(() => {
       result.current.goToPrevious()
     })
-    
+
     expect(result.current.currentIndex).toBe(1)
   })
 
@@ -82,30 +82,20 @@ describe('useViewerNavigation', () => {
     expect(result.current.currentIndex).toBe(0)
   })
 
-  it('navigates to specific index', () => {
+  it('selecting a diagram jumps to it and leaves grid view', () => {
     const { result } = renderHook(() => useViewerNavigation(totalItems))
-    
-    act(() => {
-      result.current.goToIndex(3)
-    })
-    
-    expect(result.current.currentIndex).toBe(3)
-  })
 
-  it('ignores invalid index navigation', () => {
-    const { result } = renderHook(() => useViewerNavigation(totalItems))
-    
     act(() => {
-      result.current.goToIndex(-1)
+      result.current.toggleGridView()
     })
-    
-    expect(result.current.currentIndex).toBe(0)
-    
+    expect(result.current.isGridView).toBe(true)
+
     act(() => {
-      result.current.goToIndex(10)
+      result.current.handleDiagramSelect(3)
     })
-    
-    expect(result.current.currentIndex).toBe(0)
+
+    expect(result.current.currentIndex).toBe(3)
+    expect(result.current.isGridView).toBe(false)
   })
 
   it('toggles grid view', () => {
@@ -143,24 +133,18 @@ describe('useViewerNavigation', () => {
     expect(result.current.isGridView).toBe(false)
   })
 
-  it('resets navigation state', () => {
+  it('returns to the first diagram from anywhere', () => {
     const { result } = renderHook(() => useViewerNavigation(totalItems))
-    
-    // Set some state
+
     act(() => {
-      result.current.goToIndex(3)
-      result.current.toggleGridView()
+      result.current.handleDiagramSelect(3)
     })
-    
     expect(result.current.currentIndex).toBe(3)
-    expect(result.current.isGridView).toBe(true)
-    
-    // Reset
+
     act(() => {
-      result.current.resetNavigation()
+      result.current.goToFirst()
     })
-    
+
     expect(result.current.currentIndex).toBe(0)
-    expect(result.current.isGridView).toBe(false)
   })
 })

@@ -122,13 +122,31 @@ try {
         logError('HTML file missing asset references');
     }
     
-    // Check for relative paths (offline compatibility)
-    // Exclude SVG namespace declarations and data URLs
-    const problematicUrls = htmlContent.match(/(?:href|src)=["']https?:\/\//g);
+    // Offline compatibility is about what the page *fetches*, so this checks the
+    // attributes a browser resolves and requests. It deliberately ignores
+    // `content=`: og:url holds an absolute URL that is only ever read by other
+    // sites sharing a link, never requested by this page.
+    const fetchingAttributes = /(?:href|src|srcset|poster|data|action)\s*=\s*["']https?:\/\//gi;
+    const problematicUrls = htmlContent.match(fetchingAttributes);
     if (problematicUrls && problematicUrls.length > 0) {
         logError(`HTML file contains ${problematicUrls.length} absolute URLs (bad for offline)`);
     } else {
-        logSuccess('HTML file uses relative paths (good for offline)');
+        logSuccess('HTML file requests nothing from an absolute URL (good for offline)');
+    }
+
+    // An inline handler cannot run under the Content-Security-Policy, so one
+    // appearing here means something regressed to building markup from strings.
+    if (/\son[a-z]+\s*=\s*["']/i.test(htmlContent)) {
+        logError('HTML file contains an inline event handler (blocked by CSP)');
+    } else {
+        logSuccess('HTML file contains no inline event handlers');
+    }
+
+    // The policy itself must survive into every channel.
+    if (/http-equiv=["']Content-Security-Policy["']/i.test(htmlContent)) {
+        logSuccess('HTML file carries the Content-Security-Policy');
+    } else {
+        logError('HTML file is missing the Content-Security-Policy');
     }
 } catch {
     logError('Cannot read HTML file');

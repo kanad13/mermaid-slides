@@ -108,7 +108,7 @@ mermaid-slides/
 **Web Channel:**
 
 - Build: `npm run build`
-- Config: `vite.config.js` with GitHub Pages base path
+- Config: `config/vite.config.js` with GitHub Pages base path
 - Output: `dist/`
 
 **Offline Channel:**
@@ -121,7 +121,8 @@ mermaid-slides/
 **Docker Channel:**
 
 - Build: Automated via GitHub Actions
-- Base: Python 3.11 Alpine with Node.js installed for compatibility testing
+- Base: Python 3.11 Alpine, pinned by digest. Node.js is deliberately not installed —
+  the image runs the bundled Python server and carried an unused toolchain until v1.3.0
 - Runtime: Serves the generated offline package via the bundled local server script
 
 ---
@@ -332,23 +333,44 @@ npm run validate:continuity    # Documentation consistency
 
 ## Release Process
 
-### Workflow
+Merging to `master` **publishes**. One push runs `deploy.yml`, which deploys to GitHub Pages, creates
+a GitHub release tagged from `package.json`, and pushes to Docker Hub. There is no staging step and no
+manual tagging — creating the tag yourself makes the release action fail on a tag that already exists.
 
-1. **Update Version**: Bump `package.json` version
-2. **Build All Channels**: `npm run build && npm run build:offline`
-3. **Run Validation**: `npm run validate:all`
-4. **Commit & Tag**: Create git tag (e.g., `v1.2.3`)
-5. **Push to Main**: Automated deployment triggers
-6. **Verify Deployment**: Check all three channels
+1. **Work on a branch.** `validate.yml` runs on branches and pull requests and publishes nothing.
 
-### Automated Steps (via GitHub Actions)
+2. **Run the full channel matrix** in [TESTING.md](TESTING.md) *before* merging. Local checks alone
+   are not enough: the offline package and Docker image resolve assets differently from the web build.
+
+3. **Bump the version once**, in a single commit immediately before the merge:
+
+   ```bash
+   npm version 1.5.0 --no-git-tag-version   # --no-git-tag-version matters
+   git commit -am "chore(release): 1.5.0"
+   ```
+
+   `npm version` creates a git tag by default. The workflow creates that tag itself, so suppress it.
+
+4. **Merge and push:**
+
+   ```bash
+   git checkout master
+   git merge --no-ff your-branch
+   git push origin master
+   ```
+
+5. **Verify all three channels** once the workflow finishes — the live site, the release assets, and
+   the published image. Do not assume a green workflow means a correct artefact.
+
+The default branch is `master`. The deploy workflow also triggers on `main`, so do not create a branch
+by that name: pushing it would publish.
+
+### Automated steps (deploy.yml)
 
 - Web app deploys to GitHub Pages
-- Offline package creates GitHub Release
-- Docker image builds and pushes to Docker Hub
-- Deployment summary provides status
-
----
+- Offline package archive and checksum attach to a new GitHub release
+- Docker image builds for amd64 and arm64 and pushes to Docker Hub
+- A deployment summary reports the status of each
 
 ## Security & Privacy
 
