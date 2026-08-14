@@ -50,6 +50,13 @@ and the silent no-op is gone.** Any visible difference is a regression.
 | U8   | Clean up the uncancelled timer in `GridView`                   | todo   |
 | U3   | Remove the hardcoded layout arithmetic                         | todo   |
 | U7   | One Mermaid instance, cache rendered diagrams                  | todo   |
+
+**Measured severity of U7/U8.** Grid view does not finish rendering. Against the sample deck, the
+production build leaves previews stuck on "Loading preview…" — 5 of 8 blank before the S7 dependency
+update, 2 of 8 after it. The effect re-runs when `isLoaded` flips, starting a second render loop that
+races the first, and each call clears the container the other is writing into. The dependency update
+changed the timing but not the defect. Fixing U8 then U7 should close this; verify with the grid step
+of the smoke checklist, not by eye on a three-slide deck.
 | U9   | Debounce parsing                                               | todo   |
 | U1   | Fix the silent no-op on paste-then-present                     | todo   |
 

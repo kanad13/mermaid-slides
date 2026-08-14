@@ -2,44 +2,32 @@
 
 The items below are the recommended follow-ups, in order of value.
 
+Work that has been scheduled onto a branch is tracked in [WORKPLAN.md](WORKPLAN.md), which is the
+source of truth for status. This file holds the reasoning and the items not yet scheduled.
+
 ---
 
 ## 1. Dependency refresh and release reproducibility
 
-### Why this is worth doing
+### Status: partly done
 
-- The current stack is on stable major lines: React 19, Mermaid 11, Vite 7, Vitest 3, Tailwind 3.4.
-- There are safe patch/minor updates available for several direct dependencies.
-- `npm audit` currently reports vulnerabilities, and most of the practical wins come from patch/minor updates first.
-- The repo currently ignores `package-lock.json`, so automated deploys are **compatible** but not fully **reproducible**. GitHub Actions falls back to `npm install`, which can float to newer compatible versions over time.
+The dependency refresh is complete. Everything was updated to the newest release inside its existing
+major, which cleared all 23 advisories — including the two criticals — without a single breaking
+change. The specific target versions once listed here were superseded by higher ones and have been
+removed rather than left to rot; `package.json` now records what shipped.
 
-### Code updates required
+Release reproducibility is still outstanding and is tracked as **S10** in the work plan:
 
-- Update direct dependencies with safe patch/minor bumps first:
-  - `mermaid` → `11.14.0`
-  - `react` / `react-dom` → `19.2.5`
-  - `vite` → `7.3.2`
-  - `postcss` → `8.5.12`
-  - `@testing-library/react` → `16.3.2`
-  - `autoprefixer` → `10.5.0`
-  - `eslint` / `@eslint/js` → latest 9.x patches
-  - `typescript-eslint` → latest 8.x patch/minor
-- Decide whether to start tracking `package-lock.json` in git.
-- If lockfile tracking is adopted:
-  - remove the `package-lock.json` ignore rules from `.gitignore`
-  - commit the lockfile
-  - simplify CI from `npm ci || npm install` to `npm ci`
-- Re-run `npm run test:run`, `npm run lint`, `npm run build`, `npm run build:offline`, `npm run validate:compatibility`, and `npm run validate:continuity`.
-
-### Docs updates required
-
-- Update dependency/version references in `README.md` and `docs/CONTRIBUTING.md` if versions are bumped.
-- Update deployment notes if Node or Docker requirements change.
-- Add a short note explaining whether builds are lockfile-pinned or semver-floating.
+- remove the contradictory `package-lock.json` entries from `.gitignore`, since the file is tracked
+- simplify CI from `npm ci || npm install` to `npm ci`, so a lockfile problem fails loudly instead of
+  silently floating the build
+- pin GitHub Action versions to commit SHAs
 
 ### Keep for later / separate branch
 
-- Tailwind 4, Vite 8, Vitest 4, ESLint 10, TypeScript 6, and `lucide-react` 1.x should be handled in a dedicated upgrade branch, not mixed into the safer maintenance update.
+Major upgrades belong on `deps/majors`, never mixed into a security update — when a build breaks, the
+migration and the security fix must be distinguishable. Currently available: Tailwind 4, Vite 8,
+Vitest 4, ESLint 10, TypeScript 7, jsdom 30, and `lucide-react` 1.x.
 
 ---
 
