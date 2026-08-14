@@ -60,13 +60,34 @@ export const DiagramViewer = ({
           // - Automatic centering with margin: 0 auto
           // - Error fallback displays user-friendly message for broken/missing images
           element.innerHTML = `
-            <img 
-              src="${diagram.src}" 
-              alt="${diagram.alt || 'Slide image'}" 
+            <img
+              src="${diagram.src}"
+              alt="${diagram.alt || 'Slide image'}"
               style="max-width: ${availableWidth}; max-height: ${getAdjustedHeight()}; object-fit: contain; display: block; margin: 0 auto;"
-              onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=&quot;color: #dc2626; padding: 1rem; border: 1px solid #fca5a5; border-radius: 0.375rem; background-color: #fef2f2; text-align: center;&quot;><p style=&quot;font-weight: 500;&quot;>Error loading image:</p><p style=&quot;font-size: 0.875rem; margin-top: 0.25rem;&quot;>${diagram.src}</p></div>'"
             />
           `;
+
+          // The fallback is attached as a listener rather than written as an
+          // inline onerror attribute: the Content-Security-Policy blocks inline
+          // handlers, so an attribute here would fail silently and a broken
+          // image would show nothing at all.
+          element.querySelector('img')?.addEventListener('error', () => {
+            const card = document.createElement('div');
+            card.style.cssText =
+              'color: #dc2626; padding: 1rem; border: 1px solid #fca5a5; ' +
+              'border-radius: 0.375rem; background-color: #fef2f2; text-align: center;';
+
+            const heading = document.createElement('p');
+            heading.style.fontWeight = '500';
+            heading.textContent = 'Error loading image:';
+
+            const source = document.createElement('p');
+            source.style.cssText = 'font-size: 0.875rem; margin-top: 0.25rem;';
+            source.textContent = diagram.src ?? '';
+
+            card.append(heading, source);
+            element.replaceChildren(card);
+          });
         } else if (isLoaded) {
           // Handle Mermaid diagram rendering with layout-aware sizing
           const svgElement = await renderDiagram(diagram.id, diagram.code);

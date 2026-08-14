@@ -29,11 +29,11 @@ Rollback floor for the whole programme: tag `checkpoint/pre-hardening-v1.2.1`.
 | ID   | Task                                                          | Status |
 | ---- | ------------------------------------------------------------- | ------ |
 | —    | Work plan and manual test checklist                            | done   |
-| C0   | Validation workflow for branches and pull requests             | todo   |
-| S1   | Contain path traversal in the offline package's Node server    | todo   |
-| S7   | Update dependencies within existing majors                     | todo   |
-| S8   | Make TypeScript checking actually run, fix resulting errors    | todo   |
-| S5   | Content-Security-Policy                                        | todo   |
+| C0   | Validation workflow for branches and pull requests             | done   |
+| S1   | Contain path traversal in the offline package's Node server    | done   |
+| S7   | Update dependencies within existing majors                     | done   |
+| S8   | Make TypeScript checking actually run, fix resulting errors    | done   |
+| S5   | Content-Security-Policy                                        | done   |
 | S9   | Docker image hardening                                         | todo   |
 | S10  | Reproducible releases and pinned CI actions                    | todo   |
 | S11  | Replace the `innerHTML` modals with React components           | todo   |
@@ -50,6 +50,8 @@ and the silent no-op is gone.** Any visible difference is a regression.
 | U8   | Clean up the uncancelled timer in `GridView`                   | todo   |
 | U3   | Remove the hardcoded layout arithmetic                         | todo   |
 | U7   | One Mermaid instance, cache rendered diagrams                  | todo   |
+| U9   | Debounce parsing                                               | todo   |
+| U1   | Fix the silent no-op on paste-then-present                     | todo   |
 
 **Measured severity of U7/U8.** Grid view does not finish rendering. Against the sample deck, the
 production build leaves previews stuck on "Loading preview…" — 5 of 8 blank before the S7 dependency
@@ -57,8 +59,6 @@ update, 2 of 8 after it. The effect re-runs when `isLoaded` flips, starting a se
 races the first, and each call clears the container the other is writing into. The dependency update
 changed the timing but not the defect. Fixing U8 then U7 should close this; verify with the grid step
 of the smoke checklist, not by eye on a three-slide deck.
-| U9   | Debounce parsing                                               | todo   |
-| U1   | Fix the silent no-op on paste-then-present                     | todo   |
 
 ## Branch 3 — `ux/features`
 
@@ -148,10 +148,24 @@ name the current task ID from memory; or leaving the tree red through more than 
 
 ## Next action
 
-Add the branch and pull-request validation workflow (C0).
+Harden the Docker image (S9).
 
 ## Backlog
 
-Found during the work, deliberately not acted on yet.
+Found during the work, deliberately not acted on because they fall outside the current scope.
+Each needs a decision before it is scheduled.
 
-_(empty)_
+**B1 — The offline package's Node server cannot be run from inside the repository.**
+`start-server.js` is CommonJS, and the repository's `package.json` declares `"type": "module"`, so
+Node treats the `.js` file as an ES module and it exits with `require is not defined in ES module
+scope`. The shipped archive is unaffected: a user extracts it somewhere with no parent
+`package.json`, Node falls back to CommonJS, and it runs. Verified both ways. The consequence is that
+one of the four documented start paths cannot be exercised in place, which is presumably why nobody
+noticed. Writing a `package.json` containing `{"type": "commonjs"}` into the package from
+`scripts/prepare-offline-package.cjs` would fix it without changing any documented command. Roughly
+four lines. `docs/TESTING.md` documents the workaround in the meantime.
+
+**B2 — The offline package ships a redundant copy of the server scripts.**
+Vite copies all of `public/` into the build, which includes `public/offline-template/`, so the archive
+contains both `start-server.js` and `offline-template/start-server.js`. Harmless but confusing, and it
+means a user could edit the copy that is never run.

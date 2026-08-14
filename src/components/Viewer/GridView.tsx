@@ -30,14 +30,28 @@ export const GridView = ({
             // Render image preview
             element.innerHTML = `
               <div class="w-full h-full flex items-center justify-center">
-                <img 
-                  src="${diagram.src}" 
-                  alt="${diagram.alt || 'Image preview'}" 
+                <img
+                  src="${diagram.src}"
+                  alt="${diagram.alt || 'Image preview'}"
                   class="max-w-full max-h-full object-contain"
-                  onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=&quot;w-full h-full flex items-center justify-center&quot;><div class=&quot;text-red-500 text-xs&quot;>Image Error</div></div>'"
                 />
               </div>
             `;
+
+            // Listener rather than an inline onerror attribute, which the
+            // Content-Security-Policy blocks. See DiagramViewer for the same
+            // reasoning in the single-slide view.
+            element.querySelector('img')?.addEventListener('error', () => {
+              const label = document.createElement('div');
+              label.className = 'text-red-500 text-xs';
+              label.textContent = 'Image Error';
+
+              const wrapper = document.createElement('div');
+              wrapper.className = 'w-full h-full flex items-center justify-center';
+              wrapper.append(label);
+
+              element.replaceChildren(wrapper);
+            });
           } else if (isLoaded) {
             // Render Mermaid diagram
             const svgElement = await renderDiagram(gridId, diagram.code);

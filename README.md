@@ -83,10 +83,11 @@ npm run dev
 
 ### **Privacy & Security**
 
-- **Zero Tracking** - No analytics, telemetry, or data collection
+- **Zero Tracking** - No analytics, telemetry, or data collection, and nothing stored in the browser
 - **Offline First** - Complete functionality without internet dependency
-- **Local Processing** - All diagram rendering happens on your device
+- **Local Processing** - All parsing and diagram rendering happens on your device
 - **Self-Contained** - All distributions bundle dependencies locally
+- **Content-Security-Policy** - Enforced in every distribution; see [Privacy & Security](#privacy--security)
 - **Privacy Modals** - Built-in privacy policy and legal notice information
 
 ### **Multi-Platform Availability**
@@ -117,12 +118,22 @@ Both tools are published separately from this repository and complement the web/
 
 Mermaid Slides is designed with privacy as a core principle:
 
-- **No Data Collection** - Zero analytics, tracking, or telemetry
-- **Offline Operation** - Full functionality without internet connection
-- **Local Processing** - All diagram rendering happens on your device
-- **Self-Contained** - No external CDN dependencies in any distribution
+- **No Data Collection** - Zero analytics, tracking, or telemetry. The app stores nothing: no cookies, no local storage, no session storage, no service worker
+- **Local Processing** - Your markdown never leaves your device. Parsing and diagram rendering happen entirely in your browser
+- **Self-Contained** - No CDN dependencies. Every distribution bundles its own assets, so the app itself never contacts a third party
+- **Offline Operation** - Full functionality without an internet connection
 - **Simple Local Servers** - The offline package uses lightweight local Python or Node.js servers only
-- **No External Requests** - All distributions make zero network calls during operation
+- **Content-Security-Policy** - A strict policy is enforced in every distribution. Scripts may only load from the app's own files, and inline script is refused outright, so a markdown file cannot execute code in the page
+
+### One thing to be aware of
+
+If your markdown references a remote image — `![diagram](https://example.com/chart.png)` — your browser
+fetches it, and that request tells the hosting server your IP address and user agent. That is how
+images work on the web, and the policy above deliberately permits it: you put the image there on
+purpose, and silently refusing to load it would break real documents.
+
+Nothing else in the app reaches the network. If you want a presentation that provably makes no outside
+requests, use local image paths or diagrams only.
 
 ## Documentation
 
