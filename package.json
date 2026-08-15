@@ -15,11 +15,11 @@
 		"test:ui": "vitest --ui --config config/vite.config.js",
 		"test:unit": "vitest run --config config/vite.config.js",
 		"test:commands": "node --test tests/package-scripts.mjs",
+		"test:docs": "node --test tests/documentation-integrity.mjs && node scripts/validate-documentation.cjs",
 		"test:workflow-invariants": "node --test tests/workflow-invariants.mjs",
 		"test:workflows": "npm run test:workflow-invariants && actionlint",
 		"validate:compatibility": "node scripts/validate-compatibility.cjs",
-		"validate:continuity": "node scripts/validate-continuity.cjs",
-		"validate:all": "npm run typecheck && npm run lint && npm run test:unit && npm run test:commands && npm run test:workflows && npm run build:all && npm run validate:compatibility && npm run validate:continuity"
+		"validate:all": "npm run typecheck && npm run lint && npm run test:unit && npm run test:commands && npm run test:docs && npm run test:workflows && npm run build:all && npm run validate:compatibility"
 	},
 	"keywords": [
 		"mermaid",

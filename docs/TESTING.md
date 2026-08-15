@@ -90,27 +90,24 @@ External network requests are blocked during tests except explicit local fixture
 
 ## Command contract
 
-The engineering-foundation milestone makes these commands executable:
+The currently configured foundation command surface includes:
 
 ```text
 npm run typecheck          strict TypeScript
 npm run test:unit          Vitest once
 npm run test:commands      package-script contracts
-npm run test:coverage      Vitest with V8 coverage
-npm run test:browser       required Chromium Playwright suite
 npm run test:docs          documentation integrity
-npm run test:dead-code     Knip
-npm run test:server        offline Node-server integration
 npm run test:workflows     workflow invariants and actionlint
 npm run build:all          web and offline builds
-npm run check              typecheck, lint, unit, docs, and dead-code checks
-npm run validate:all       check, builds, browser, server, workflow, and compatibility checks
-npm run validate:release   validate:all plus Docker, cross-browser, audit, and release checks
+npm run validate:all       every configured check and both builds
 ```
 
 `validate:all` runs every configured local gate and creates generated artefacts before validating
-them. It must continue to work after `npm ci` as browser, server, dead-code, and documentation gates
-are added.
+them. It must continue to work after `npm ci` as coverage, browser, server, and dead-code gates are
+added.
+
+The remaining foundation work adds coverage, browser, dead-code, server, fast-check, full-validation,
+and release-validation commands as their underlying checks become executable.
 
 `test:workflows` requires actionlint on `PATH`; CI installs the version pinned in the workflow. Use
 the actionlint installation method for the local platform before running the command.

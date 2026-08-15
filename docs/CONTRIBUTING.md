@@ -101,7 +101,8 @@ Documentation rules:
 - Avoid volatile counts of tests, hooks, components, checks, or files.
 - Every local link and heading anchor resolves.
 - Every Markdown document is reachable from an owning document, exposed by GitHub as an issue entry
-  point, or explicitly marked as optional internal reference material.
+  point, or explicitly marked with `<!-- documentation-integrity: optional -->` as internal
+  reference material.
 - Every documented npm command exists in `package.json`.
 - Delete obsolete docs, examples, comments, commands, and references with the change that replaces
   them.

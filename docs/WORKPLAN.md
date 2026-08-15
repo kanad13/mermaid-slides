@@ -27,11 +27,13 @@ Completed:
 - Strict TypeScript covers every source and test file and runs during repository validation.
 - The canonical validation command works without prebuilt artefacts, builds the web and offline
   distributions before checking them, and is the command CI invokes.
+- Documentation validation rejects broken local links and heading anchors, missing npm scripts, and
+  Markdown files outside the ownership graph.
 
 Remaining:
 
-- Add Playwright, Knip, coverage thresholds, documentation integrity checks, and the shared fixture
-  deck described in [TESTING.md](TESTING.md).
+- Add Playwright, Knip, coverage thresholds, and the shared fixture deck described in
+  [TESTING.md](TESTING.md).
 - Define and run the fast, full, and release gates in `package.json` and CI.
 
 Acceptance: each new gate rejects a representative defect, all documented commands exist, and a
@@ -84,10 +86,9 @@ still produces a light PDF.
 
 ## Next task
 
-Replace the shallow continuity check with repository-level documentation integrity tests for local
-links, heading anchors, documented npm commands, ownership reachability, and orphan Markdown files;
-first demonstrate representative failures, then wire the resulting `test:docs` command into
-validation.
+Configure `test:coverage` with V8 coverage for every source file, measure the corrected baseline,
+and set non-decreasing thresholds; first demonstrate that including an untested source file causes
+the gate to fail.
 
 ## Backlog
 
