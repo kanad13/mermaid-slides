@@ -22,6 +22,10 @@ test('canonical commands use the configured unit and build tools', () => {
         scripts['test:coverage'],
         'node --test tests/coverage-config.mjs && vitest run --config config/vite.config.js --coverage',
     );
+    assert.equal(
+        scripts['test:dead-code'],
+        'node --test tests/knip-config.mjs && knip --config config/knip.json',
+    );
     assert.equal(scripts['test:run'], undefined, 'test:run was replaced by test:unit');
 });
 
@@ -33,6 +37,7 @@ test('validate:all runs every configured gate and builds before compatibility ch
         'npm run test:coverage',
         'npm run test:commands',
         'npm run test:docs',
+        'npm run test:dead-code',
         'npm run test:workflows',
         'npm run build:all',
         'npm run validate:compatibility',

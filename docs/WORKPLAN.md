@@ -31,10 +31,12 @@ Completed:
   Markdown files outside the ownership graph.
 - V8 coverage includes untested runtime source files and enforces the measured baseline for
   statements, branches, functions, and lines.
+- Knip checks the real runtime, tool, validation, distribution, and test graph without dependency
+  suppressions and rejects unused or unresolved code.
 
 Remaining:
 
-- Add Playwright, Knip, and the shared fixture deck described in [TESTING.md](TESTING.md).
+- Add Playwright and the shared fixture deck described in [TESTING.md](TESTING.md).
 - Define and run the fast, full, and release gates in `package.json` and CI.
 
 Acceptance: each new gate rejects a representative defect, all documented commands exist, and a
@@ -87,9 +89,9 @@ still produces a light PDF.
 
 ## Next task
 
-Configure Knip for the real runtime, test, build, and validation entry points; first demonstrate
-representative unused-file, unused-export, unused-dependency, and unresolved-import failures, then
-remove existing findings and wire `test:dead-code` into validation.
+Add the shared deterministic fixture deck and bundled local assets described in [TESTING.md](TESTING.md);
+first add fixture-contract tests for every required diagram, size, duplicate, image state, long/error
+case, and hostile string, without adding browser tests yet.
 
 ## Backlog
 

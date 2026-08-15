@@ -6,9 +6,9 @@ coverage are supporting signals, not substitutes for behavioral assertions.
 ## Current test boundary
 
 The repository currently uses strict TypeScript, Vitest, React Testing Library, jsdom, V8 coverage,
-ESLint, production builds, and repository validators. The unit setup mocks Mermaid and returns a
-trivial SVG, so it does not exercise successful Mermaid rendering, real layout, CSP, browser timing,
-or PDF output.
+ESLint, Knip, production builds, and repository validators. The unit setup mocks Mermaid and returns
+a trivial SVG, so it does not exercise successful Mermaid rendering, real layout, CSP, browser
+timing, or PDF output.
 
 The engineering-foundation milestone adds:
 
@@ -100,6 +100,7 @@ npm run typecheck          strict TypeScript
 npm run test:unit          Vitest once
 npm run test:coverage      Vitest once with enforced V8 thresholds
 npm run test:commands      package-script contracts
+npm run test:dead-code     Knip file, export, dependency, and import checks
 npm run test:docs          documentation integrity
 npm run test:workflows     workflow invariants and actionlint
 npm run build:all          web and offline builds
@@ -107,9 +108,9 @@ npm run validate:all       every configured check and both builds
 ```
 
 `validate:all` runs every configured local gate and creates generated artefacts before validating
-them. It must continue to work after `npm ci` as browser, server, and dead-code gates are added.
+them. It must continue to work after `npm ci` as browser and server gates are added.
 
-The remaining foundation work adds browser, dead-code, server, fast-check, full-validation, and
+The remaining foundation work adds browser, server, fast-check, full-validation, and
 release-validation commands as their underlying checks become executable.
 
 `test:workflows` requires actionlint on `PATH`; CI installs the version pinned in the workflow. Use

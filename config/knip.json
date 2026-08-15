@@ -1,0 +1,17 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": [
+    "config/*.config.js",
+    "tests/*.mjs",
+    "public/offline-template/start-server.js"
+  ],
+  "project": [
+    "src/**/*.{ts,tsx}",
+    "src/**/*.css",
+    "config/**/*.js",
+    "scripts/**/*.{cjs,js}",
+    "tests/**/*.mjs"
+  ],
+  "ignoreBinaries": ["actionlint"],
+  "treatConfigHintsAsErrors": true
+}

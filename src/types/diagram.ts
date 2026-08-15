@@ -8,8 +8,3 @@ export interface Diagram {
 }
 
 export type DiagramType = 'sequence' | 'er' | 'flowchart' | 'diagram' | 'gantt' | 'pie' | 'git' | 'class' | 'state' | 'image';
-
-export interface FileInfo {
-  name: string;
-  content: string;
-}

@@ -1,11 +1,6 @@
 import type { ChangeEvent, DragEvent, ReactNode } from 'react';
 import type { Diagram } from './diagram';
 
-// Editor Component Props
-export interface EditorProps {
-  onViewDiagrams: (_diagrams: Diagram[]) => void;
-}
-
 // Viewer Component Props
 export interface ViewerProps {
   diagrams: Diagram[];
@@ -24,17 +19,13 @@ export interface FileUploadProps {
 }
 
 // Navigation Props
-export interface NavigationProps {
+interface NavigationProps {
   currentIndex: number;
   totalDiagrams: number;
   onPrevious: () => void;
   onNext: () => void;
   onFirst: () => void;
   onLast: () => void;
-}
-
-export interface NavigationControlsProps extends NavigationProps {
-  isVisible?: boolean;
 }
 
 export type HeaderNavigationProps = NavigationProps;
@@ -92,20 +83,11 @@ export interface DropZoneProps {
   children: ReactNode;
 }
 
-export interface CurrentFileDisplayProps {
-  fileName: string;
-}
-
 export interface FileInputProps {
   onFileSelect: (_event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 // Progress and Navigation
-export interface ProgressIndicatorProps {
-  currentIndex: number;
-  totalDiagrams: number;
-}
-
 export interface ProgressBarProps {
   currentIndex: number;
   totalDiagrams: number;
