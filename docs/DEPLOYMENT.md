@@ -34,31 +34,31 @@ docker run --rm -p 3000:3000 mermaid-slides:local
 
 Open `http://localhost:3000`.
 
-## Current workflow
+## Validation and publishing workflow
 
-`.github/workflows/deploy.yml` currently runs for pushes to `main` or `master` and for manual workflow
-dispatch. A successful run:
+`.github/workflows/deploy.yml` validates every branch push and pull request, including pushes to
+`master`. These runs install from the lockfile, run the unit and lint gates, check workflow invariants
+with actionlint, build the web and offline distributions, and run compatibility and documentation
+continuity checks. Branch and pull-request runs do not upload release artefacts or reach a publishing
+job.
 
-1. installs dependencies;
-2. runs tests, lint, builds, and compatibility validation;
-3. deploys `dist/` to GitHub Pages;
-4. creates a GitHub release and uploads the offline zip plus checksum;
-5. builds and pushes multi-architecture Docker images;
-6. updates the Docker Hub description and writes a deployment summary.
+Publishing starts only for a pushed `v*` tag. Before any channel can publish, the workflow checks
+that:
 
-A push to `master` therefore publishes. Do not merge or push `master` unless publication is intended.
-The active engineering milestone changes this to validated tag-only publishing.
+- the tag is exactly `v` followed by the version in `package.json`;
+- the tagged commit is contained in `origin/master` history;
+- the normal validation and both production builds pass.
 
-The workflow requires:
+The publishing jobs then deploy `dist/` to GitHub Pages, create a GitHub release with generated notes
+and a checksummed offline zip, and push `latest` plus the package version to Docker Hub. Actions are
+pinned to immutable commits. Workflow permissions default to read-only; only the Pages job receives
+Pages and OIDC write access, and only the GitHub release job receives repository-content write
+access.
 
-- GitHub Pages configured for GitHub Actions;
-- `DOCKER_USERNAME` and `DOCKER_PASSWORD` secrets;
-- repository permissions for Pages, releases, and the OIDC token used by Pages.
+The workflow requires GitHub Pages configured for GitHub Actions and the `DOCKER_USERNAME` and
+`DOCKER_PASSWORD` secrets.
 
 ## Release operation
-
-Until tag-only publishing is implemented, follow the current workflow trigger above and treat a
-default-branch push as a release action.
 
 Before publication:
 
@@ -66,10 +66,13 @@ Before publication:
 2. update `package.json` and its lockfile together;
 3. run the release gate defined in [TESTING.md](TESTING.md#release-evidence);
 4. review the complete diff and generated web/offline artefacts;
-5. confirm Docker credentials and Pages configuration;
-6. obtain explicit approval to publish.
+5. merge the reviewed release commit into `master`;
+6. confirm Docker credentials and Pages configuration;
+7. obtain explicit approval to publish;
+8. create the matching `v<package-version>` tag on that commit and push only that tag.
 
-Never reuse a Git tag. Never publish from an unreviewed feature-branch commit.
+Pushing the tag is the release operation. A branch push, pull request, or push to `master` only
+validates. Never reuse a Git tag or tag an unreviewed commit.
 
 ## Post-release checks
 

@@ -12,6 +12,8 @@
 		"test": "vitest --config config/vite.config.js",
 		"test:ui": "vitest --ui --config config/vite.config.js",
 		"test:run": "vitest run --config config/vite.config.js",
+		"test:workflow-invariants": "node --test tests/workflow-invariants.mjs",
+		"test:workflows": "npm run test:workflow-invariants && actionlint",
 		"validate:compatibility": "node scripts/validate-compatibility.cjs",
 		"validate:continuity": "node scripts/validate-continuity.cjs",
 		"validate:all": "npm run test:run && npm run validate:compatibility && npm run validate:continuity"

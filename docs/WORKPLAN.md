@@ -16,10 +16,17 @@ Implementation follows [CONTRIBUTING.md](CONTRIBUTING.md), verification follows
 
 ## 1. Engineering foundation
 
-Status: **next**
+Status: **in progress**
 
-- Change publishing from default-branch pushes to validated `v*` tags.
-- Keep non-publishing validation on branches, pull requests, and `master`.
+Completed:
+
+- Publishing runs only from validated `v*` tags whose version matches `package.json` and whose
+  commit belongs to `master` history.
+- Repository invariants and actionlint protect non-publishing validation on branches, pull requests,
+  and `master`.
+
+Remaining:
+
 - Make strict TypeScript cover every source and test file.
 - Make validation commands work from a clean checkout and build artefacts before checking them.
 - Add Playwright, Knip, actionlint, coverage thresholds, documentation integrity checks, workflow
@@ -76,9 +83,9 @@ still produces a light PDF.
 
 ## Next task
 
-Implement workflow invariant tests, observe them fail against the current publish-on-push workflow,
-then implement validated tag-only publishing and update [DEPLOYMENT.md](DEPLOYMENT.md) in the same
-concern.
+Make strict TypeScript cover every source and test file, first recording the current typecheck
+failures and then repairing only the configuration, source, tests, and owning documentation required
+for a clean strict typecheck.
 
 ## Backlog
 

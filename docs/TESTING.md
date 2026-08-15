@@ -109,6 +109,9 @@ npm run validate:release   validate:all plus Docker, cross-browser, audit, and r
 `validate:all` must work after `npm ci` and documented Playwright browser installation. It creates
 generated artefacts before validating them.
 
+`test:workflows` requires actionlint on `PATH`; CI installs the version pinned in the workflow. Use
+the actionlint installation method for the local platform before running the command.
+
 ## Change verification gate
 
 Before presenting a completed concern:
