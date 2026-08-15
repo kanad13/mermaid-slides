@@ -5,10 +5,10 @@ coverage are supporting signals, not substitutes for behavioral assertions.
 
 ## Current test boundary
 
-The repository currently uses strict TypeScript, Vitest, React Testing Library, jsdom, ESLint,
-production builds, and repository validators. The unit setup mocks Mermaid and returns a trivial
-SVG, so it does not exercise successful Mermaid rendering, real layout, CSP, browser timing, or PDF
-output.
+The repository currently uses strict TypeScript, Vitest, React Testing Library, jsdom, V8 coverage,
+ESLint, production builds, and repository validators. The unit setup mocks Mermaid and returns a
+trivial SVG, so it does not exercise successful Mermaid rendering, real layout, CSP, browser timing,
+or PDF output.
 
 The engineering-foundation milestone adds:
 
@@ -82,8 +82,11 @@ External network requests are blocked during tests except explicit local fixture
 
 ## Coverage policy
 
-- Enable `test:coverage` with the existing V8 provider after strict source inclusion is fixed.
-- Measure the corrected baseline before choosing thresholds.
+- `test:coverage` includes every runtime TypeScript source file, including untested files. Tests,
+  test setup, declarations, and type-only modules are excluded because they are not production
+  runtime behavior.
+- The measured all-source baseline is 46.81% statements, 75.24% branches, 46.15% functions, and
+  46.81% lines; these values are enforced as global thresholds.
 - Thresholds may stay level or increase; lowering one requires an explicit reason.
 - New behavior is tested directly even when aggregate coverage passes.
 - Browser-only behavior stays in browser tests rather than being distorted for unit coverage.
@@ -95,6 +98,7 @@ The currently configured foundation command surface includes:
 ```text
 npm run typecheck          strict TypeScript
 npm run test:unit          Vitest once
+npm run test:coverage      Vitest once with enforced V8 thresholds
 npm run test:commands      package-script contracts
 npm run test:docs          documentation integrity
 npm run test:workflows     workflow invariants and actionlint
@@ -103,11 +107,10 @@ npm run validate:all       every configured check and both builds
 ```
 
 `validate:all` runs every configured local gate and creates generated artefacts before validating
-them. It must continue to work after `npm ci` as coverage, browser, server, and dead-code gates are
-added.
+them. It must continue to work after `npm ci` as browser, server, and dead-code gates are added.
 
-The remaining foundation work adds coverage, browser, dead-code, server, fast-check, full-validation,
-and release-validation commands as their underlying checks become executable.
+The remaining foundation work adds browser, dead-code, server, fast-check, full-validation, and
+release-validation commands as their underlying checks become executable.
 
 `test:workflows` requires actionlint on `PATH`; CI installs the version pinned in the workflow. Use
 the actionlint installation method for the local platform before running the command.

@@ -34,6 +34,26 @@ export default defineConfig(({ mode }) => ({
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
-    globals: true
+    globals: true,
+    coverage: {
+      provider: 'v8',
+      all: true,
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: [
+        'src/**/*.d.ts',
+        'src/**/*.test.{ts,tsx}',
+        'src/**/__tests__/**',
+        'src/test/**',
+        'src/types/**'
+      ],
+      reporter: ['text', 'json-summary'],
+      reportsDirectory: 'coverage',
+      thresholds: {
+        statements: 46.81,
+        branches: 75.24,
+        functions: 46.15,
+        lines: 46.81
+      }
+    }
   }
 }))

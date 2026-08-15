@@ -29,11 +29,12 @@ Completed:
   distributions before checking them, and is the command CI invokes.
 - Documentation validation rejects broken local links and heading anchors, missing npm scripts, and
   Markdown files outside the ownership graph.
+- V8 coverage includes untested runtime source files and enforces the measured baseline for
+  statements, branches, functions, and lines.
 
 Remaining:
 
-- Add Playwright, Knip, coverage thresholds, and the shared fixture deck described in
-  [TESTING.md](TESTING.md).
+- Add Playwright, Knip, and the shared fixture deck described in [TESTING.md](TESTING.md).
 - Define and run the fast, full, and release gates in `package.json` and CI.
 
 Acceptance: each new gate rejects a representative defect, all documented commands exist, and a
@@ -86,9 +87,9 @@ still produces a light PDF.
 
 ## Next task
 
-Configure `test:coverage` with V8 coverage for every source file, measure the corrected baseline,
-and set non-decreasing thresholds; first demonstrate that including an untested source file causes
-the gate to fail.
+Configure Knip for the real runtime, test, build, and validation entry points; first demonstrate
+representative unused-file, unused-export, unused-dependency, and unresolved-import failures, then
+remove existing findings and wire `test:dead-code` into validation.
 
 ## Backlog
 
