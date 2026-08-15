@@ -132,3 +132,14 @@ test('allows explicitly marked optional internal reference material', (t) => {
     const result = runValidator(root);
     assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
 });
+
+test('ignores Markdown files that are executable fixture input rather than documentation', (t) => {
+    const root = createRepositoryFixture(t);
+    writeFixtureFile(root, 'tests/fixtures/shared-deck.md', `# Broken image fixture
+
+![Expected failure](/test-fixtures/intentionally-missing.svg)
+`);
+
+    const result = runValidator(root);
+    assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+});

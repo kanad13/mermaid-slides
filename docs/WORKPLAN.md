@@ -33,10 +33,12 @@ Completed:
   statements, branches, functions, and lines.
 - Knip checks the real runtime, tool, validation, distribution, and test graph without dependency
   suppressions and rejects unused or unresolved code.
+- The shared deterministic fixture deck and bundled local assets cover every required diagram,
+  geometry, image state, error source, duplicate, and hostile Markdown value.
 
 Remaining:
 
-- Add Playwright and the shared fixture deck described in [TESTING.md](TESTING.md).
+- Add Playwright against the shared fixture deck described in [TESTING.md](TESTING.md).
 - Define and run the fast, full, and release gates in `package.json` and CI.
 
 Acceptance: each new gate rejects a representative defect, all documented commands exist, and a
@@ -89,9 +91,9 @@ still produces a light PDF.
 
 ## Next task
 
-Add the shared deterministic fixture deck and bundled local assets described in [TESTING.md](TESTING.md);
-first add fixture-contract tests for every required diagram, size, duplicate, image state, long/error
-case, and hostile string, without adding browser tests yet.
+Add Playwright Chromium against the production web and offline builds using the shared fixture deck;
+first add failing real-browser tests for successful Mermaid rendering, navigation, the four image
+states, and external-network blocking, then wire the browser gate into repository validation.
 
 ## Backlog
 

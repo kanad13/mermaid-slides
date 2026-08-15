@@ -57,8 +57,9 @@ disposable worktree while retaining its test. Do not destructively mutate the wo
 
 ## Shared fixture deck
 
-Browser, visual, PDF, offline, and Docker tests use one deterministic deck with bundled local assets.
-It covers:
+[`tests/fixtures/shared-deck.md`](../tests/fixtures/shared-deck.md) is the canonical deterministic
+deck for browser, visual, PDF, offline, and Docker tests. Its bundled images live under
+`public/test-fixtures/`, so production web and offline builds serve the same local assets. It covers:
 
 - flowchart, sequence, ER, class, state, Gantt, pie, and git graph diagrams;
 - tall, wide, tiny, large, empty, and malformed input;
@@ -67,7 +68,14 @@ It covers:
 - long titles, long error source, and hostile Markdown strings.
 
 Tests may select relevant slides, but a visual or renderer change runs the complete deck before merge.
-External network requests are blocked during tests except explicit local fixture routes.
+The normal and already-cached cases repeat one source URL. The delayed case uses the bundled asset
+with `?delay=250`; browser tests delay that explicit local request. The broken case names an
+intentionally absent local file. External network requests are blocked during tests, and only these
+explicit local fixture routes may be intercepted.
+
+`npm run test:fixtures` enforces this contract independently of browser tooling, including the
+required syntax families, dimensions, duplicate source, local paths, absent broken target, and
+literal hostile values.
 
 ## Browser and visual policy
 
@@ -100,6 +108,7 @@ npm run typecheck          strict TypeScript
 npm run test:unit          Vitest once
 npm run test:coverage      Vitest once with enforced V8 thresholds
 npm run test:commands      package-script contracts
+npm run test:fixtures      shared-deck and bundled-asset contracts
 npm run test:dead-code     Knip file, export, dependency, and import checks
 npm run test:docs          documentation integrity
 npm run test:workflows     workflow invariants and actionlint

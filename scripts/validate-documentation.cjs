@@ -12,6 +12,7 @@ const ignoredDirectories = new Set([
     'playwright-report',
     'test-results',
 ]);
+const ignoredPaths = new Set(['tests/fixtures']);
 const requiredDocuments = [
     'README.md',
     'AGENTS.md',
@@ -41,6 +42,9 @@ function listMarkdownFiles(root) {
 
             const relativePath = path.join(relativeDirectory, entry.name);
             if (entry.isDirectory()) {
+                if (ignoredPaths.has(toRepositoryPath(relativePath))) {
+                    continue;
+                }
                 visit(relativePath);
             } else if (entry.isFile() && entry.name.toLowerCase().endsWith('.md')) {
                 files.push(toRepositoryPath(relativePath));

@@ -39,9 +39,9 @@ Open `http://localhost:3000`.
 `.github/workflows/deploy.yml` validates every branch push and pull request, including pushes to
 `master`. These runs install from the lockfile and invoke `npm run validate:all`, which runs strict
 TypeScript, lint, unit, coverage, command-contract, documentation-integrity, and workflow gates,
-checks for unused code and dependencies, builds the web and offline distributions, and then runs
-compatibility checks. Branch and pull-request runs do not upload release artefacts or reach a
-publishing job.
+checks the shared fixture deck and its local assets, checks for unused code and dependencies, builds
+the web and offline distributions, and then runs compatibility checks. Branch and pull-request runs
+do not upload release artefacts or reach a publishing job.
 
 Publishing starts only for a pushed `v*` tag. Before any channel can publish, the workflow checks
 that:

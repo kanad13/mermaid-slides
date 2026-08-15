@@ -16,12 +16,13 @@
 		"test:unit": "vitest run --config config/vite.config.js",
 		"test:coverage": "node --test tests/coverage-config.mjs && vitest run --config config/vite.config.js --coverage",
 		"test:commands": "node --test tests/package-scripts.mjs",
+		"test:fixtures": "node --test tests/fixture-deck.mjs",
 		"test:dead-code": "node --test tests/knip-config.mjs && knip --config config/knip.json",
 		"test:docs": "node --test tests/documentation-integrity.mjs && node scripts/validate-documentation.cjs",
 		"test:workflow-invariants": "node --test tests/workflow-invariants.mjs",
 		"test:workflows": "npm run test:workflow-invariants && actionlint",
 		"validate:compatibility": "node scripts/validate-compatibility.cjs",
-		"validate:all": "npm run typecheck && npm run lint && npm run test:unit && npm run test:coverage && npm run test:commands && npm run test:docs && npm run test:dead-code && npm run test:workflows && npm run build:all && npm run validate:compatibility"
+		"validate:all": "npm run typecheck && npm run lint && npm run test:unit && npm run test:coverage && npm run test:commands && npm run test:fixtures && npm run test:docs && npm run test:dead-code && npm run test:workflows && npm run build:all && npm run validate:compatibility"
 	},
 	"keywords": [
 		"mermaid",

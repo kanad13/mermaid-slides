@@ -26,6 +26,7 @@ test('canonical commands use the configured unit and build tools', () => {
         scripts['test:dead-code'],
         'node --test tests/knip-config.mjs && knip --config config/knip.json',
     );
+    assert.equal(scripts['test:fixtures'], 'node --test tests/fixture-deck.mjs');
     assert.equal(scripts['test:run'], undefined, 'test:run was replaced by test:unit');
 });
 
@@ -36,6 +37,7 @@ test('validate:all runs every configured gate and builds before compatibility ch
         'npm run test:unit',
         'npm run test:coverage',
         'npm run test:commands',
+        'npm run test:fixtures',
         'npm run test:docs',
         'npm run test:dead-code',
         'npm run test:workflows',
