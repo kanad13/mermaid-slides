@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useMermaid } from '../../hooks/useMermaid';
 import { getDiagramType } from '../../utils/mermaidParser';
+import type { GridViewProps } from '../../types/components';
 
 export const GridView = ({ 
   diagrams, 
@@ -8,7 +9,7 @@ export const GridView = ({
   onDiagramSelect,
   isExtensionMode = false,
   showTitles = true
-}) => {
+}: GridViewProps) => {
   const { isLoaded, renderDiagram } = useMermaid();
 
   useEffect(() => {

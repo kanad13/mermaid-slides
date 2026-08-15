@@ -4,6 +4,7 @@ import { SettingsPanel } from '../Settings/SettingsPanel';
 import { GridViewToggle } from './HeaderControls/GridViewToggle';
 import { ProgressBar } from './HeaderControls/ProgressBar';
 import { useAutoHide } from '../../hooks/useAutoHide';
+import type { ViewerHeaderProps } from '../../types/components';
 
 export const ViewerHeader = ({
   currentIndex,
@@ -20,7 +21,7 @@ export const ViewerHeader = ({
   onAutoHideToggle,
   showTitles = true,
   onShowTitlesToggle
-}) => {
+}: ViewerHeaderProps) => {
   const { isVisible } = useAutoHide({
     timeout: autoHideEnabled ? 2000 : 0,
     initiallyVisible: true

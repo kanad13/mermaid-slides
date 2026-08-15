@@ -1,6 +1,7 @@
 import { Grid } from 'lucide-react';
+import type { GridViewToggleProps } from '../../../types/components';
 
-export const GridViewToggle = ({ isGridView, onToggleGridView }) => {
+export const GridViewToggle = ({ isGridView, onToggleGridView }: GridViewToggleProps) => {
   return (
     <button
       onClick={onToggleGridView}

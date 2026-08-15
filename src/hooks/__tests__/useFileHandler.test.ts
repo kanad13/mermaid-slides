@@ -8,16 +8,6 @@ vi.mock('../../utils/fileHandler', () => ({
   readFileAsText: vi.fn().mockResolvedValue('mock file content')
 }))
 
-// Type-safe mock event helpers
-type MockFileInputEvent = {
-  target: { files: File[] }
-}
-
-type MockDragEvent = {
-  preventDefault: () => void
-  dataTransfer?: { files: File[] }
-}
-
 describe('useFileHandler', () => {
   beforeEach(() => {
     vi.clearAllMocks()
@@ -35,7 +25,7 @@ describe('useFileHandler', () => {
     const mockOnFileLoad = vi.fn()
 
     const mockFile = new File(['test content'], 'test.md', { type: 'text/markdown' })
-    const mockEvent: MockFileInputEvent = {
+    const mockEvent = {
       target: { files: [mockFile] }
     }
 
@@ -50,7 +40,7 @@ describe('useFileHandler', () => {
   it('handles drag events correctly', () => {
     const { result } = renderHook(() => useFileHandler())
 
-    const mockEvent: MockDragEvent = {
+    const mockEvent = {
       preventDefault: vi.fn()
     }
 
@@ -73,7 +63,7 @@ describe('useFileHandler', () => {
     const mockOnFileLoad = vi.fn()
 
     const mockFile = new File(['test content'], 'dropped.md', { type: 'text/markdown' })
-    const mockEvent: MockDragEvent = {
+    const mockEvent = {
       preventDefault: vi.fn(),
       dataTransfer: { files: [mockFile] }
     }

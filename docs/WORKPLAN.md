@@ -24,10 +24,10 @@ Completed:
   commit belongs to `master` history.
 - Repository invariants and actionlint protect non-publishing validation on branches, pull requests,
   and `master`.
+- Strict TypeScript covers every source and test file and runs during repository validation.
 
 Remaining:
 
-- Make strict TypeScript cover every source and test file.
 - Make validation commands work from a clean checkout and build artefacts before checking them.
 - Add Playwright, Knip, actionlint, coverage thresholds, documentation integrity checks, workflow
   invariant tests, and the shared fixture deck described in [TESTING.md](TESTING.md).
@@ -83,9 +83,9 @@ still produces a light PDF.
 
 ## Next task
 
-Make strict TypeScript cover every source and test file, first recording the current typecheck
-failures and then repairing only the configuration, source, tests, and owning documentation required
-for a clean strict typecheck.
+Make validation commands work from a clean checkout and build required artefacts before checking
+them, first adding command-contract tests that fail for the current incomplete and order-dependent
+scripts.
 
 ## Backlog
 

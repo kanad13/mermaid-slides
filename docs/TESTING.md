@@ -5,9 +5,10 @@ coverage are supporting signals, not substitutes for behavioral assertions.
 
 ## Current test boundary
 
-The repository currently uses Vitest, React Testing Library, jsdom, ESLint, production builds, and
-two repository validators. The unit setup mocks Mermaid and returns a trivial SVG, so it does not
-exercise successful Mermaid rendering, real layout, CSP, browser timing, or PDF output.
+The repository currently uses strict TypeScript, Vitest, React Testing Library, jsdom, ESLint,
+production builds, and repository validators. The unit setup mocks Mermaid and returns a trivial
+SVG, so it does not exercise successful Mermaid rendering, real layout, CSP, browser timing, or PDF
+output.
 
 The engineering-foundation milestone adds:
 

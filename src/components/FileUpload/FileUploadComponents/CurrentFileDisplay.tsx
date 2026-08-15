@@ -1,6 +1,7 @@
 import { FileText } from 'lucide-react';
+import type { CurrentFileDisplayProps } from '../../../types/components';
 
-export const CurrentFileDisplay = ({ fileName }) => {
+export const CurrentFileDisplay = ({ fileName }: CurrentFileDisplayProps) => {
   if (!fileName) {return null;}
 
   return (

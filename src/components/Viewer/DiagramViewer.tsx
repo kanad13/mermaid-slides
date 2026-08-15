@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { useMermaid } from '../../hooks/useMermaid';
 import { useLayoutCalculations } from '../../hooks/useLayoutCalculations';
+import type { DiagramViewerProps } from '../../types/components';
 
 /**
  * DiagramViewer Component
@@ -17,10 +18,9 @@ import { useLayoutCalculations } from '../../hooks/useLayoutCalculations';
  */
 export const DiagramViewer = ({ 
   diagram, 
-  onError,
   showTitles = true
-}) => {
-  const { isLoaded, error, renderDiagram } = useMermaid();
+}: DiagramViewerProps) => {
+  const { isLoaded, renderDiagram } = useMermaid();
   const { availableHeight, availableWidth } = useLayoutCalculations(true);
   
   // Calculate adjusted height when titles are shown
@@ -32,12 +32,6 @@ export const DiagramViewer = ({
     }
     return availableHeight;
   }, [showTitles, diagram?.title, availableHeight]);
-
-  useEffect(() => {
-    if (error) {
-      onError?.(error);
-    }
-  }, [error, onError]);
 
   useEffect(() => {
     if (!diagram) {
@@ -86,10 +80,11 @@ export const DiagramViewer = ({
         }
       } catch (err) {
         console.error('Error rendering content:', err);
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error';
         element.innerHTML = `
           <div style="color: #dc2626; padding: 1rem; border: 1px solid #fca5a5; border-radius: 0.375rem; background-color: #fef2f2; text-align: center;">
             <p style="font-weight: 500;">Error rendering content:</p>
-            <p style="font-size: 0.875rem; margin-top: 0.25rem;">${err.message}</p>
+            <p style="font-size: 0.875rem; margin-top: 0.25rem;">${errorMessage}</p>
             <pre style="font-size: 0.75rem; margin-top: 0.5rem; background-color: #f3f4f6; padding: 0.5rem; border-radius: 0.375rem; overflow: auto; text-align: left;">${diagram.code || diagram.src}</pre>
           </div>
         `;

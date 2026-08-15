@@ -6,16 +6,32 @@ interface FileResult {
   name: string;
 }
 
+interface FileSelectionEvent {
+  target: {
+    files?: ArrayLike<File> | null;
+  };
+}
+
+interface PreventableEvent {
+  preventDefault: () => void;
+}
+
+interface FileDropEvent extends PreventableEvent {
+  dataTransfer: {
+    files: ArrayLike<File>;
+  };
+}
+
 interface DragEvents {
-  onDragOver: (_e: React.DragEvent<HTMLDivElement>) => void;
-  onDragLeave: (_e: React.DragEvent<HTMLDivElement>) => void;
-  onDrop: (_e: React.DragEvent<HTMLDivElement>, _onFileLoad: (_content: string, _name: string) => void) => Promise<void>;
+  onDragOver: (_event: PreventableEvent) => void;
+  onDragLeave: (_event: PreventableEvent) => void;
+  onDrop: (_event: FileDropEvent, _onFileLoad: (_content: string, _name: string) => void) => Promise<void>;
 }
 
 interface UseFileHandlerReturn {
   fileName: string;
   isDragging: boolean;
-  handleFileSelect: (_event: React.ChangeEvent<HTMLInputElement>, _onFileLoad: (_c: string, _n: string) => void) => Promise<void>;
+  handleFileSelect: (_event: FileSelectionEvent, _onFileLoad: (_content: string, _name: string) => void) => Promise<void>;
   handleDragEvents: DragEvents;
   resetFile: () => void;
   setFileName: (_name: string) => void;
@@ -34,7 +50,7 @@ export const useFileHandler = (): UseFileHandlerReturn => {
     return { content, name: file.name };
   };
 
-  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>, onFileLoad: (_content: string, _name: string) => void): Promise<void> => {
+  const handleFileSelect = async (event: FileSelectionEvent, onFileLoad: (_content: string, _name: string) => void): Promise<void> => {
     const file = event.target.files?.[0];
     if (file) {
       try {
@@ -49,15 +65,15 @@ export const useFileHandler = (): UseFileHandlerReturn => {
   };
 
   const handleDragEvents: DragEvents = {
-    onDragOver: (e: React.DragEvent<HTMLDivElement>) => {
+    onDragOver: (e: PreventableEvent) => {
       e.preventDefault();
       setIsDragging(true);
     },
-    onDragLeave: (e: React.DragEvent<HTMLDivElement>) => {
+    onDragLeave: (e: PreventableEvent) => {
       e.preventDefault();
       setIsDragging(false);
     },
-    onDrop: async (e: React.DragEvent<HTMLDivElement>, onFileLoad: (_content: string, _name: string) => void) => {
+    onDrop: async (e: FileDropEvent, onFileLoad: (_content: string, _name: string) => void) => {
       e.preventDefault();
       setIsDragging(false);
 

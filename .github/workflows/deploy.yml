@@ -31,6 +31,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Run strict TypeScript
+        run: npm run typecheck
+
       - name: Install actionlint
         env:
           ACTIONLINT_VERSION: 1.7.12

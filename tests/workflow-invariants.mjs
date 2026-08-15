@@ -52,6 +52,7 @@ test('branch pushes and pull requests validate without publishing', () => {
     assert.doesNotMatch(validationJob, /^    if:/m);
 
     for (const validationCommand of [
+        'npm run typecheck',
         'npm run test:run',
         'npm run lint',
         'npm run test:workflows',

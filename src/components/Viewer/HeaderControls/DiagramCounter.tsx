@@ -1,4 +1,6 @@
-export const DiagramCounter = ({ currentIndex, totalDiagrams }) => {
+import type { ProgressIndicatorProps } from '../../../types/components';
+
+export const DiagramCounter = ({ currentIndex, totalDiagrams }: ProgressIndicatorProps) => {
   return (
     <div className="flex items-center space-x-4">
       <div className="px-4 py-2 rounded-lg bg-gray-100">

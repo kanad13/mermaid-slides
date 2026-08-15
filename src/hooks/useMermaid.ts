@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 
+type MermaidInstance = (typeof import('mermaid'))['default'];
+
 interface UseMermaidReturn {
   isLoaded: boolean;
   error: string | null;
@@ -9,8 +11,7 @@ interface UseMermaidReturn {
 export const useMermaid = (): UseMermaidReturn => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [mermaidInstance, setMermaidInstance] = useState<any>(null);
+  const [mermaidInstance, setMermaidInstance] = useState<MermaidInstance | null>(null);
 
   useEffect(() => {
     const initializeMermaid = async (): Promise<void> => {

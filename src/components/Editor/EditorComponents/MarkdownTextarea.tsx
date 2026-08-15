@@ -1,4 +1,6 @@
-export const MarkdownTextarea = ({ markdownText, onTextChange }) => {
+import type { MarkdownTextareaProps } from '../../../types/components';
+
+export const MarkdownTextarea = ({ markdownText, onTextChange }: MarkdownTextareaProps) => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">

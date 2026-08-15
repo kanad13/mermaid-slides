@@ -1,10 +1,12 @@
+import type { DropZoneProps } from '../../../types/components';
+
 export const DropZone = ({ 
   isDragging, 
   onDragOver, 
   onDragLeave, 
   onDrop,
   children
-}) => {
+}: DropZoneProps) => {
   return (
     <div
       className={`border-2 border-dashed rounded-lg p-6 transition-colors ${

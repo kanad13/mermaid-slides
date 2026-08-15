@@ -8,6 +8,7 @@
 		"build": "vite build --config config/vite.config.js",
 		"build:offline": "vite build --config config/vite.config.js --mode offline --outDir offline-package && node scripts/prepare-offline-package.cjs",
 		"preview": "vite preview --config config/vite.config.js",
+		"typecheck": "tsc --project config/tsconfig.json --noEmit",
 		"lint": "eslint . --config config/eslint.config.js --report-unused-disable-directives --max-warnings 0",
 		"test": "vitest --config config/vite.config.js",
 		"test:ui": "vitest --ui --config config/vite.config.js",

@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom'
+import { vi } from 'vitest'
 
 // Mock mermaid module to avoid initialization issues in tests
 vi.mock('mermaid', () => ({
@@ -39,8 +40,8 @@ Object.defineProperty(window, 'FileReader', {
       setTimeout(() => {
         this.result = 'mock file content'
         if (this.onload) {
-          // Create a minimal ProgressEvent-like object for the mock
-          const mockEvent = { target: this } as ProgressEvent<FileReader>
+          const mockEvent = new ProgressEvent('load') as ProgressEvent<FileReader>
+          Object.defineProperty(mockEvent, 'target', { value: this })
           this.onload(mockEvent)
         }
       }, 0)

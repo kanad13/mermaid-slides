@@ -1,6 +1,7 @@
 import { FileText } from 'lucide-react';
+import type { BackButtonProps } from '../../../types/components';
 
-export const BackButton = ({ onBackToEditor, isExtensionMode = false }) => {
+export const BackButton = ({ onBackToEditor, isExtensionMode = false }: BackButtonProps) => {
   const buttonText = isExtensionMode ? 'Focus Editor' : 'Back to Editor';
   
   return (

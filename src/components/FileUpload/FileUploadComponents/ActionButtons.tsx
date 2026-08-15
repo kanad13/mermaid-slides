@@ -1,4 +1,11 @@
-export const ActionButtons = ({ onLoadSample, onViewDiagrams, onClear, hasMarkdown }) => {
+import type { FileUploadActionButtonsProps } from '../../../types/components';
+
+export const ActionButtons = ({
+  onLoadSample,
+  onViewDiagrams,
+  onClear,
+  hasMarkdown
+}: FileUploadActionButtonsProps) => {
   return (
     <div className="flex gap-4 w-full">
       {/* Load Content Box */}

@@ -17,7 +17,7 @@ export const useAutoHide = ({
   initiallyVisible = true
 }: UseAutoHideOptions = {}): UseAutoHideReturn => {
   const [isVisible, setIsVisible] = useState(initiallyVisible);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clearExistingTimeout = useCallback(() => {
     if (timeoutRef.current) {
