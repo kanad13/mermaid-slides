@@ -25,12 +25,13 @@ Completed:
 - Repository invariants and actionlint protect non-publishing validation on branches, pull requests,
   and `master`.
 - Strict TypeScript covers every source and test file and runs during repository validation.
+- The canonical validation command works without prebuilt artefacts, builds the web and offline
+  distributions before checking them, and is the command CI invokes.
 
 Remaining:
 
-- Make validation commands work from a clean checkout and build artefacts before checking them.
-- Add Playwright, Knip, actionlint, coverage thresholds, documentation integrity checks, workflow
-  invariant tests, and the shared fixture deck described in [TESTING.md](TESTING.md).
+- Add Playwright, Knip, coverage thresholds, documentation integrity checks, and the shared fixture
+  deck described in [TESTING.md](TESTING.md).
 - Define and run the fast, full, and release gates in `package.json` and CI.
 
 Acceptance: each new gate rejects a representative defect, all documented commands exist, and a
@@ -83,9 +84,10 @@ still produces a light PDF.
 
 ## Next task
 
-Make validation commands work from a clean checkout and build required artefacts before checking
-them, first adding command-contract tests that fail for the current incomplete and order-dependent
-scripts.
+Replace the shallow continuity check with repository-level documentation integrity tests for local
+links, heading anchors, documented npm commands, ownership reachability, and orphan Markdown files;
+first demonstrate representative failures, then wire the resulting `test:docs` command into
+validation.
 
 ## Backlog
 

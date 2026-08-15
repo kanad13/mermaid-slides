@@ -51,18 +51,7 @@ test('branch pushes and pull requests validate without publishing', () => {
     assert.doesNotMatch(triggers, /^  workflow_dispatch:/m);
     assert.doesNotMatch(validationJob, /^    if:/m);
 
-    for (const validationCommand of [
-        'npm run typecheck',
-        'npm run test:run',
-        'npm run lint',
-        'npm run test:workflows',
-        'npm run build',
-        'npm run build:offline',
-        'npm run validate:compatibility',
-        'npm run validate:continuity',
-    ]) {
-        assert.match(validationJob, new RegExp(`run: ${validationCommand.replaceAll(':', '\\:')}`));
-    }
+    assert.match(validationJob, /run: npm run validate:all/);
 
     assert.match(
         validationJob,

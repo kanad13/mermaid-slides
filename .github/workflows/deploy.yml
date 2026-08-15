@@ -31,9 +31,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run strict TypeScript
-        run: npm run typecheck
-
       - name: Install actionlint
         env:
           ACTIONLINT_VERSION: 1.7.12
@@ -46,26 +43,8 @@ jobs:
           tar -xzf "$RUNNER_TEMP/$archive" -C "$RUNNER_TEMP" actionlint
           echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
 
-      - name: Run unit tests
-        run: npm run test:run
-
-      - name: Run linting
-        run: npm run lint
-
-      - name: Check workflow invariants and syntax
-        run: npm run test:workflows
-
-      - name: Build web application
-        run: npm run build
-
-      - name: Build offline package
-        run: npm run build:offline
-
-      - name: Validate compatibility
-        run: npm run validate:compatibility
-
-      - name: Validate documentation continuity
-        run: npm run validate:continuity
+      - name: Run validation
+        run: npm run validate:all
 
       - name: Upload release build artifacts
         if: github.ref_type == 'tag' && startsWith(github.ref_name, 'v')

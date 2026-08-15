@@ -95,6 +95,7 @@ The engineering-foundation milestone makes these commands executable:
 ```text
 npm run typecheck          strict TypeScript
 npm run test:unit          Vitest once
+npm run test:commands      package-script contracts
 npm run test:coverage      Vitest with V8 coverage
 npm run test:browser       required Chromium Playwright suite
 npm run test:docs          documentation integrity
@@ -107,8 +108,9 @@ npm run validate:all       check, builds, browser, server, workflow, and compati
 npm run validate:release   validate:all plus Docker, cross-browser, audit, and release checks
 ```
 
-`validate:all` must work after `npm ci` and documented Playwright browser installation. It creates
-generated artefacts before validating them.
+`validate:all` runs every configured local gate and creates generated artefacts before validating
+them. It must continue to work after `npm ci` as browser, server, dead-code, and documentation gates
+are added.
 
 `test:workflows` requires actionlint on `PATH`; CI installs the version pinned in the workflow. Use
 the actionlint installation method for the local platform before running the command.

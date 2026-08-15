@@ -7,17 +7,19 @@
 		"dev": "vite --config config/vite.config.js",
 		"build": "vite build --config config/vite.config.js",
 		"build:offline": "vite build --config config/vite.config.js --mode offline --outDir offline-package && node scripts/prepare-offline-package.cjs",
+		"build:all": "npm run build && npm run build:offline",
 		"preview": "vite preview --config config/vite.config.js",
 		"typecheck": "tsc --project config/tsconfig.json --noEmit",
 		"lint": "eslint . --config config/eslint.config.js --report-unused-disable-directives --max-warnings 0",
 		"test": "vitest --config config/vite.config.js",
 		"test:ui": "vitest --ui --config config/vite.config.js",
-		"test:run": "vitest run --config config/vite.config.js",
+		"test:unit": "vitest run --config config/vite.config.js",
+		"test:commands": "node --test tests/package-scripts.mjs",
 		"test:workflow-invariants": "node --test tests/workflow-invariants.mjs",
 		"test:workflows": "npm run test:workflow-invariants && actionlint",
 		"validate:compatibility": "node scripts/validate-compatibility.cjs",
 		"validate:continuity": "node scripts/validate-continuity.cjs",
-		"validate:all": "npm run test:run && npm run validate:compatibility && npm run validate:continuity"
+		"validate:all": "npm run typecheck && npm run lint && npm run test:unit && npm run test:commands && npm run test:workflows && npm run build:all && npm run validate:compatibility && npm run validate:continuity"
 	},
 	"keywords": [
 		"mermaid",
